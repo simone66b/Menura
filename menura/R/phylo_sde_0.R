@@ -26,27 +26,48 @@ phylo_sde_0 <- function(tr, rt_value, N, theta, model, method, ...) {
   }
 
   sde_edges <- function(tr, node, X0, t0) {
+    
+    #node = rt_node
     # preceeding nodes
     daughters <- tr$edge[which(tr$edge[, 1] == node), 2]
     for (d_ind in 1:2) {
+      
+      #what are node and d_ind
+      #I think this is how you traverse the tree
+      # where does (col 1 = rt_node && col 2 = daughters[d_ind])
       edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[d_ind]))
+      
+      #drift = expression (0.1 *(0-x))
+      # model$drift = alpha * (mu - x)
+      #sets the parameters as 2 vectors/lists
       drift <- as.expression(force(eval(substitute(substitute(e,
                               list(alpha = theta[edge, "alpha"],
                                    mu = theta[edge, "mu"],
                                    sigma = theta[edge, "sigma"])),
                               list(e = model$drift)))))
+      
+      #diffusion = expression (1)
+      # model$diffusion = sigma
       diffusion <- as.expression(force(eval(substitute(substitute(e,
                               list(alpha = theta[edge, "alpha"],
                                    mu = theta[edge, "mu"],
                                    sigma = theta[edge, "sigma"])),
                               list(e = model$diffusion)))))
+      
+      #diffusion_x = 0
+      #model$dx_diffusion  
       diffusion_x <- as.expression(force(eval(substitute(substitute(e,
                               list(alpha = theta[edge, "alpha"],
                                    mu = theta[edge, "mu"],
                                    sigma = theta[edge, "sigma"])),
                               list(e = model$dx_diffusion)))))
+      
+      #???
       n_steps <- tr$edge.length[edge] * N
+      #???
       tE <- t0 + tr$edge.length[edge]
+      
+      #runs sde.sim
       lst[[edge]] <<- sde::sde.sim(X0 = X0, t0 = t0, T = tE, N = n_steps,
                                    method = method,
                                    drift = drift,
