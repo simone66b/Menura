@@ -5,18 +5,35 @@
   rpkgs <- c("sde", "ape", "msm")
   lapply(rpkgs, require, character.only = TRUE)
   # Number of tips
-  # Random tree with 64 tips
+  # Random tree with n tips
   tr <-  compute.brlen(rtree(n=20))
   
   plot(tr)
+  
   # SDE parameters
-  Nedges <- length(tr$edge.length)
-  dclade <- max(which(tr$edge[,1] == tr$edge[1,1])) - 1
+  # set to size of the length of the edge.length vector
+  Nedges <- length(tr$edge.length)  
+  
+  dclade <- max(which(tr$edge[,1] == tr$edge[1,1])) - 1  
+  
+  #these parameters are vectors with size = number of edges = number of simulations
   alpha <- mu <- sigma <- rep(0, Nedges)
+  
+  #numeric vector of selective constraint strength for ec. branch
   alpha[1:Nedges]  <- 0.1
+  
+  #mu == theta 
+  #represents numeric vector giving ec. branch optimum
   mu[1:Nedges] <- 0
+  
+  #numeric vector Std-dev of random component for ec. branch
   sigma[1:Nedges] <- 1
+  
   rt_value <- 0
+  
+  # rTraitCont simulates the evolution of a continuous character along a phylogeny
+  # OU specifies model type (Brownian, Orn-Uhl, fxn)
+  # model type OU is sensitive to sigma, alpha, theta 
   tipdata <- rTraitCont(tr, "OU", sigma=sigma, alpha=alpha, theta=mu,
                         root.value=rt_value)
   model <- list()
@@ -27,9 +44,15 @@
   model$s <- function(t, x, theta) {
     theta[3]
   }
+  
+  # quote() assigns an expression to a variable instead of the solution
   model$drift <- quote(alpha * (mu - x))
   model$diffusion <- quote(sigma)
+  
+  # the derivative of diffusion = sigma = 0
   model$dx_diffusion <- quote(0)
+  
+  #theta is a vector of the parameters
   theta <- cbind(alpha=alpha, mu=mu, sigma=sigma)
   N <- 100
   lst <- phylo_sde_0 (tr=tr, rt_value=rt_value, theta=theta, model=model,
@@ -41,5 +64,5 @@ sink("phylo_sde_test_output")
 print(lst)
 sink()
 
-plot(NA, xlim=c(-1,1), ylim=c(-2, 1), type="n")
+plot(NA, xlim=c(0,1), ylim=c(-2, 3), type="n")
 lapply(lst, lines)
