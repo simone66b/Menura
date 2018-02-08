@@ -1,12 +1,14 @@
 #examples{
-
+  #set seed for random num generator to ensure simulation is reproducible
   set.seed(1)
+  # install these packages
   rpkgs <- c("sde", "ape", "msm")
   lapply(rpkgs, require, character.only = TRUE)
   # Number of tips
   # Random tree with 64 tips
-  tr <-  compute.brlen(rtree(n=64))
+  tr <-  compute.brlen(rtree(n=20))
   
+  plot(tr)
   # SDE parameters
   Nedges <- length(tr$edge.length)
   dclade <- max(which(tr$edge[,1] == tr$edge[1,1])) - 1
@@ -35,3 +37,9 @@
 }
   
   lst
+sink("phylo_sde_test_output")  
+print(lst)
+sink()
+
+plot(NA, xlim=c(-1,1), ylim=c(-2, 1), type="n")
+lapply(lst, lines)

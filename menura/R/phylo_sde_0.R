@@ -84,4 +84,3 @@ phylo_sde_0 <- function(tr, rt_value, N, theta, model, method, ...) {
   return(lst)
 }
 
-##testing git
