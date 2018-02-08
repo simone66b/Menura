@@ -6,7 +6,7 @@
   lapply(rpkgs, require, character.only = TRUE)
   # Number of tips
   # Random tree with n tips
-  tr <-  compute.brlen(rtree(n=20))
+  tr <-  compute.brlen(rtree(n=128))
   
   plot(tr)
   
@@ -55,6 +55,8 @@
   #theta is a vector of the parameters
   theta <- cbind(alpha=alpha, mu=mu, sigma=sigma)
   N <- 100
+  
+  #calls the sde function, stored as a list of trees
   lst <- phylo_sde_0 (tr=tr, rt_value=rt_value, theta=theta, model=model,
                     N=N, method="euler")
 }
@@ -64,5 +66,8 @@ sink("phylo_sde_test_output")
 print(lst)
 sink()
 
-plot(NA, xlim=c(0,1), ylim=c(-2, 3), type="n")
+
+plot(NA, xlim=c(0,1), ylim=c(-2, 1.5), type="n")
 lapply(lst, lines)
+
+       
