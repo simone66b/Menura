@@ -6,8 +6,9 @@
   lapply(rpkgs, require, character.only = TRUE)
   # Number of tips
   # Random tree with n tips
-  tr <-  compute.brlen(rtree(n=128))
+  tr <-  compute.brlen(rtree(n=3))
   
+  # plot the tree
   plot(tr)
   
   # SDE parameters
@@ -56,18 +57,34 @@
   theta <- cbind(alpha=alpha, mu=mu, sigma=sigma)
   N <- 100
   
-  #calls the sde function, stored as a list of trees
+  #calls the sde function
   lst <- phylo_sde_0 (tr=tr, rt_value=rt_value, theta=theta, model=model,
                     N=N, method="euler")
+  
+  #calls log likelihood using Euler, approximates for diffusion process in tree
+  loglike <-  tree_logL (tr=tr, tipdata=tipdata, lst=lst,
+                         alpha=theta[, "alpha"],
+                         mu=theta[, "mu"],
+                         sigma=theta[, "sigma"], model,
+                         method = "euler")
+  
+  
 }
   
+  #lst stores the point path to each node
   lst
+  
+  #print lst to a file
 sink("phylo_sde_test_output")  
 print(lst)
 sink()
 
-
+#plot the point paths in list
+#compare to plot(tr)
 plot(NA, xlim=c(0,1), ylim=c(-2, 1.5), type="n")
 lapply(lst, lines)
+
+loglike
+
 
        
