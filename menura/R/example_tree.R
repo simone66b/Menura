@@ -4,12 +4,14 @@
   # install these packages
   rpkgs <- c("sde", "ape", "msm")
   lapply(rpkgs, require, character.only = TRUE)
-  # Number of tips
+
   # Random tree with n tips
   tr <-  compute.brlen(rtree(n=3))
   
   # plot the tree
   plot(tr)
+  edgelabels()
+ nodelabels()
   
   # SDE parameters
   # set to size of the length of the edge.length vector
@@ -23,7 +25,7 @@
   #numeric vector of selective constraint strength for ec. branch
   alpha[1:Nedges]  <- 0.1
   
-  #mu == theta 
+  #mu == theta as per method description
   #represents numeric vector giving ec. branch optimum
   mu[1:Nedges] <- 0
   
@@ -84,6 +86,7 @@ sink()
 plot(NA, xlim=c(0,1), ylim=c(-2, 1.5), type="n")
 lapply(lst, lines)
 
+#The higher the better, relative value
 loglike
 
 
