@@ -3,7 +3,6 @@
 #see help file for argument descriptors
 tree_logL <- function(tr, tipdata, lst, alpha, mu, sigma, model,
               method, ...) {
-browser()
 tipdata <- as.numeric(tipdata)
 n_tips  <- length(tr$tip.label)
 rt_node <- n_tips + 1
@@ -41,7 +40,6 @@ rt_node_dist <- ape::dist.nodes(tr)[rt_node, ]
 #   }
 # }
 
-browser()
 ##Calculates the log likelihood at each edge given the specific parameters of the edge
 ##returns value logL which is the sum of the logLikelihood of all edges
 logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
@@ -49,7 +47,7 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
   daughters <- tr$edge[which(tr$edge[, 1] == node), 2]
   
   for (ind_d in 1:2) {
-    browser()
+  
     edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[ind_d]))
     theta <- c(alpha[edge], mu[edge], sigma[edge])
 
