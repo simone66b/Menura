@@ -6,6 +6,7 @@ phylo_sde_0 <- function(tr, rt_value, N, theta, model, method, ...) {
   n_tips <- length(tr$tip.label)
   rt_node <- n_tips + 1
 
+  #only relevant if specified
   dotslist <- list(...)
   if ("pred.corr" %in% names(dotslist)) {
     pred.corr <- dotslist$pred.corr
@@ -37,6 +38,8 @@ phylo_sde_0 <- function(tr, rt_value, N, theta, model, method, ...) {
       # where does (col 1 = rt_node && col 2 = daughters[d_ind])
       edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[d_ind]))
       
+      #mu -> long term mean level
+      #alpha -> 
       #drift = expression (0.1 *(0-x))
       # model$drift = alpha * (mu - x)
       #sets the parameters as 2 vectors/lists
