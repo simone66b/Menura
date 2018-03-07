@@ -11,7 +11,8 @@
   # plot the tree
   plot(tr)
   edgelabels()
- nodelabels()
+ 
+nodelabels()
   
   # SDE parameters
   # set to size of the length of the edge.length vector
