@@ -6,14 +6,29 @@
   lapply(rpkgs, require, character.only = TRUE)
 
   # Random tree with n tips
-  tr <-  compute.brlen(rtree(n=3))
+  tr <-  compute.brlen(rtree(n=4))
   
+  tr$edge.length
+  tr$edge
   # plot the tree
   plot(tr)
   edgelabels()
- 
-nodelabels()
-  
+  nodelabels()
+  add.scale.bar()
+  ##working on manually adding fossils to tree as new branches with length 0
+  tip <- list(edge = matrix(c(2,1),1,2), 
+              tip.label = "fossil",
+              edge.length = 0.0,
+              Nnode = 1)
+  class(tip)<- "phylo"
+  ftree <- bind.tree(tr,tip, where = 5)
+  tr$edge[, 1]
+  tr$edge
+  plot(ftree)
+  ftree$edge.length
+  edgelabels()
+  nodelabels()                                                    
+  tr$edge
   # SDE parameters
   # set to size of the length of the edge.length vector
   Nedges <- length(tr$edge.length)  
@@ -89,6 +104,6 @@ lapply(lst, lines)
 
 #The higher the better, relative value
 loglike
-
+tipdata
 
        
