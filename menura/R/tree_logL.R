@@ -54,16 +54,16 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
 
     #if the value of the node is greater than the total number of tips, the node is not a tip
     #this is logical due to the way trees are labelled (tips first)
-    #if not a tip, calculate LogL and jump to recursive call
+    #if not a tip, calculate LogL of the edge and jump to recursive call
     if (daughters[ind_d] > n_tips) {
       logL[edge] <<- logl_fn(X = lst[[edge]], theta = theta,
                             model = model, log = TRUE,
                             method = method)
       #must be a tip
       #calls 2 functions within dc_fn (dc_fn & logl_fn)
-      #logL of a tip is the sum of the conditional density of the diffusion process and the logl ????
+      #logL of a tip and its edge is the sum of the conditional density of the diffusion process and the logl 
     } else {
-      browser()
+     
       logL[edge] <<- logl_fn(X = lst[[edge]], theta = theta,
                           model = model, log = TRUE, method = method) +
                      dc_fn(x = tipdata[daughters[ind_d]],
@@ -82,7 +82,7 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
     
     
     #recursive call
-    #reset the node to the "new root" 
+    #reset the node to the "new root" and rerun logL_edges until you get to the tip
     if (daughters[ind_d] > n_tips) {
       logL_edges(daughters[ind_d], tr, tipdata, lst, alpha, mu, sigma, model)
     }
