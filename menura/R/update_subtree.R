@@ -13,6 +13,7 @@ update_subtree <- function(lst, tr, tipdata, rt_value, N, method = "euler",
   rt_node <- n_tips + 1
 
   dotslist <- list(...)
+   
   if ("pred.corr" %in% names(dotslist)) {
     pred.corr <- dotslist$pred.corr
   } else {
@@ -29,12 +30,15 @@ update_subtree <- function(lst, tr, tipdata, rt_value, N, method = "euler",
     }
   } else {
       model$dx_diffusion <- quote(NULL)
-  }
+    }
 
+ 
+  
   rt_node_dist <- ape::dist.nodes(tr)[rt_node, ]
 
   sde_edges <- function(tr, node, X0, t0) {
     daughters <- tr$edge[which(tr$edge[, 1] == node), 2]
+    
     for (d_ind in 1:2) {
       edge <- which((tr$edge[, 1] == node) & (tr$edge[ ,2] == daughters[d_ind]))
       drift <- as.expression(force(eval(substitute(
@@ -57,27 +61,28 @@ update_subtree <- function(lst, tr, tipdata, rt_value, N, method = "euler",
 
       tE <- tsp(lst[[edge]])[2]
       n_steps <- length(lst[[edge]]) - 1
-      if (n_steps > 0) {
+    
+        if (n_steps > 0) {
         new_lst[[edge]] <<- sde::sde.sim(X0 = X0, t0 = t0, T = tE, N = n_steps,
                                          method = method,
                                          drift = drift,
                                          sigma = diffusion,
                                          sigma.x = diffusion_x,
                                          pred.corr = pred.corr)
-      } else {
-        new_lst[[edge]][1] <<- X0
-      }
-      if (daughters[d_ind] > n_tips) {
-        sde_edges(tr, daughters[d_ind], new_lst[[edge]][n_steps + 1], tE)
-      } else {
-        subtr_tips <<- c(subtr_tips, daughters[d_ind])
+        } else {
+          new_lst[[edge]][1] <<- X0
+        }
+        if (daughters[d_ind] > n_tips) {
+          sde_edges(tr, daughters[d_ind], new_lst[[edge]][n_steps + 1], tE)
+        } else {
+          subtr_tips <<- c(subtr_tips, daughters[d_ind])
       }
     }
   }
 
   rnode <- sample((n_tips + 1):max(tr$edge), 1)
 
-  # If seelcted subtree doesn't contain large enough edges
+  # If selected subtree doesn't contain large enough edges
   sub_trs <- ape::subtrees(tr)
   if (max( sub_trs[[rnode - n_tips]]$edge.length ) * N < 2) {
     return(list(lst = lst, data_accept = NA))
@@ -110,7 +115,8 @@ update_subtree <- function(lst, tr, tipdata, rt_value, N, method = "euler",
       # Calculate the acceptance probability
       data_accept <- 0
       curr_path_logLs <- new_path_logLs <- 0
-      for (i_tip in subtr_tips) {
+     
+       for (i_tip in subtr_tips) {
         i_tip_edge <- ape::which.edge(tr, tr$tip.label[i_tip])
         X_end <- tipdata[i_tip]
         T_end <- rt_node_dist[i_tip]
@@ -122,7 +128,6 @@ update_subtree <- function(lst, tr, tipdata, rt_value, N, method = "euler",
                   model = model,
                   log = TRUE,
                   method = method)
-
         X_start <- new_lst[[i_tip_edge]][length(new_lst[[i_tip_edge]])]
         T_start <- tsp(new_lst[[i_tip_edge]])[2]
         new_path_logLs <- new_path_logLs +
@@ -132,6 +137,7 @@ update_subtree <- function(lst, tr, tipdata, rt_value, N, method = "euler",
                   log = TRUE,
                   method = method)
       }
+     
       accept_prob <- exp(sum(new_path_logLs - curr_path_logLs))
 
       if (is.na(accept_prob))
@@ -145,3 +151,4 @@ update_subtree <- function(lst, tr, tipdata, rt_value, N, method = "euler",
     return(list(lst = lst, data_accept = data_accept))
   }
 }
+

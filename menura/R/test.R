@@ -9,7 +9,7 @@ true.alpha <- 10
 true.mu <- 5
 true.sigma <- 2
 t.root.value <- true.mu
-iters <- 200
+iters <- 500
 # Generate tip values
 set.seed(1)
 tr <-  compute.brlen(stree(n=ntips, type="balanced"))
@@ -19,7 +19,7 @@ t.tipdata <- rTraitCont(tr, f_TrCir, ancestor = FALSE, root.value = t.root.value
 
 set.seed(1)
 model.1 <- fit_model.default(tr=tr, tipdata=t.tipdata, rt_value=t.root.value, iters=iters,
-                     model = "CIR", alpha = 10,  mu = 15, sigma = NULL,
+                     model = "CIR", alpha = NULL,  mu = NULL, sigma = NULL,
                      N=240, init_method = "sim", update_method = "subtree")
 
 # Look at the MCMC trace of the parameters

@@ -27,6 +27,7 @@ if (update_method == "tree") {
                   N = N, method = method, mcmc_type = "tanner-wong")
   lst_star <- rlst$lst
   n_data_accept <- 1 #ifelse(rlst$data_accept > 0, 1, 0)
+  
 } else if (update_method == "subtree") {
   rlst <- update_subtree(lst = lst, tr = tr, tipdata = tipdata,
                   rt_value = rt_value, model = model, theta = theta,
