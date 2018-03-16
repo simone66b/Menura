@@ -8,8 +8,6 @@
   # Random tree with n tips
   tr <-  compute.brlen(rtree(n=4))
   
-  tr$edge.length
-  tr$edge
   # plot the tree
   plot(tr)
   edgelabels()
@@ -17,26 +15,27 @@
   add.scale.bar()
   
   
-  ##working on manually adding fossils to tree as new branches with length 0
-  tip1 <- list(edge = matrix(c(2,1),1,2), 
+  ##working on manually adding fossils to tree as new branches with length 0 ######################################
+  tip <- list(edge = matrix(c(2,1),1,2), 
               tip.label = "fossil",
               edge.length = 0.0,
               Nnode = 1)
-  class(tip1)<- "phylo"
-  f1t <- bind.tree(tr,tip1, where = 7, position = 0.1)
-  plot(f1t)
-  nodelabels()
-  tip2 <- list(edge = matrix(c(2,1),1,2), 
-              tip.label = "fossil",
-              edge.length = 0.0,
-              Nnode = 1)
-  class(tip2)<- "phylo"
-  ftree <- bind.tree(f1t,tip2, where = 7, position = 0.1)
-  plot(ftree)
-  nodelabels()
+  class(tip)<- "phylo"
   
-  ftree$edge.length
-
+  ftr1 <- bind.tree(tr,tip, where = 7, position = 0.1)
+  plot(ftr1)
+  nodelabels()
+ 
+  tip <- list(edge = matrix(c(2,1),1,2), 
+              tip.label = "fake",
+              edge.length = 0.2,
+              Nnode = 1)
+  class(tip)<- "phylo"
+  
+  ftr <- bind.tree(ftr1,tip, where = 7, position = 0.1) 
+  plot(ftr)
+  
+  
   #a way to add multiple fossils given node #, tip.label, edge_length
   #PROBLEM, when entering a node at a position on the branch, nodes get reset each time
   bind.tip <- function(tree, tip.label, edge.length = NULL, where = NULL, position = NULL){
@@ -50,7 +49,7 @@
     return(obj)
   }
   
-  ###attempt at rerooting from fossils
+  ###attempt at rerooting from fossils#################################################################
   
   
   
@@ -87,6 +86,48 @@
   edgelabels()
   nodelabels()                                                    
   ftree$edge.length
+  
+########################################################################################################################  
+  
+  
+  
+##new attempt at locating fossils
+  tr = ftr
+  plot(tr)
+  edgelabels()
+  nodelabels()
+  
+  #which branches have a length of 0
+  br_zero = which(tr$edge.length[] == 0.0)
+  br_zero
+  
+  #which branches have tips attached
+  br_classes = branchClasses(tr)
+  br_classes
+  
+  
+  num_tips <- length(tr$tip.label)
+  tr$edge[,2]
+  which(tr$edge[,2] < num_tips)
+  tr$edge[,2]
+
+  
+  #assigns dead tips to tr, represents any edge that is connected to a tip that is not at present
+  tr$brlen.dead = br_classes$brlen.dead
+  #this should work
+  which.edge(tr,(tr$edge.length[] == 0.0) && (tr$edge[,2] < num_tips))
+  
+
+  tr$brlen.dead
+  #num edges to iterate for all edges
+  Nedge(tr)
+  
+  #edge length to test if == 0.0
+  tr$edge.length
+  
+  tr$tip.label
+  
+  tr$Nnode
   
   
   
