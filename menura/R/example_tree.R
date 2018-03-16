@@ -104,20 +104,20 @@
   #which branches have tips attached
   br_classes = branchClasses(tr)
   br_classes
-  
-  
-  num_tips <- length(tr$tip.label)
-  tr$edge[,2]
-  which(tr$edge[,2] < num_tips)
-  tr$edge[,2]
 
   
   #assigns dead tips to tr, represents any edge that is connected to a tip that is not at present
   tr$brlen.dead = br_classes$brlen.dead
   #this should work
-  which.edge(tr,(tr$edge.length[] == 0.0) && (tr$edge[,2] < num_tips))
   
-
+  ###THIS ONE WORKS, IDENTIFIES THE EDGE CONNECTED TO A FOSSIL###
+  br_zero <-  which(tr$edge.length[] == 0.0) 
+  col <- which(tr$edge[,2] == br_zero)
+  tr$edge[col,2]
+  
+  
+  
+  
   tr$brlen.dead
   #num edges to iterate for all edges
   Nedge(tr)
