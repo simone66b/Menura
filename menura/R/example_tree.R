@@ -22,7 +22,7 @@
               Nnode = 1)
   class(tip)<- "phylo"
   
-  ftr1 <- bind.tree(tr,tip, where = 7, position = 0.1)
+  ftr1 <- bind.tree(tr,tip, where = 6, position = 0.1)
   plot(ftr1)
   nodelabels()
  
@@ -49,43 +49,6 @@
     return(obj)
   }
   
-  ###attempt at rerooting from fossils#################################################################
-  
-  
-  
-  
-  #step through the tree looking for fossils
-  #at each node check both sides edge length, if edge length == 0 and a tip edge, 
-  #add tip to vector "fossils"
-  br_class <- branchClasses(ftree)
-  fossils <- vector(mode = "numeric")
-  
-  #indicates which edges have fossils attached
-  br_zero <- which(ftree$edge.length[] == 0.0)
-  #indicates which tips are fossils
-  f_label <- which(ftree$tip.label[] == "fossil")
- 
-  n_edges <- Nedge(ftree)
-  
-
-  find_fossils <- function(tr, br_class, e) 
-    if ((tr$edge.length[e] == 0.0) & (br_class[e] == dead)) 
-       return e
-  
-  
-  e = 1
-  n_edges = Nedge(tr)
-  for(e in n_edges){
-    fossil <- find_fossils(ftree, br_class, e)
-  }
-  
-  
-  br_class$brlen.dead
-  plot(ftree)
-  ftree$edge.length
-  edgelabels()
-  nodelabels()                                                    
-  ftree$edge.length
   
 ########################################################################################################################  
   
@@ -104,29 +67,42 @@
   #which branches have tips attached
   br_classes = branchClasses(tr)
   br_classes
-
+  
+  num_tips <- length(tr$tip.label)
   
   #assigns dead tips to tr, represents any edge that is connected to a tip that is not at present
   tr$brlen.dead = br_classes$brlen.dead
   #this should work
   
-  ###THIS ONE WORKS, IDENTIFIES THE EDGE CONNECTED TO A FOSSIL###
-  br_zero <-  which(tr$edge.length[] == 0.0) 
-  col <- which(tr$edge[,2] == br_zero)
-  tr$edge[col,2]
-  
-  
-  
-  
-  tr$brlen.dead
-  #num edges to iterate for all edges
-  Nedge(tr)
+  ###IDENTIFIES THE NODE # OF A FOSSIL
+  #easy to identify which branches have length 0
+    br_zero <-  which(tr$edge.length[] == 0.0) 
+    br_zero
+  #from this set, need to identify which ones have tipdata
+    #edges are labeled according to their row in the edge matrix
+    is_tip <- tr$edge[br_zero,2]
+    is_tip
+    #how many other rows have the same node value in column 2
+    #a tip will only show up once
+    tip_check <- which(tr$edge[,2] == is_tip)
+    tip_check
+    length(tip_check)
+    fossil = 0
+    #if there are more than 1 edges with the same column 2 node value, the edge does not belong to a fossil
+    #if there is only 1 edge with that node value, it must be a fossil
+    if (length(tip_check) == 1)
+      fossil = is_tip
+    
+    fossil
+    
+    
+ 
+ 
   
   #edge length to test if == 0.0
   tr$edge.length
-  
+  Nedges(tr)
   tr$tip.label
-  
   tr$Nnode
   
   
