@@ -7,7 +7,7 @@
 
   # Random tree with n tips
   tr <-  compute.brlen(rtree(n=4))
-  
+  tr_tips <- Ntip(tr)
   # plot the tree
   plot(tr)
   edgelabels()
@@ -15,27 +15,37 @@
   add.scale.bar()
   
   
-  ##working on manually adding fossils to tree as new branches with length 0 ######################################
+  ##manually adding fossils to tree as new branches with length 0 ######################################
+ 
+   tip <- list(edge = matrix(c(2,1),1,2), 
+              tip.label = "fossil",
+              edge.length = 0.0,
+              Nnode = 1)
+  class(tip)<- "phylo"
+  
+  ftr1 <- bind.tree(tr,tip, where = 4, position = 0.1)
+  plot(ftr1)
+  
   tip <- list(edge = matrix(c(2,1),1,2), 
               tip.label = "fossil",
               edge.length = 0.0,
               Nnode = 1)
   class(tip)<- "phylo"
   
-  ftr1 <- bind.tree(tr,tip, where = 6, position = 0.1)
+  ftr1 <- bind.tree(ftr1,tip, where = 7, position = 0.1)
   plot(ftr1)
-  nodelabels()
- 
+  
   tip <- list(edge = matrix(c(2,1),1,2), 
-              tip.label = "fake",
-              edge.length = 0.2,
+              tip.label = "fossil",
+              edge.length = 0.0,
               Nnode = 1)
   class(tip)<- "phylo"
   
-  ftr <- bind.tree(ftr1,tip, where = 7, position = 0.1) 
+  ftr <- bind.tree(ftr1,tip, where = 11, position = 0.1) 
   plot(ftr)
+  nodelabels()
   
-  
+  ftr$edge
   #a way to add multiple fossils given node #, tip.label, edge_length
   #PROBLEM, when entering a node at a position on the branch, nodes get reset each time
   bind.tip <- function(tree, tip.label, edge.length = NULL, where = NULL, position = NULL){
@@ -55,48 +65,33 @@
   
   
 ##new attempt at locating fossils
-  tr = ftr
-  plot(tr)
+  ftr_tips <- Ntip(ftr)
+  plot(ftr)
   edgelabels()
   nodelabels()
   
   #which branches have a length of 0
-  br_zero = which(tr$edge.length[] == 0.0)
+  br_zero = which(ftr$edge.length[] == 0.0)
   br_zero
   
   #which branches have tips attached
-  br_classes = branchClasses(tr)
+  br_classes = branchClasses(ftr)
   br_classes
   
-  num_tips <- length(tr$tip.label)
+  num_tips <- length(ftr$tip.label)
   
   #assigns dead tips to tr, represents any edge that is connected to a tip that is not at present
-  tr$brlen.dead = br_classes$brlen.dead
+  ftr$brlen.dead = br_classes$brlen.dead
   #this should work
   
-  ###IDENTIFIES THE NODE # OF A FOSSIL
-  #easy to identify which branches have length 0
-    br_zero <-  which(tr$edge.length[] == 0.0) 
-    br_zero
-  #from this set, need to identify which ones have tipdata
-    #edges are labeled according to their row in the edge matrix
-    is_tip <- tr$edge[br_zero,2]
-    is_tip
-    #how many other rows have the same node value in column 2
-    #a tip will only show up once
-    tip_check <- which(tr$edge[,2] == is_tip)
-    tip_check
-    length(tip_check)
-    fossil = 0
-    #if there are more than 1 edges with the same column 2 node value, the edge does not belong to a fossil
-    #if there is only 1 edge with that node value, it must be a fossil
-    if (length(tip_check) == 1)
-      fossil = is_tip
-    
-    fossil
-    
-    
- 
+  ###identifies the node values for all fossil within a tree
+  
+  
+    tr$edge
+    tr$edge.length
+    #takes in the tree with fossils and the number of tips in the original tree
+    fossils <- fossil_id(ftr, tr_tips)
+    fossils
  
   
   #edge length to test if == 0.0
@@ -134,6 +129,9 @@
   # model type OU is sensitive to sigma, alpha, theta 
   tipdata <- rTraitCont(tr, "OU", sigma=sigma, alpha=alpha, theta=mu,
                         root.value=rt_value)
+  
+  tipdata
+  
   model <- list()
   model$d <- function (t, x, theta) {
     theta[1] * (theta[2] - x)
