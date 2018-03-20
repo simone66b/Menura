@@ -63,7 +63,7 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
       #calls 2 functions within dc_fn (dc_fn & logl_fn)
       #logL of a tip and its edge is the sum of the conditional density of the diffusion process and the logl 
     } else {
-     
+     ###INSERT FOSSIL REROOTER HERE#######
       logL[edge] <<- logl_fn(X = lst[[edge]], theta = theta,
                           model = model, log = TRUE, method = method) +
                      dc_fn(x = tipdata[daughters[ind_d]],
@@ -83,6 +83,7 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
     
     #recursive call
     #reset the node to the "new root" and rerun logL_edges until you get to the tip
+    ##### NEED TO FIX THIS TO REFLECT FOSSILS AS TIPS, DON'T STOP AT FOSSILS###################
     if (daughters[ind_d] > n_tips) {
       logL_edges(daughters[ind_d], tr, tipdata, lst, alpha, mu, sigma, model)
     }
