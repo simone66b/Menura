@@ -42,10 +42,15 @@
   class(tip)<- "phylo"
   
   ftr <- bind.tree(ftr1,tip, where = 11, position = 0.1) 
+  #number of tips in the new tree
+  ftr_tips <- Ntip(ftr)
+  #plot the tree
   plot(ftr)
+  edgelabels()
   nodelabels()
   
-  ftr$edge
+  
+  
   #a way to add multiple fossils given node #, tip.label, edge_length
   #PROBLEM, when entering a node at a position on the branch, nodes get reset each time
   bind.tip <- function(tree, tip.label, edge.length = NULL, where = NULL, position = NULL){
@@ -60,43 +65,15 @@
   }
   
   
-########################################################################################################################  
-  
-  
-  
-##new attempt at locating fossils
-  ftr_tips <- Ntip(ftr)
-  plot(ftr)
-  edgelabels()
-  nodelabels()
-  
-  #which branches have a length of 0
-  br_zero = which(ftr$edge.length[] == 0.0)
-  br_zero
-  
-  #which branches have tips attached
-  br_classes = branchClasses(ftr)
-  br_classes
-  
-  num_tips <- length(ftr$tip.label)
-  
-  #assigns dead tips to tr, represents any edge that is connected to a tip that is not at present
-  ftr$brlen.dead = br_classes$brlen.dead
-  #this should work
-  
-  ###identifies the node values for all fossil within a tree
-  
-  
-    tr$edge
-    tr$edge.length
-    #takes in the tree with fossils and the number of tips in the original tree
-    fossils <- fossil_id(ftr, tr_tips)
-    fossils
+
+  #takes in the tree with fossils and the original tree
+  #returns a vector of the nodes numbers that are fossils
+  fossils <- fossil_id(ftr, tr)
+  fossils
  
   
   #edge length to test if == 0.0
   tr$edge.length
-  Nedges(tr)
   tr$tip.label
   tr$Nnode
   
@@ -105,9 +82,9 @@
   
   # SDE parameters
   # set to size of the length of the edge.length vector
-  Nedges <- length(tr$edge.length)  
+  Nedges <- length(ftr$edge.length)  
   
-  dclade <- max(which(tr$edge[,1] == tr$edge[1,1])) - 1  
+  dclade <- max(which(ftr$edge[,1] == ftr$edge[1,1])) - 1  
   
   #these parameters are vectors with size = number of edges = number of simulations
   alpha <- mu <- sigma <- rep(0, Nedges)
@@ -127,7 +104,7 @@
   # rTraitCont simulates the evolution of a continuous character along a phylogeny
   # OU specifies model type (Brownian, Orn-Uhl, fxn)
   # model type OU is sensitive to sigma, alpha, theta 
-  tipdata <- rTraitCont(tr, "OU", sigma=sigma, alpha=alpha, theta=mu,
+  tipdata <- rTraitCont(ftr, "OU", sigma=sigma, alpha=alpha, theta=mu,
                         root.value=rt_value)
   
   tipdata
