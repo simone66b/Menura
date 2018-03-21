@@ -1,7 +1,7 @@
 ### Calculates the Log Likelihood of the Diffusion Process in a Tree of Life
 ## Method can only be 'euler' or 'milstein'
 #see help file for argument descriptors
-tree_logL <- function(tr, tipdata, lst, alpha, mu, sigma, model,
+tree_logL <- function(fossils, tr, tipdata, lst, alpha, mu, sigma, model,
               method, ...) {
 
 tipdata <- as.numeric(tipdata)
@@ -62,6 +62,19 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
       #must be a tip
       #calls 2 functions within dc_fn (dc_fn & logl_fn)
       #logL of a tip and its edge is the sum of the conditional density of the diffusion process and the logl 
+    
+    } else if (daughters[ind_d] %in% fossils){
+      logL[edge] <<- logl_fn(X = lst[[edge]], theta = theta,
+                             model = model, log = TRUE, method = method) +
+                     dc_fn(x = tipdata[daughters[ind_d]],
+                          t = rt_node_dist[daughters[ind_d]],
+                          x0 = lst[[edge]][length(lst[[edge]])],
+                          t0 = tsp(lst[[edge]])[2],
+                          theta = theta,
+                          model = model,
+                          log = TRUE,
+                          method = method)
+    
     } else {
      ###INSERT FOSSIL REROOTER HERE#######
       logL[edge] <<- logl_fn(X = lst[[edge]], theta = theta,
@@ -85,6 +98,9 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
     #reset the node to the "new root" and rerun logL_edges until you get to the tip
     ##### NEED TO FIX THIS TO REFLECT FOSSILS AS TIPS, DON'T STOP AT FOSSILS###################
     if (daughters[ind_d] > n_tips) {
+      logL_edges(daughters[ind_d], tr, tipdata, lst, alpha, mu, sigma, model)
+    }
+    else if(daughters[ind_d] %in% fossils){
       logL_edges(daughters[ind_d], tr, tipdata, lst, alpha, mu, sigma, model)
     }
   }
