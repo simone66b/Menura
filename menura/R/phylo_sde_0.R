@@ -81,6 +81,10 @@ phylo_sde_0 <- function(tr, rt_value, N, theta, model, method, ...) {
       if (daughters[d_ind] > n_tips) {
         sde_edges(tr, daughters[d_ind], lst[[edge]][n_steps + 1], tE)
       }
+      
+      else if (daughters[d_ind] %in% fossils){
+        sde_edges(tr, daughters[d_ind], lst[[edge]][n_steps + 1], tE)
+      }
     }
   }
   sde_edges(tr, rt_node, X0 = rt_value, t0 = 0)
