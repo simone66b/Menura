@@ -65,9 +65,11 @@ phylo_sde_0 <- function(tr, rt_value, N, theta, model, method, ...) {
                                    sigma = theta[edge, "sigma"])),
                               list(e = model$dx_diffusion)))))
       
-      #???
-      n_steps <- tr$edge.length[edge] * N
-      #???
+      #number of steps is the length of the edge times the given frequency N (100)
+      #####May cause an issue as the edge length of a fossil is 0, but maybe not considering you can have polytomys
+      n_steps <- tr$edge.length[edge] * N 
+      #time end is time start plus the length of the given edge
+      ####This will also be 0 for fossils
       tE <- t0 + tr$edge.length[edge]
       
       #runs sde.sim
@@ -79,10 +81,6 @@ phylo_sde_0 <- function(tr, rt_value, N, theta, model, method, ...) {
                                    pred.corr = pred.corr)
       tE <- tsp(lst[[edge]])[2]
       if (daughters[d_ind] > n_tips) {
-        sde_edges(tr, daughters[d_ind], lst[[edge]][n_steps + 1], tE)
-      }
-      
-      else if (daughters[d_ind] %in% fossils){
         sde_edges(tr, daughters[d_ind], lst[[edge]][n_steps + 1], tE)
       }
     }

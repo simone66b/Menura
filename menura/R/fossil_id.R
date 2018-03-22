@@ -1,4 +1,4 @@
-fossil_id <- function(tr, tr_tips){
+fossil_id <- function(ftr, tr){
   # identify which branches have length 0
   br_zero <-  which(ftr$edge.length[] == 0.0) 
   br_zero
@@ -14,5 +14,5 @@ fossil_id <- function(tr, tr_tips){
       fossils[i] <- is_tip[i]
     }
   } 
-  fossils
+  return (fossils)
 }  

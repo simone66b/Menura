@@ -7,7 +7,7 @@
 
   # Random tree with n tips
   tr <-  compute.brlen(rtree(n=4))
-  tr_tips <- Ntip(tr)
+
   # plot the tree
   plot(tr)
   edgelabels()
@@ -82,9 +82,9 @@
   
   # SDE parameters
   # set to size of the length of the edge.length vector
-  Nedges <- length(ftr$edge.length)  
+  Nedges <- length(tr$edge.length)  
   
-  dclade <- max(which(ftr$edge[,1] == ftr$edge[1,1])) - 1  
+  dclade <- max(which(tr$edge[,1] == tr$edge[1,1])) - 1  
   
   #these parameters are vectors with size = number of edges = number of simulations
   alpha <- mu <- sigma <- rep(0, Nedges)
@@ -104,7 +104,7 @@
   # rTraitCont simulates the evolution of a continuous character along a phylogeny
   # OU specifies model type (Brownian, Orn-Uhl, fxn)
   # model type OU is sensitive to sigma, alpha, theta 
-  tipdata <- rTraitCont(ftr, "OU", sigma=sigma, alpha=alpha, theta=mu,
+  tipdata <- rTraitCont(tr, "OU", sigma=sigma, alpha=alpha, theta=mu,
                         root.value=rt_value)
   
   tipdata
@@ -137,7 +137,7 @@
   loglike <-  tree_logL (tr=tr, tipdata=tipdata, lst=lst,
                          alpha=theta[, "alpha"],
                          mu=theta[, "mu"],
-                         sigma=theta[, "sigma"], model,
+                         sigma=theta[, "sigma"], model=model,
                          method = "euler")
   
   
@@ -147,9 +147,9 @@
   lst
   
   #print lst to a file
-sink("phylo_sde_test_output")  
-print(lst)
-sink()
+#sink("phylo_sde_test_output")  
+#print(lst)
+#sink()
 
 #plot the point paths in list
 #compare to plot(tr)
