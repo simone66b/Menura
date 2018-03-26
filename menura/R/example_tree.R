@@ -25,7 +25,7 @@
   
   ftr1 <- bind.tree(tr,tip, where = 4, position = 0.1)
   plot(ftr1)
-  
+  ftr <- ftr1
   tip <- list(edge = matrix(c(2,1),1,2), 
               tip.label = "fossil",
               edge.length = 0.0,
@@ -48,8 +48,7 @@
   plot(ftr)
   edgelabels()
   nodelabels()
-  
-  
+ 
   
   #a way to add multiple fossils given node #, tip.label, edge_length
   #PROBLEM, when entering a node at a position on the branch, nodes get reset each time
@@ -82,9 +81,9 @@
   
   # SDE parameters
   # set to size of the length of the edge.length vector
-  Nedges <- length(tr$edge.length)  
+  Nedges <- length(ftr$edge.length)  
   
-  dclade <- max(which(tr$edge[,1] == tr$edge[1,1])) - 1  
+  dclade <- max(which(ftr$edge[,1] == ftr$edge[1,1])) - 1  
   
   #these parameters are vectors with size = number of edges = number of simulations
   alpha <- mu <- sigma <- rep(0, Nedges)
@@ -104,7 +103,7 @@
   # rTraitCont simulates the evolution of a continuous character along a phylogeny
   # OU specifies model type (Brownian, Orn-Uhl, fxn)
   # model type OU is sensitive to sigma, alpha, theta 
-  tipdata <- rTraitCont(tr, "OU", sigma=sigma, alpha=alpha, theta=mu,
+  tipdata <- rTraitCont(ftr, "OU", sigma=sigma, alpha=alpha, theta=mu,
                         root.value=rt_value)
   
   tipdata
@@ -130,18 +129,19 @@
   N <- 100
   
   #calls the sde function
-  lst <- phylo_sde_0 (tr=tr, rt_value=rt_value, theta=theta, model=model,
+  lst <- phylo_sde_0 (fossils = fossils, tr=ftr, rt_value=rt_value, theta=theta, model=model,
                     N=N, method="euler")
   
+  
   #calls log likelihood using Euler, approximates for diffusion process in tree
-  loglike <-  tree_logL (tr=tr, tipdata=tipdata, lst=lst,
+  loglike <-  tree_logL (fossils = fossils, tr=ftr, tipdata=tipdata, lst=lst,
                          alpha=theta[, "alpha"],
                          mu=theta[, "mu"],
                          sigma=theta[, "sigma"], model=model,
                          method = "euler")
   
   
-}
+
   
   #lst stores the point path to each node
   lst
