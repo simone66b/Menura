@@ -43,10 +43,13 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
         # do not use fossil edge (length = 0), use the sister node edge
           if (daughters[1] %in% fossils){
             edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] == daughters[2]))
+            f_edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] == daughters[1]))
+            lst[[f_edge]] <<- NULL
           
           }else{
             edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[1]))
-         
+            f_edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] == daughters[2]))
+            lst[[f_edge]] <<- NULL
           }
        }
       
@@ -106,8 +109,11 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
   # Remove tip values (we have observed tip values)
   node_len <- ape::node.depth.edgelength(tr)
   for (nthtip in 1:n_tips) {
+    
     nEdge <- ape::which.edge(tr, tr$tip.label[nthtip])
+    
     ntsp <- tsp(lst[[nEdge]])
+    
     # If the end time for the node edges is less than T - 1/N,
     # the last sample is removed from the simulated data,
     # if there is more than one sample.
