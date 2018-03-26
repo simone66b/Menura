@@ -1,7 +1,7 @@
 ### Calculates the Log Likelihood of the Diffusion Process in a Tree of Life
 ## Method can only be 'euler' or 'milstein'
 #see help file for argument descriptors
-tree_logL <- function(tr, tipdata, lst, alpha, mu, sigma, model,
+tree_logL <- function(fossils, tr, tipdata, lst, alpha, mu, sigma, model,
               method, ...) {
 
 tipdata <- as.numeric(tipdata)
@@ -55,17 +55,23 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
     edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[ind_d]))
     theta <- c(alpha[edge], mu[edge], sigma[edge])
     
-    if (daughters[ind_d] %in% fossils) {
+    if (any(daughters %in% fossils)) {
       #do not use fossil edge (length = 0), use the sister node edge
       #assumes fossils are right justified (i.e. in position daughters[1])
-      edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[ind_d + 1]))
-      
+      if (daughters[1] %in% fossils){
+        f <- 1
+        edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] == daughters[2]))
+      }else{
+        f <- 2
+        edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[1]))
+       }
+     
       #log likelihood of edge uses sister edge
       #dc_fn uses the tipdata of the fossil but the rt node distance of the sister edge
       logL[edge] <<- logl_fn(X = lst[[edge]], theta = theta,
                            model = model, log = TRUE, method = method) +
-                     dc_fn(x = tipdata[daughters[ind_d]],
-                          t = rt_node_dist[daughters[ind_d + 1]],
+                     dc_fn(x = tipdata[daughters[f]],
+                          t = rt_node_dist[daughters[ind_d]],
                           x0 = lst[[edge]][length(lst[[edge]])],
                           t0 = tsp(lst[[edge]])[2],
                           theta = theta,
