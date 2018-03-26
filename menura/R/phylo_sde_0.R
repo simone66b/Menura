@@ -109,25 +109,32 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
   # Remove tip values (we have observed tip values)
   node_len <- ape::node.depth.edgelength(tr)
   for (nthtip in 1:n_tips) {
-    
+  
+    f_edge <- which.edge(tr, tr$tip.label[fossils])
     nEdge <- ape::which.edge(tr, tr$tip.label[nthtip])
-    
-    ntsp <- tsp(lst[[nEdge]])
-    
-    # If the end time for the node edges is less than T - 1/N,
-    # the last sample is removed from the simulated data,
-    # if there is more than one sample.
-    if (ntsp[2] > (node_len[nthtip] - 1 / N)) {
-      if (length(lst[[nEdge]]) > 1) {
-        if (length(lst[[nEdge]]) == 2) {
-          lst[[nEdge]] <- ts(lst[[nEdge]][1], start = ntsp[1], end = ntsp[1],
-                              frequency = N)
-        } else {
-          lst[[nEdge]] <- window(lst[[nEdge]], start = ntsp[1],
-                                 end = ntsp[2] - 1 / N)
+    if (nEdge %in% f_edge){
+      lst[[nEdge]] <- NULL
+    }else{
+      ntsp <- tsp(lst[[nEdge]])
+      
+      # If the end time for the node edges is less than T - 1/N,
+      # the last sample is removed from the simulated data,
+      # if there is more than one sample.
+      if (ntsp[2] > (node_len[nthtip] - 1 / N)) {
+        if (length(lst[[nEdge]]) > 1) {
+          if (length(lst[[nEdge]]) == 2) {
+            lst[[nEdge]] <- ts(lst[[nEdge]][1], start = ntsp[1], end = ntsp[1],
+                               frequency = N)
+          } else {
+            lst[[nEdge]] <- window(lst[[nEdge]], start = ntsp[1],
+                                   end = ntsp[2] - 1 / N)
+          }
         }
       }
+      
+      
     }
+    
   }
   return(lst)
 }
