@@ -14,10 +14,9 @@
   nodelabels()
   add.scale.bar()
   
-  
   ##manually adding fossils to tree as new branches with length 0 ######################################
  
-   tip <- list(edge = matrix(c(2,1),1,2), 
+  tip <- list(edge = matrix(c(2,1),1,2), 
               tip.label = "fossil",
               edge.length = 0.0,
               Nnode = 1)
@@ -48,8 +47,8 @@
   plot(ftr)
   edgelabels()
   nodelabels()
- 
-  
+ ftr <- ftr1
+  plot(ftr)
   #a way to add multiple fossils given node #, tip.label, edge_length
   #PROBLEM, when entering a node at a position on the branch, nodes get reset each time
   bind.tip <- function(tree, tip.label, edge.length = NULL, where = NULL, position = NULL){
@@ -75,7 +74,6 @@
   tr$edge.length
   tr$tip.label
   tr$Nnode
-  
   
   
   
@@ -107,7 +105,8 @@
                         root.value=rt_value)
   
   tipdata
-  
+  tipdata[5] <- .7
+  tipdata
   model <- list()
   model$d <- function (t, x, theta) {
     theta[1] * (theta[2] - x)
@@ -141,10 +140,11 @@
                          method = "euler")
   
   
+  lst
+  loglike
   #lst stores the point path to each node
  
-   lst
-  
+ 
   #print lst to a file
 #sink("phylo_sde_test_output")  
 #print(lst)
@@ -156,7 +156,7 @@ plot(NA, xlim=c(0,1), ylim=c(-2, 1.5), type="n")
 lapply(lst, lines)
 
 #The higher the better, relative value
-loglike
+
 tipdata
 
        
