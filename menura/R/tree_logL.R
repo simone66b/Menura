@@ -54,11 +54,30 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
   for (ind_d in 1:2) {
     edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[ind_d]))
     theta <- c(alpha[edge], mu[edge], sigma[edge])
+    
+    if (daughters[ind_d] %in% fossils) {
+      #do not use fossil edge (length = 0), use the sister node edge
+      #assumes fossils are right justified (i.e. in position daughters[1])
+      edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[ind_d + 1]))
+      
+      #log likelihood of edge uses sister edge
+      #dc_fn uses the tipdata of the fossil but the rt node distance of the sister edge
+      logL[edge] <<- logl_fn(X = lst[[edge]], theta = theta,
+                           model = model, log = TRUE, method = method) +
+                     dc_fn(x = tipdata[daughters[ind_d]],
+                          t = rt_node_dist[daughters[ind_d + 1]],
+                          x0 = lst[[edge]][length(lst[[edge]])],
+                          t0 = tsp(lst[[edge]])[2],
+                          theta = theta,
+                          model = model,
+                          log = TRUE,
+                          method = method)
+   }
 
     #if the value of the node is greater than the total number of tips, the node is not a tip
     #this is logical due to the way trees are labelled (tips first)
     #if not a tip, calculate LogL of the edge and jump to recursive call
-    if (daughters[ind_d] > n_tips) {
+    else if (daughters[ind_d] > n_tips) {
       logL[edge] <<- logl_fn(X = lst[[edge]], theta = theta,
                             model = model, log = TRUE,
                             method = method)
@@ -67,7 +86,6 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
       #logL of a tip and its edge is the sum of the conditional density of the diffusion process and the logl 
     
     } else {
-     ###INSERT FOSSIL REROOTER HERE#######
       logL[edge] <<- logl_fn(X = lst[[edge]], theta = theta,
                           model = model, log = TRUE, method = method) +
                      dc_fn(x = tipdata[daughters[ind_d]],
@@ -87,7 +105,6 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
     
     #recursive call
     #reset the node to the "new root" and rerun logL_edges until you get to the tip
-    ##### NEED TO FIX THIS TO REFLECT FOSSILS AS TIPS, DON'T STOP AT FOSSILS###################
     if (daughters[ind_d] > n_tips) {
       logL_edges(daughters[ind_d], tr, tipdata, lst, alpha, mu, sigma, model)
     }
