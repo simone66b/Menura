@@ -104,10 +104,6 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
                           method = method)
     }
     
-     
-    
-    
-    
     
     #recursive call
     #reset the node to the "new root" and rerun logL_edges until you get to the tip

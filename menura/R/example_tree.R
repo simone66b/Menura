@@ -141,10 +141,9 @@
                          method = "euler")
   
   
-
-  
   #lst stores the point path to each node
-  lst
+ 
+   lst
   
   #print lst to a file
 #sink("phylo_sde_test_output")  
