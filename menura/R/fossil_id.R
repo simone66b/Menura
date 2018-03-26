@@ -9,15 +9,16 @@ fossil_id <- function(ftr, tr){
   fossils <- 0
   #fossils will be added to the tree separately, this means they will have tip values greater than the original tips
   #and less than the internal notes, the difference in tips in the range they are in
-  if(ftr == tr){
-    return NULL
+  if(all.equal(ftr,tr)){
+    fossils <- NULL
+    return (fossils)
+  }else{
+      for(i in 1:length(tip)){
+          if ((tip[i] <= Ntip(ftr)) && (tip[i] > Ntip(tr))){
+             fossils[i] <- tip[i]
+          }
+      } 
+      return (fossils)
   }
-  
-  for(i in 1:length(is_tip)){
-    if ((tip[i] <= Ntip(ftr)) && (tip[i] > Ntip(tr))){
-      fossils[i] <- tip[i]
-    }
-  } 
-  return (fossils)
 }  
 
