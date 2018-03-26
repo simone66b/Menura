@@ -60,10 +60,12 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
       #assumes fossils are right justified (i.e. in position daughters[1])
       if (daughters[1] %in% fossils){
         f <- 1
+        n <- 2
         logL[edge] <- 0
         edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] == daughters[2]))
         
       }else{
+        n <- 1
         f <- 2
         logL[edge] <- 0
         edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[1]))
@@ -74,7 +76,7 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
       logL[edge] <<- logl_fn(X = lst[[edge]], theta = theta,
                            model = model, log = TRUE, method = method) +
                      dc_fn(x = tipdata[daughters[f]],
-                          t = rt_node_dist[daughters[ind_d]],
+                          t = rt_node_dist[daughters[n]],
                           x0 = lst[[edge]][length(lst[[edge]])],
                           t0 = tsp(lst[[edge]])[2],
                           theta = theta,
