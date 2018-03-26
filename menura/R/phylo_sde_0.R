@@ -1,8 +1,9 @@
 
 
-phylo_sde_0 <- function(tr, rt_value, N, theta, model, method, ...) {
+phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
 
   lst <- list()
+  tr <- ftr
   n_tips <- length(tr$tip.label)
   rt_node <- n_tips + 1
 
@@ -37,6 +38,17 @@ phylo_sde_0 <- function(tr, rt_value, N, theta, model, method, ...) {
       #I think this is how you traverse the tree
       # where does (col 1 = rt_node && col 2 = daughters[d_ind])
       edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[d_ind]))
+     
+       if (any(daughters %in% fossils)) {
+        # do not use fossil edge (length = 0), use the sister node edge
+          if (daughters[1] %in% fossils){
+            edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] == daughters[2]))
+          
+          }else{
+            edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[1]))
+         
+          }
+       }
       
       #mu -> long term mean level
       #alpha -> 
@@ -80,6 +92,7 @@ phylo_sde_0 <- function(tr, rt_value, N, theta, model, method, ...) {
                                    sigma.x = diffusion_x,
                                    pred.corr = pred.corr)
       tE <- tsp(lst[[edge]])[2]
+      
       if (daughters[d_ind] > n_tips) {
         sde_edges(tr, daughters[d_ind], lst[[edge]][n_steps + 1], tE)
       }
@@ -87,6 +100,9 @@ phylo_sde_0 <- function(tr, rt_value, N, theta, model, method, ...) {
   }
   sde_edges(tr, rt_node, X0 = rt_value, t0 = 0)
 
+  
+  
+  
   # Remove tip values (we have observed tip values)
   node_len <- ape::node.depth.edgelength(tr)
   for (nthtip in 1:n_tips) {
