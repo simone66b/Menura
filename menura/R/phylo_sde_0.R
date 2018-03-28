@@ -57,7 +57,7 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
          
          edge <- which((tr$edge[,1] == node) & !(tr$edge[, 2] %in% fossils))
          root <- tr$edge[edge, 2]
-       }
+       } 
       
       #mu -> long term mean level
       #alpha -> 

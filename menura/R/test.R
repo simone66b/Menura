@@ -53,3 +53,4 @@ model.2 <- fit_model.default(tr=tr, tipdata=tipdata, rt_value=rt_value, iters=it
 
 plot(model.2$mcmctrace)
 }
+
