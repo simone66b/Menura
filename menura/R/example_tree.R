@@ -13,7 +13,7 @@
   edgelabels()
   nodelabels()
   add.scale.bar()
-  
+  ftr <- tr
   ##manually adding fossils to tree as new branches with length 0 ######################################
  
   tip <- list(edge = matrix(c(2,1),1,2), 
@@ -46,7 +46,8 @@
   #plot the tree
   plot(ftr)
   edgelabels()
-  nodelabels()
+  
+ nodelabels()
  ftr <- ftr1
   plot(ftr)
   #a way to add multiple fossils given node #, tip.label, edge_length
@@ -62,12 +63,12 @@
     return(obj)
   }
   
-  
+
 
   #takes in the tree with fossils and the original tree
   #returns a vector of the nodes numbers that are fossils
-  fossils <- fossil_id(ftr, tr)
-  fossils
+  fossils <- fossil_id(ftr)
+  fossils 
  
   
   #edge length to test if == 0.0
@@ -104,9 +105,7 @@
   tipdata <- rTraitCont(ftr, "OU", sigma=sigma, alpha=alpha, theta=mu,
                         root.value=rt_value)
   
-  tipdata
-  tipdata[5] <- .7
-  tipdata
+  
   model <- list()
   model$d <- function (t, x, theta) {
     theta[1] * (theta[2] - x)
@@ -131,7 +130,7 @@
   lst <- phylo_sde_0 (fossils = fossils, tr=ftr, rt_value=rt_value, theta=theta, model=model,
                     N=N, method="euler")
   
-  
+  lst
   #calls log likelihood using Euler, approximates for diffusion process in tree
   loglike <-  tree_logL (fossils = fossils, tr=ftr, tipdata=tipdata, lst=lst,
                          alpha=theta[, "alpha"],
