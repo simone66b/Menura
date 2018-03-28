@@ -32,25 +32,31 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
     #node = rt_node
     # preceeding nodes
     daughters <- tr$edge[which(tr$edge[, 1] == node), 2]
+    
     for (d_ind in 1:2) {
       
       #what are node and d_ind
       #I think this is how you traverse the tree
       # where does (col 1 = rt_node && col 2 = daughters[d_ind])
       edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[d_ind]))
-     
+      
        if (any(daughters %in% fossils)) {
         # do not use fossil edge (length = 0), use the sister node edge
-          if (daughters[1] %in% fossils){
-            edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] == daughters[2]))
-            f_edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] == daughters[1]))
-            lst[[f_edge]] <<- NULL
+          # if (daughters[1] %in% fossils){
+          #   edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] == daughters[2]))
+          #   f_edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] == daughters[1]))
+          #   reroot <- daughters[2]
+          #   lst[[f_edge]] <<- NULL
+          # 
+          # }else{
+          #   edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[1]))
+          #   f_edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] == daughters[2]))
+          #   reroot <- daughters[1]
+          #   lst[[f_edge]] <<- NULL
           
-          }else{
-            edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[1]))
-            f_edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] == daughters[2]))
-            lst[[f_edge]] <<- NULL
-          }
+         
+         edge <- which((tr$edge[,1] == node) & !(tr$edge[, 2] %in% fossils))
+         root <- tr$edge[edge, 2]
        }
       
       #mu -> long term mean level
@@ -99,6 +105,9 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
       if (daughters[d_ind] > n_tips) {
         sde_edges(tr, daughters[d_ind], lst[[edge]][n_steps + 1], tE)
       }
+      # if (daughters[d_ind] %in% fossils){
+      #   sde_edges(tr, root, lst[[edge]][n_steps + 1], tE)
+      # }
     }
   }
   sde_edges(tr, rt_node, X0 = rt_value, t0 = 0)
@@ -110,10 +119,10 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
   node_len <- ape::node.depth.edgelength(tr)
   for (nthtip in 1:n_tips) {
   
-    f_edge <- which.edge(tr, tr$tip.label[fossils])
+    f_edge <- ape::which.edge(tr, tr$tip.label[fossils])
     nEdge <- ape::which.edge(tr, tr$tip.label[nthtip])
     if (nEdge %in% f_edge){
-      lst[[nEdge]] <- NULL
+      lst[[nEdge]] <- 0
     }else{
       ntsp <- tsp(lst[[nEdge]])
       
