@@ -37,7 +37,9 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
       # do not use fossil edge (length = 0), use the sister node edge
       
       edge <- which((tr$edge[,1] == node) & !(tr$edge[, 2] %in% fossils))
+      f_edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] %in% fossils))
       root <- tr$edge[edge, 2]
+      lst[[f_edge]] <<- 0
     
       
       drift <- as.expression(force(eval(substitute(substitute(e,
@@ -147,25 +149,28 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
   }
   sde_edges(tr, rt_node, X0 = rt_value, t0 = 0)
 
- lst[[10]] <- 0
-  
-  
+ 
+ #print(lst)  
+ 
+   
   # Remove tip values (we have observed tip values)
-  # NOT WORKING
   node_len <- ape::node.depth.edgelength(tr)
+  print(node_len)
   for (nthtip in 1:n_tips) {
   
   
       nEdge <- which(tr$edge[, 2] == nthtip)
       ntsp <- tsp(lst[[nEdge]])
-   
+      print(ntsp)
       
       # If the end time for the node edges is less than T - 1/N,
       # the last sample is removed from the simulated data,
       # if there is more than one sample.
     if (nthtip %in% fossils){
-      lst[[nEdge]] <- NULL
-    }else if (ntsp[2] > (node_len[nthtip] - 1 / N)) {
+     ntsp[2] <- 0
+     lst[[nEdge]] <- 0
+      }
+      if (ntsp[2] > (node_len[nthtip] - 1 / N)) {
         if (length(lst[[nEdge]]) > 1) {
           if (length(lst[[nEdge]]) == 2) {
             lst[[nEdge]] <- ts(lst[[nEdge]][1], start = ntsp[1], end = ntsp[1],
@@ -176,8 +181,8 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
           }
         }
       }
-    
   }
+  # fossils in list are given value of 0, NULL causes problems if the fossil is right justified
   return(lst)
 }
 
