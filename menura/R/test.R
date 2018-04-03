@@ -13,12 +13,19 @@ iters <- 500
 # Generate tip values
 set.seed(1)
 tr <-  compute.brlen(stree(n=ntips, type="balanced"))
+tr <- ftr
+plot(tr)
 f_TrCir <- function(x, l)
   rcCIR(n=1, Dt=l, x0=x, theta=c(true.alpha*true.mu, true.alpha, true.sigma))
-t.tipdata <- rTraitCont(tr, f_TrCir, ancestor = FALSE, root.value = t.root.value)
 
+#t.tipdata <- rTraitCont(tr, f_TrCir, ancestor = FALSE, root.value = t.root.value)
+t.tipdata <- rTraitCont(ftr, "OU", sigma=sigma, alpha=alpha, theta=mu,
+                      root.value=rt_value)
+t.tipdata
+fossils <- fossils
+fossils
 set.seed(1)
-model.1 <- fit_model.default(tr=tr, tipdata=t.tipdata, rt_value=t.root.value, iters=iters,
+model.1 <- fit_model.default(fossils = fossils, tr=tr, tipdata=t.tipdata, rt_value=t.root.value, iters=iters,
                      model = "CIR", alpha = NULL,  mu = NULL, sigma = NULL,
                      N=240, init_method = "sim", update_method = "subtree")
 
@@ -47,7 +54,7 @@ model$dx_diffusion <- quote(0)
 tipdata  <- sqrt(t.tipdata)
 rt_value <- sqrt(t.root.value)
 set.seed(1)
-model.2 <- fit_model.default(tr=tr, tipdata=tipdata, rt_value=rt_value, iters=iters,
+model.2 <- fit_model.default(fossils = fossils, tr=tr, tipdata=tipdata, rt_value=rt_value, iters=iters,
                      model = model, alpha = 10,  mu = 15, sigma = NULL,
                      N=240, init_method = "sim", update_method = "subtree")
 

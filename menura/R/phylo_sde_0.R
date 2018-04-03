@@ -40,14 +40,14 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
       f_edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] %in% fossils))
       root <- tr$edge[edge, 2]
       lst[[f_edge]] <<- 0
-    
+      
       
       drift <- as.expression(force(eval(substitute(substitute(e,
                               list(alpha = theta[edge, "alpha"],
                               mu = theta[edge, "mu"],
                               sigma = theta[edge, "sigma"])),
                               list(e = model$drift)))))
-      
+      print(drift)
       #diffusion = expression (1)
       # model$diffusion = sigma
       diffusion <- as.expression(force(eval(substitute(substitute(e,

@@ -1,7 +1,7 @@
 # ver 0.3.0 - make the acceptace rates vectors
-fit_model <- function(tr, tipdata, rt_value, model, ...) UseMethod("fit_model")
+fit_model <- function(fossils, tr, tipdata, rt_value, model, ...) UseMethod("fit_model")
 
-fit_model.default <- function(tr, tipdata, rt_value = mean(tipdata),
+fit_model.default <- function(fossils, tr, tipdata, rt_value = mean(tipdata),
   model = "OU",
   priors = list(
     alpha = list(df =  function(x, a = 1, b = 125, log_scale = TRUE) {
@@ -137,7 +137,7 @@ n_edges <- length(tr$edge.length)
 n_tips  <- length(tr$tip.label)
 node_len <- ape::node.depth.edgelength(tr)
 if (init_method == "sim") {
-  lst <- phylo_sde_0(tr = tr, rt_value = rt_value, theta = theta, model = M,
+  lst <- phylo_sde_0(fossils = fossils, tr = tr, rt_value = rt_value, theta = theta, model = M,
                         N = N, method = method, ...)
 } else {
   stop("The init_method specified is not available.", .call = FALSE)
@@ -158,7 +158,7 @@ pb <- txtProgressBar(min=1, max=iters)
 if (mcmc_type == "tanner-wong") {
   for (k in 2:iters) {
     setTxtProgressBar(pb, k)
-    out_mcmc <- mcmc_steps_tanner_wong(tr = tr, tipdata = tipdata,
+    out_mcmc <- mcmc_steps_tanner_wong(fossils = fossils, tr = tr, tipdata = tipdata,
                 rt_value = rt_value, lst = lst,
                 theta = theta, model = M, para2est = para2est,
                 update_method = update_method, proposals = proposals,
@@ -173,7 +173,7 @@ if (mcmc_type == "tanner-wong") {
 } else {
   for (k in 2:iters) {
     setTxtProgressBar(pb, k)
-    out_mcmc <- mcmc_steps_else(tr = tr, tipdata = tipdata,
+    out_mcmc <- mcmc_steps_else(fossils = fossils, tr = tr, tipdata = tipdata,
                 rt_value = rt_value, lst = lst,
                 theta = theta, model = M, para2est = para2est,
                 update_method = update_method, proposals = proposals,

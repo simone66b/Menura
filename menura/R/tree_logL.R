@@ -55,7 +55,7 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
     #edge that does not belong to the fossil
        edge <- which((tr$edge[,1] == node) & !(tr$edge[, 2] %in% fossils))
        theta <- c(alpha[edge], mu[edge], sigma[edge])
-       
+       print(edge)
     #fossil edge that will take 0   
        f_edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] %in% fossils))
        
@@ -80,7 +80,7 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
                            log = TRUE,
                            method = method)
       
-      
+      print(logL)
        if (n > n_tips){
           logL_edges(reroot, tr, tipdata, lst, alpha, mu, sigma, model)
        }
@@ -121,73 +121,8 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
     }
  }  
   
-#   for (ind_d in 1:2) {
-#     edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[ind_d]))
-#     theta <- c(alpha[edge], mu[edge], sigma[edge])
-#     
-#     if (any(daughters %in% fossils)) {
-#       #do not use fossil edge (length = 0), use the sister node edge
-#       #assumes fossils are right justified (i.e. in position daughters[1])
-#       if (daughters[1] %in% fossils){
-#         f <- 1
-#         n <- 2
-#         logL[edge] <- 0
-#         edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] == daughters[2]))
-#         
-#       }else{
-#         n <- 1
-#         f <- 2
-#         logL[edge] <- 0
-#         edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[1]))
-#        }
-#       
-#       #log likelihood of edge uses sister edge
-#       #dc_fn uses the tipdata of the fossil but the rt node distance of the sister edge
-#       logL[edge] <<- logl_fn(X = lst[[edge]], theta = theta,
-#                            model = model, log = TRUE, method = method) +
-#                      dc_fn(x = tipdata[daughters[f]],
-#                           t = rt_node_dist[daughters[n]],
-#                           x0 = lst[[edge]][length(lst[[edge]])],
-#                           t0 = tsp(lst[[edge]])[2],
-#                           theta = theta,
-#                           model = model,
-#                           log = TRUE,
-#                           method = method)
-#    }
-# 
-#     #if the value of the node is greater than the total number of tips, the node is not a tip
-#     #this is logical due to the way trees are labelled (tips first)
-#     #if not a tip, calculate LogL of the edge and jump to recursive call
-#     else if (daughters[ind_d] > n_tips) {
-#       logL[edge] <<- logl_fn(X = lst[[edge]], theta = theta,
-#                             model = model, log = TRUE,
-#                             method = method)
-#       #must be a tip
-#       #calls 2 functions within dc_fn (dc_fn & logl_fn)
-#       #logL of a tip and its edge is the sum of the conditional density of the diffusion process and the logl 
-#     
-#     } else {
-#       logL[edge] <<- logl_fn(X = lst[[edge]], theta = theta,
-#                           model = model, log = TRUE, method = method) +
-#                      dc_fn(x = tipdata[daughters[ind_d]],
-#                           t = rt_node_dist[daughters[ind_d]],
-#                           x0 = lst[[edge]][length(lst[[edge]])],
-#                           t0 = tsp(lst[[edge]])[2],
-#                           theta = theta,
-#                           model = model,
-#                           log = TRUE,
-#                           method = method)
-#     }
-#     
-#     
-#     #recursive call
-#     #reset the node to the "new root" and rerun logL_edges until you get to the tip
-#     if (daughters[ind_d] > n_tips) {
-#       logL_edges(daughters[ind_d], tr, tipdata, lst, alpha, mu, sigma, model)
-#     }
-#   }
-# }
 
+print(logL)
 logL_edges(rt_node, tr, tipdata, lst, alpha, mu, sigma, model)
 #logL allows us to sum the likelihoods rather than take the product
 return(sum(logL))

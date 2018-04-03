@@ -1,8 +1,8 @@
-mcmc_steps_tanner_wong <- function(tr, tipdata, rt_value, lst, theta, model,
+mcmc_steps_tanner_wong <- function(fossils, tr, tipdata, rt_value, lst, theta, model,
                             para2est, update_method, proposals, priors,
                             method, N=N, ...) {
 
-loglike_curr <-  tree_logL(tr = tr, tipdata = tipdata, lst = lst,
+loglike_curr <-  tree_logL(fossils = fossils, tr = tr, tipdata = tipdata, lst = lst,
                            alpha = theta[, "alpha"], mu = theta[, "mu"],
                            sigma = theta[, "sigma"],
                            model = model,
@@ -38,7 +38,7 @@ if (update_method == "tree") {
   stop("update_method must only be tree or subtree")
 }
 
-loglike_star <- tree_logL(tr = tr, tipdata = tipdata, lst = lst_star,
+loglike_star <- tree_logL(fossils = fossils, tr = tr, tipdata = tipdata, lst = lst_star,
                           alpha = theta_star[, "alpha"],
                           mu = theta_star[, "mu"],
                           sigma = theta_star[, "sigma"],

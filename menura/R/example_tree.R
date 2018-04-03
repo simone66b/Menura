@@ -13,7 +13,7 @@
   edgelabels()
   nodelabels()
   add.scale.bar()
-  ftr <- tr
+  
   ##manually adding fossils to tree as new branches with length 0 ######################################
  
   tip <- list(edge = matrix(c(2,1),1,2), 
