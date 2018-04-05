@@ -3,7 +3,7 @@
 phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
 
   lst <- list()
-  tr <- ftr
+  #tr <- ftr
   n_tips <- length(tr$tip.label)
   rt_node <- n_tips + 1
 
@@ -47,7 +47,7 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
                               mu = theta[edge, "mu"],
                               sigma = theta[edge, "sigma"])),
                               list(e = model$drift)))))
-      print(drift)
+      
       #diffusion = expression (1)
       # model$diffusion = sigma
       diffusion <- as.expression(force(eval(substitute(substitute(e,
@@ -155,13 +155,12 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
    
   # Remove tip values (we have observed tip values)
   node_len <- ape::node.depth.edgelength(tr)
-  print(node_len)
+
   for (nthtip in 1:n_tips) {
-  
   
       nEdge <- which(tr$edge[, 2] == nthtip)
       ntsp <- tsp(lst[[nEdge]])
-      print(ntsp)
+     
       
       # If the end time for the node edges is less than T - 1/N,
       # the last sample is removed from the simulated data,

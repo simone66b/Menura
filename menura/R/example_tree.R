@@ -105,7 +105,8 @@
   tipdata <- rTraitCont(ftr, "OU", sigma=sigma, alpha=alpha, theta=mu,
                         root.value=rt_value)
   
-  
+  tipdata <- t.tipdata
+  tipdata
   model <- list()
   model$d <- function (t, x, theta) {
     theta[1] * (theta[2] - x)
@@ -131,6 +132,7 @@
                     N=N, method="euler")
   
   lst
+  
   #calls log likelihood using Euler, approximates for diffusion process in tree
   loglike <-  tree_logL (fossils = fossils, tr=ftr, tipdata=tipdata, lst=lst,
                          alpha=theta[, "alpha"],

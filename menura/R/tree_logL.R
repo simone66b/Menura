@@ -5,6 +5,7 @@ tree_logL <- function(fossils, tr, tipdata, lst, alpha, mu, sigma, model,
               method, ...) {
 
 tipdata <- as.numeric(tipdata)
+
 n_tips  <- length(tr$tip.label)
 rt_node <- n_tips + 1
 logL <- NULL
@@ -44,10 +45,10 @@ rt_node_dist <- ape::dist.nodes(tr)[rt_node, ]
 
 ##Calculates the log likelihood at each edge given the specific parameters of the edge
 ##returns value logL which is the sum of the logLikelihood of all edges
-logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
+logL_edges <- function (fossils, node, tr, tipdata, lst, alpha, mu, sigma, model) {
   #The daughter nodes are those that at first branch directily from rt_node, node is updated for subsequent splits
     daughters <- tr$edge[which(tr$edge[, 1] == node), 2]
-    print(logL)
+    
   ###if a daughter node is in fossils, apply the tipdata of the fossil to the current node
   ###continue to estimate along the other side of the tree
   
@@ -55,7 +56,7 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
     #edge that does not belong to the fossil
        edge <- which((tr$edge[,1] == node) & !(tr$edge[, 2] %in% fossils))
        theta <- c(alpha[edge], mu[edge], sigma[edge])
-       print(edge)
+       
     #fossil edge that will take 0   
        f_edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] %in% fossils))
        
@@ -80,9 +81,9 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
                            log = TRUE,
                            method = method)
       
-      print(logL)
+       #print(logL[edge])
        if (n > n_tips){
-          logL_edges(reroot, tr, tipdata, lst, alpha, mu, sigma, model)
+          logL_edges(fossils, reroot, tr, tipdata, lst, alpha, mu, sigma, model)
        }
        
     }else{
@@ -95,6 +96,7 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
             logL[edge] <<- logl_fn(X = lst[[edge]], theta = theta,
                                model = model, log = TRUE,
                                method = method)
+          #print(logL[edge])
         #must be a tip
         #calls 2 functions within dc_fn (dc_fn & logl_fn)
         #logL of a tip and its edge is the sum of the conditional density of the diffusion process and the logl 
@@ -110,20 +112,22 @@ logL_edges <- function (node, tr, tipdata, lst, alpha, mu, sigma, model) {
                                      model = model,
                                      log = TRUE,
                                      method = method)
+               #print(logL[edge])
           }
       
       #recursive call
       #reset the node to the "new root" and rerun logL_edges until you get to the tip
          if (daughters[ind_d] > n_tips) {
-            logL_edges(daughters[ind_d], tr, tipdata, lst, alpha, mu, sigma, model)
+            logL_edges(fossils, daughters[ind_d], tr, tipdata, lst, alpha, mu, sigma, model)
          }
       }
     }
  }  
   
 
-print(logL)
-logL_edges(rt_node, tr, tipdata, lst, alpha, mu, sigma, model)
+
+logL_edges(fossils, rt_node, tr, tipdata, lst, alpha, mu, sigma, model)
 #logL allows us to sum the likelihoods rather than take the product
+#print(sum(logL))
 return(sum(logL))
 }

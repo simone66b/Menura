@@ -2,7 +2,7 @@
 fit_model <- function(fossils, tr, tipdata, rt_value, model, ...) UseMethod("fit_model")
 
 fit_model.default <- function(fossils, tr, tipdata, rt_value = mean(tipdata),
-  model = "OU",
+  model = "CIR",
   priors = list(
     alpha = list(df =  function(x, a = 1, b = 125, log_scale = TRUE) {
                             dunif(x, min = a, max = b, log = log_scale)},
@@ -123,8 +123,10 @@ dots <- list(...)
 # the constraint in model parameters are always statisfied
 
 # set the tree to cladewise and reorder parameters
+
 cdwise <- order_tree(tr, alpha, mu, sigma, priors=priors)
 tr <- cdwise$tr
+
 theta <- cdwise$theta
 para2est <- cdwise$para2est
 # set drift and diffusion expressions
@@ -132,16 +134,19 @@ sde_comp <- sde_model(model, rt_value, tipdata, ...)
 M <- sde_comp$M
 tipdata <- sde_comp$tipdata
 rt_value <- sde_comp$rt_value
+
 # initialize the path
 n_edges <- length(tr$edge.length)
 n_tips  <- length(tr$tip.label)
 node_len <- ape::node.depth.edgelength(tr)
+
 if (init_method == "sim") {
   lst <- phylo_sde_0(fossils = fossils, tr = tr, rt_value = rt_value, theta = theta, model = M,
                         N = N, method = method, ...)
 } else {
   stop("The init_method specified is not available.", .call = FALSE)
 }
+
 loglike <- numeric(iters)
 mcmctrace <- matrix(NA, nrow = iters, ncol = length(para2est))
 colnames(mcmctrace) <- para2est
@@ -158,6 +163,7 @@ pb <- txtProgressBar(min=1, max=iters)
 if (mcmc_type == "tanner-wong") {
   for (k in 2:iters) {
     setTxtProgressBar(pb, k)
+   
     out_mcmc <- mcmc_steps_tanner_wong(fossils = fossils, tr = tr, tipdata = tipdata,
                 rt_value = rt_value, lst = lst,
                 theta = theta, model = M, para2est = para2est,
