@@ -30,7 +30,7 @@ update_tree <- function(lst, tr, tipdata, rt_value, N, method,
 
     daughters <- tr$edge[which(tr$edge[, 1] == node), 2]
     for (d_ind in 1:2) {
-      edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[d_ind]))
+      edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[d_ind])) 
       drift <- as.expression(force(eval(substitute(
         substitute(e, list(alpha = theta[edge, "alpha"], mu = theta[edge, "mu"],
                    sigma = theta[edge, "sigma"])), list(e = model$drift)))))

@@ -5,7 +5,7 @@ update_subtree <- function(lst, tr, tipdata, rt_value, N, method = "euler",
   # update from any node regardless edge length
   # ** if the selected subtree is has small edges, then no
   #    data update is done.
-
+ 
   # get the method from ...'s
   new_lst   <- lst
   subtr_tips <- NULL
