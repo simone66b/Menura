@@ -5,6 +5,22 @@ tree_logL <- function(fossils, tr, tipdata, lst, alpha, mu, sigma, model,
               method, ...) {
 
 tipdata <- as.numeric(tipdata)
+# print("FOSSILS")
+# print(fossils)
+# print("TREE")
+# print(tr)
+# print("TIPDATA")
+# print(tipdata)
+# print("LST")
+# print(lst)
+# print("ALPHA/MU/SIGMA")
+# print(alpha)
+# print(mu)
+# print(sigma)
+# print("MODEL")
+# print(model)
+# print("METHOD")
+# print(method)
 
 n_tips  <- length(tr$tip.label)
 rt_node <- n_tips + 1

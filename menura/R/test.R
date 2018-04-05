@@ -28,12 +28,14 @@ t.tipdata <- rTraitCont(tr, f_TrCir, ancestor = FALSE, root.value = t.root.value
 
 
 t.tipdata
+
 #t.tipdata[6] <- 0.1836
 fossils <- fossil_id(tr)
 fossils
 set.seed(1)
+print("NEEEEEEEEEEEEEEEEEEEEEEEEEEEW TRIIIIIIIIIIIALLLLLLLLLLLLLLLLLLLLLLLLLL")
 model.1 <- fit_model.default(fossils = fossils, tr=tr, tipdata=t.tipdata, rt_value=t.root.value, iters=iters,
-                     model = "CIR", alpha = 10,  mu = 15, sigma = NULL,
+                     model = "CIR", alpha = 10,  mu = NULL, sigma = 10,
                      N=240, init_method = "sim", update_method = "subtree")
 
 # Look at the MCMC trace of the parameters
