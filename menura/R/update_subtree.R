@@ -42,29 +42,27 @@ update_subtree <- function(fossils, lst, tr, tipdata, rt_value, N, method = "eul
        if (any(daughters %in% fossils)) {
       # do not use fossil edge (length = 0), use the sister node edge
       
-      edge <- which((tr$edge[,1] == node) & !(tr$edge[, 2] %in% fossils))
-      f_edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] %in% fossils))
-      root <- tr$edge[edge, 2]
-      lst[[f_edge]] <<- 0
+        edge <- which((tr$edge[,1] == node) & !(tr$edge[, 2] %in% fossils))
+        f_edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] %in% fossils))
+        root <- tr$edge[edge, 2]
+        lst[[f_edge]] <<- 0
       
       
-      drift <- as.expression(force(eval(substitute(substitute(e,
-                                                              list(alpha = theta[edge, "alpha"],
+        drift <- as.expression(force(eval(substitute(substitute(e,
+                                                             list(alpha = theta[edge, "alpha"],
                                                                    mu = theta[edge, "mu"],
                                                                    sigma = theta[edge, "sigma"])),
                                                    list(e = model$drift)))))
      
-      #diffusion = expression (1)
-      # model$diffusion = sigma
-      diffusion <- as.expression(force(eval(substitute(substitute(e,
+     
+        diffusion <- as.expression(force(eval(substitute(substitute(e,
                                                                   list(alpha = theta[edge, "alpha"],
                                                                        mu = theta[edge, "mu"],
                                                                        sigma = theta[edge, "sigma"])),
                                                        list(e = model$diffusion)))))
       
-      #diffusion_x = 0
-      #model$dx_diffusion  
-      diffusion_x <- as.expression(force(eval(substitute(substitute(e,
+       
+        diffusion_x <- as.expression(force(eval(substitute(substitute(e,
                                                                     list(alpha = theta[edge, "alpha"],
                                                                          mu = theta[edge, "mu"],
                                                                          sigma = theta[edge, "sigma"])),
@@ -86,8 +84,21 @@ update_subtree <- function(fossils, lst, tr, tipdata, rt_value, N, method = "eul
                                    pred.corr = pred.corr)
       tE <- tsp(lst[[edge]])[2]
       
+      
+      if (n_steps > 0) {
+        new_lst[[edge]] <<- sde::sde.sim(X0 = X0, t0 = t0, T = tE, N = n_steps,
+                                         method = method,
+                                         drift = drift,
+                                         sigma = diffusion,
+                                         sigma.x = diffusion_x,
+                                         pred.corr = pred.corr)
+      } else {
+        new_lst[[edge]][1] <<- X0
+      }
       if (root > n_tips) {
-        sde_edges(fossils, tr, root, lst[[edge]][n_steps + 1], tE)
+        sde_edges(fossils, tr, root, new_lst[[edge]][n_steps + 1], tE)
+      } else {
+        subtr_tips <<- c(subtr_tips, root)
       }
       
     }else{
