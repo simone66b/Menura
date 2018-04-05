@@ -27,7 +27,7 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
       model$dx_diffusion <- quote(NULL)
   }
 
-  sde_edges <- function(tr, node, X0, t0) {
+  sde_edges <- function(fossils, tr, node, X0, t0) {
     
     #node = rt_node
     # preceeding nodes
@@ -81,7 +81,7 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
       tE <- tsp(lst[[edge]])[2]
       
         if (root > n_tips) {
-          sde_edges(tr, root, lst[[edge]][n_steps + 1], tE)
+          sde_edges(fossils, tr, root, lst[[edge]][n_steps + 1], tE)
        }
         
      }else{     
@@ -123,10 +123,10 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
                                                            list(e = model$dx_diffusion)))))
         
         #number of steps is the length of the edge times the given frequency N (100)
-        #####May cause an issue as the edge length of a fossil is 0, but maybe not considering you can have polytomys
+       
         n_steps <- tr$edge.length[edge] * N 
         #time end is time start plus the length of the given edge
-        ####This will also be 0 for fossils
+      
         tE <- t0 + tr$edge.length[edge]
         
         #runs sde.sim
@@ -139,7 +139,7 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
         tE <- tsp(lst[[edge]])[2]
         
         if (daughters[d_ind] > n_tips) {
-          sde_edges(tr, daughters[d_ind], lst[[edge]][n_steps + 1], tE)
+          sde_edges(fossils, tr, daughters[d_ind], lst[[edge]][n_steps + 1], tE)
         }
        
       }
@@ -147,7 +147,7 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
      } 
     
   }
-  sde_edges(tr, rt_node, X0 = rt_value, t0 = 0)
+  sde_edges(fossils, tr, rt_node, X0 = rt_value, t0 = 0)
 
  
  #print(lst)  

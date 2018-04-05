@@ -33,9 +33,8 @@ t.tipdata
 fossils <- fossil_id(tr)
 fossils
 set.seed(1)
-print("NEEEEEEEEEEEEEEEEEEEEEEEEEEEW TRIIIIIIIIIIIALLLLLLLLLLLLLLLLLLLLLLLLLL")
 model.1 <- fit_model.default(fossils = fossils, tr=tr, tipdata=t.tipdata, rt_value=t.root.value, iters=iters,
-                     model = "CIR", alpha = 10,  mu = NULL, sigma = 10,
+                     model = "CIR", alpha = 10,  mu = 5, sigma = NULL,
                      N=240, init_method = "sim", update_method = "subtree")
 
 # Look at the MCMC trace of the parameters

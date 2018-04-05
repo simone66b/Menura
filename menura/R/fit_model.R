@@ -147,6 +147,7 @@ if (init_method == "sim") {
   stop("The init_method specified is not available.", .call = FALSE)
 }
 
+
 loglike <- numeric(iters)
 mcmctrace <- matrix(NA, nrow = iters, ncol = length(para2est))
 colnames(mcmctrace) <- para2est
@@ -169,6 +170,7 @@ if (mcmc_type == "tanner-wong") {
                 theta = theta, model = M, para2est = para2est,
                 update_method = update_method, proposals = proposals,
                 priors = priors, method = method, N = N, ...)
+    
     lst <- out_mcmc$lst
     theta <- out_mcmc$theta
     mcmctrace[k, para2est] <- theta[1, para2est]

@@ -2,8 +2,6 @@ mcmc_steps_tanner_wong <- function(fossils, tr, tipdata, rt_value, lst, theta, m
                             para2est, update_method, proposals, priors,
                             method, N=N, ...) {
 
-  
-
 loglike_curr <-  tree_logL(fossils = fossils, tr = tr, tipdata = tipdata, lst = lst,
                            alpha = theta[, "alpha"], mu = theta[, "mu"],
                            sigma = theta[, "sigma"],
@@ -12,7 +10,7 @@ loglike_curr <-  tree_logL(fossils = fossils, tr = tr, tipdata = tipdata, lst = 
 
 
 
-print(loglike_curr)
+
 loglike <- loglike_curr
 q_ratio <- p_theta <- p_theta_star <- 0
 theta_star <- theta

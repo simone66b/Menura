@@ -122,7 +122,7 @@
   
   # the derivative of diffusion = sigma = 0
   model$dx_diffusion <- quote(0)
-  
+  print(model)
   #theta is a vector of the parameters
   theta <- cbind(alpha=alpha, mu=mu, sigma=sigma)
   N <- 100
