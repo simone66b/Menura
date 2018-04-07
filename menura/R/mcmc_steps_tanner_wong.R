@@ -2,13 +2,12 @@ mcmc_steps_tanner_wong <- function(fossils, tr, tipdata, rt_value, lst, theta, m
                             para2est, update_method, proposals, priors,
                             method, N=N, ...) {
 
+
 loglike_curr <-  tree_logL(fossils = fossils, tr = tr, tipdata = tipdata, lst = lst,
                            alpha = theta[, "alpha"], mu = theta[, "mu"],
                            sigma = theta[, "sigma"],
                            model = model,
                            method = method)
-
-
 
 
 loglike <- loglike_curr

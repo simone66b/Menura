@@ -3,24 +3,9 @@
 #see help file for argument descriptors
 tree_logL <- function(fossils, tr, tipdata, lst, alpha, mu, sigma, model,
               method, ...) {
+  
 
 tipdata <- as.numeric(tipdata)
-# print("FOSSILS")
-# print(fossils)
-# print("TREE")
-# print(tr)
-# print("TIPDATA")
-# print(tipdata)
-# print("LST")
-# print(lst)
-# print("ALPHA/MU/SIGMA")
-# print(alpha)
-# print(mu)
-# print(sigma)
-# print("MODEL")
-# print(model)
-# print("METHOD")
-# print(method)
 
 n_tips  <- length(tr$tip.label)
 rt_node <- n_tips + 1
@@ -97,7 +82,7 @@ logL_edges <- function (fossils, node, tr, tipdata, lst, alpha, mu, sigma, model
                            log = TRUE,
                            method = method)
       
-       #print(logL[edge])
+       print(logL[edge])
        if (n > n_tips){
           logL_edges(fossils, reroot, tr, tipdata, lst, alpha, mu, sigma, model)
        }
@@ -145,5 +130,6 @@ logL_edges <- function (fossils, node, tr, tipdata, lst, alpha, mu, sigma, model
 logL_edges(fossils, rt_node, tr, tipdata, lst, alpha, mu, sigma, model)
 #logL allows us to sum the likelihoods rather than take the product
 #print(sum(logL))
+
 return(sum(logL))
 }

@@ -1,8 +1,8 @@
 # ver 0.3.0 - make the acceptace rates vectors
-fit_model <- function(fossils, tr, tipdata, rt_value, model, ...) UseMethod("fit_model")
+#fit_model <- function(fossils, tr, tipdata, rt_value, model, ...) UseMethod("fit_model")
 
 fit_model.default <- function(fossils, tr, tipdata, rt_value = mean(tipdata),
-  model = "CIR",
+  model = "OU",
   priors = list(
     alpha = list(df =  function(x, a = 1, b = 125, log_scale = TRUE) {
                             dunif(x, min = a, max = b, log = log_scale)},

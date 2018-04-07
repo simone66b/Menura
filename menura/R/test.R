@@ -5,6 +5,7 @@ rm(list=ls())
 #set working directory 
 setwd("/home/cheyennem/Documents/Menura/menura/R")
 
+
 # initialize functions
 source("fossil_id.R")
 source("fit_model.R")
@@ -27,12 +28,20 @@ lapply(rpkgs, require, character.only = TRUE)
 # Number of tips
 ntips <- 128
 # SDE parameters
-true.alpha <- 10
-true.mu <- 5
-true.sigma <- 2
+# true.alpha <- 10
+# true.mu <- 5
+# true.sigma <- 2
+# 
+# 
+# t.root.value <- true.mu
+
+true.alpha <- 0.1
+true.mu <- 0
+true.sigma <- 1
 
 
 t.root.value <- true.mu
+
 iters <- 500
 
 
@@ -86,17 +95,17 @@ set.seed(1)
 
 
 #originally x and l undefined, generates tipdata for CIR method
-f_TrCir <- function(x, l){
-  x <- 1
-  l <- 0.1
-  rcCIR(n=1, Dt=l, x0=x, theta=c(true.alpha*true.mu, true.alpha, true.sigma))
-}
-
-t.tipdata <- rTraitCont(tr, f_TrCir, ancestor = FALSE, root.value = t.root.value)
+# f_TrCir <- function(x, l){
+#   x <- 1
+#   l <- 0.1
+#   rcCIR(n=1, Dt=l, x0=x, theta=c(true.alpha*true.mu, true.alpha, true.sigma))
+# }
+# 
+# t.tipdata <- rTraitCont(tr, f_TrCir, ancestor = FALSE, root.value = t.root.value)
 
 ##Generates tipdata for OU method,  **issue, must not include negative numbers
-# t.tipdata <- rTraitCont(ftr, "OU", sigma=sigma, alpha=alpha, theta=mu,
-                     # root.value=rt_value)
+ t.tipdata <- rTraitCont(tr, "OU", sigma=true.sigma, alpha=true.alpha, theta=true.mu,
+                      root.value=t.root.value)
 
 
 ## identify fossils
@@ -105,7 +114,7 @@ fossils <- fossil_id(tr)
 ## run the simulation and mcmc
 set.seed(1)
 model.1 <- fit_model.default(fossils = fossils, tr=tr, tipdata=t.tipdata, rt_value=t.root.value, iters=iters,
-                     model = "CIR", alpha = 10,  mu = 5, sigma = NULL,
+                     model = "OU", alpha = 0.1,  mu = 0, sigma = NULL,
                      N=240, init_method = "sim", update_method = "subtree")
 
 # Look at the MCMC trace of the parameters
