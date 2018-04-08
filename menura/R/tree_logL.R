@@ -11,9 +11,11 @@ n_tips  <- length(tr$tip.label)
 rt_node <- n_tips + 1
 logL <- NULL
 
+print(tr)
 #list of the distance of each node from the root node
 rt_node_dist <- ape::dist.nodes(tr)[rt_node, ]
 #rt_node_dist
+print(rt_node_dist)
 
 
 # if (method == "milstein") {
@@ -74,7 +76,8 @@ logL_edges <- function (fossils, node, tr, tipdata, lst, alpha, mu, sigma, model
        logL[edge] <<- logl_fn(X = lst[[edge]], theta = theta,
                            model = model, log = TRUE, method = method) +
                       dc_fn(x = tipdata[f],
-                           t = rt_node_dist[n],
+                          # t = rt_node_dist[n],
+                           t = 1,
                            x0 = lst[[edge]][length(lst[[edge]])],
                            t0 = tsp(lst[[edge]])[2],
                            theta = theta,
@@ -82,7 +85,7 @@ logL_edges <- function (fossils, node, tr, tipdata, lst, alpha, mu, sigma, model
                            log = TRUE,
                            method = method)
       
-       print(logL[edge])
+       
        if (n > n_tips){
           logL_edges(fossils, reroot, tr, tipdata, lst, alpha, mu, sigma, model)
        }
