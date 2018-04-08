@@ -42,7 +42,7 @@ true.sigma <- 1
 
 t.root.value <- true.mu
 
-iters <- 500
+iters <- 12000
 
 
 
@@ -114,7 +114,7 @@ fossils <- fossil_id(tr)
 ## run the simulation and mcmc
 set.seed(1)
 model.1 <- fit_model.default(fossils = fossils, tr=tr, tipdata=t.tipdata, rt_value=t.root.value, iters=iters,
-                     model = "OU", alpha = 0.1,  mu = 0, sigma = NULL,
+                     model = "OU", alpha = 10,  mu = 15, sigma = NULL,
                      N=240, init_method = "sim", update_method = "subtree")
 
 # Look at the MCMC trace of the parameters

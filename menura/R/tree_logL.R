@@ -11,11 +11,11 @@ n_tips  <- length(tr$tip.label)
 rt_node <- n_tips + 1
 logL <- NULL
 
-print(tr)
+
 #list of the distance of each node from the root node
 rt_node_dist <- ape::dist.nodes(tr)[rt_node, ]
 #rt_node_dist
-print(rt_node_dist)
+
 
 
 # if (method == "milstein") {
