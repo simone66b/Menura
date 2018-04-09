@@ -26,23 +26,23 @@ set.seed(1)
 rpkgs <- c("sde", "ape", "msm")
 lapply(rpkgs, require, character.only = TRUE)
 # Number of tips
-ntips <- 128
+#ntips <- 128
 # SDE parameters
-# true.alpha <- 10
-# true.mu <- 5
-# true.sigma <- 2
-# 
-# 
-# t.root.value <- true.mu
-
-true.alpha <- 0.1
-true.mu <- 0
-true.sigma <- 1
+true.alpha <- 10
+true.mu <- 5
+true.sigma <- 2
 
 
 t.root.value <- true.mu
 
-iters <- 12000
+# true.alpha <- 0.1
+# true.mu <- 0
+# true.sigma <- 1
+# 
+# 
+# t.root.value <- true.mu
+
+iters <- 60000
 
 
 
@@ -54,7 +54,7 @@ rpkgs <- c("sde", "ape", "msm")
 lapply(rpkgs, require, character.only = TRUE)
 
 # Random tree with n tips
-tr <-  compute.brlen(rtree(n=4))
+tr <-  compute.brlen(rtree(n=64))
 
 # plot the tree
 plot(tr)
@@ -69,7 +69,7 @@ tip <- list(edge = matrix(c(2,1),1,2),
             Nnode = 1)
 class(tip)<- "phylo"
 
-ftr1 <- bind.tree(tr,tip, where = 4, position = 0.1)
+ftr1 <- bind.tree(tr,tip, where = 106, position = 0.1)
 plot(ftr1)
 
 
@@ -79,7 +79,7 @@ tip <- list(edge = matrix(c(2,1),1,2),
             Nnode = 1)
 class(tip)<- "phylo"
 
-ftr2 <- bind.tree(ftr1,tip, where = 7, position = 0.1)
+ftr2 <- bind.tree(ftr1,tip, where = 82, position = 0.1)
 plot(ftr2)
 
 

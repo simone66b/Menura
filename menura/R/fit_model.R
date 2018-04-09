@@ -34,7 +34,7 @@ fit_model.default <- function(fossils, tr, tipdata, rt_value = mean(tipdata),
                         rlnorm(n, meanlog = log(sigma), sdlog = gamma)})
   ),
   mcmc_type = "tanner-wong", alpha = NULL, mu = NULL, sigma = NULL,
-  N = 100, init_method = "sim", update_method = "subtree", iters = 5000,
+  N = 1000, init_method = "sim", update_method = "subtree", iters = 5000,
   method = "euler", ...)
 {
 
