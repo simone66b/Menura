@@ -42,7 +42,7 @@ t.root.value <- true.mu
 # 
 # t.root.value <- true.mu
 
-iters <- 60000
+iters <- 50000
 
 
 
@@ -54,7 +54,7 @@ rpkgs <- c("sde", "ape", "msm")
 lapply(rpkgs, require, character.only = TRUE)
 
 # Random tree with n tips
-tr <-  compute.brlen(rtree(n=64))
+tr <-  compute.brlen(rtree(n=128))
 
 # plot the tree
 plot(tr)
@@ -69,7 +69,7 @@ tip <- list(edge = matrix(c(2,1),1,2),
             Nnode = 1)
 class(tip)<- "phylo"
 
-ftr1 <- bind.tree(tr,tip, where = 106, position = 0.1)
+ftr1 <- bind.tree(tr,tip, where = 183, position = 0.1)
 plot(ftr1)
 
 
@@ -79,7 +79,7 @@ tip <- list(edge = matrix(c(2,1),1,2),
             Nnode = 1)
 class(tip)<- "phylo"
 
-ftr2 <- bind.tree(ftr1,tip, where = 82, position = 0.1)
+ftr2 <- bind.tree(ftr1,tip, where = 164, position = 0.1)
 plot(ftr2)
 
 
