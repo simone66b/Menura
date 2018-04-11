@@ -29,8 +29,8 @@ lapply(rpkgs, require, character.only = TRUE)
 #ntips <- 128
 # SDE parameters
 true.alpha <- 10
-true.mu <- 5
-true.sigma <- 2
+true.mu <- 15
+true.sigma <- 5
 
 
 t.root.value <- true.mu
@@ -42,7 +42,7 @@ t.root.value <- true.mu
 # 
 # t.root.value <- true.mu
 
-iters <- 50000
+iters <- 500
 
 
 
