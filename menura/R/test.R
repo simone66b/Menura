@@ -30,7 +30,7 @@ lapply(rpkgs, require, character.only = TRUE)
 # SDE parameters
 true.alpha <- 10
 true.mu <- 15
-true.sigma <- 5
+true.sigma <- 2
 
 
 t.root.value <- true.mu
@@ -42,7 +42,7 @@ t.root.value <- true.mu
 # 
 # t.root.value <- true.mu
 
-iters <- 500
+iters <- 4000
 
 
 
