@@ -1,3 +1,6 @@
+
+#runs markov chain monte carlo with tanner-wong data augmentation method, estimation of parameters
+
 mcmc_steps_tanner_wong <- function(fossils, tr, tipdata, rt_value, lst, theta, model,
                             para2est, update_method, proposals, priors,
                             method, N=N, ...) {

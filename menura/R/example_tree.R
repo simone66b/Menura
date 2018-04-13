@@ -119,7 +119,7 @@ source("back_transform.R")
   mu[1:Nedges] <- 0
   
   #numeric vector Std-dev of random component for ec. branch
-  sigma[1:Nedges] <- 7.66
+  sigma[1:Nedges] <- 1
   
   rt_value <- 0
   

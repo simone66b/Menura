@@ -2,8 +2,9 @@
 
 phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
 
+  
+  #stores list of points for each simulated edge
   lst <- list()
-  #tr <- ftr
   n_tips <- length(tr$tip.label)
   rt_node <- n_tips + 1
 
@@ -29,7 +30,7 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
 
   sde_edges <- function(fossils, tr, node, X0, t0) {
     
-    #node = rt_node
+    #node is the root node
     # preceeding nodes
     daughters <- tr$edge[which(tr$edge[, 1] == node), 2]
   
@@ -65,10 +66,8 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
                                     list(e = model$dx_diffusion)))))
       
       #number of steps is the length of the edge times the given frequency N (100)
-      #####May cause an issue as the edge length of a fossil is 0, but maybe not considering you can have polytomys
       n_steps <- tr$edge.length[edge] * N 
       #time end is time start plus the length of the given edge
-      ####This will also be 0 for fossils
       tE <- t0 + tr$edge.length[edge]
       
       #runs sde.sim
@@ -87,19 +86,14 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
      }else{     
         
         for (d_ind in 1:2) {
-        
-        #what are node and d_ind
-        #I think this is how you traverse the tree
-        # where does (col 1 = rt_node && col 2 = daughters[d_ind])
+       #identify the branch for simulation
         edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[d_ind]))
         
         
         
-        #mu -> long term mean level
-        #alpha -> 
         #drift = expression (0.1 *(0-x))
         # model$drift = alpha * (mu - x)
-        #sets the parameters as 2 vectors/lists
+        #pulls specific edge parameters from vector theta
         drift <- as.expression(force(eval(substitute(substitute(e,
                                                                 list(alpha = theta[edge, "alpha"],
                                                                      mu = theta[edge, "mu"],
@@ -137,7 +131,7 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
                                      sigma.x = diffusion_x,
                                      pred.corr = pred.corr)
         tE <- tsp(lst[[edge]])[2]
-        
+        #recursive call until a tip is met
         if (daughters[d_ind] > n_tips) {
           sde_edges(fossils, tr, daughters[d_ind], lst[[edge]][n_steps + 1], tE)
         }
@@ -149,9 +143,8 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
   }
   sde_edges(fossils, tr, rt_node, X0 = rt_value, t0 = 0)
 
- 
- #print(lst)  
- 
+  
+  
    
   # Remove tip values (we have observed tip values)
   node_len <- ape::node.depth.edgelength(tr)
