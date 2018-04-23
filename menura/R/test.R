@@ -1,4 +1,12 @@
 
+### This is a test file running through all functions given a tree of type phylo
+## A birfucating phylogenetic tree of type phylo is required to run this package
+## Polytomies are auto resolved
+## fossils must be bound to the tree as tips with a given tipvalue and an edgelength of 0.0, they are inserted
+## at secific positions along a branch given a specific node
+## 
+
+
 #clears environment
 rm(list=ls())
 
@@ -27,7 +35,7 @@ rpkgs <- c("sde", "ape", "msm")
 lapply(rpkgs, require, character.only = TRUE)
 # Number of tips
 #ntips <- 128
-# SDE parameters
+# true values of parameters used to generate tipdata
 true.alpha <- 10
 true.mu <- 15
 true.sigma <- 2
@@ -35,13 +43,7 @@ true.sigma <- 2
 
 t.root.value <- true.mu
 
-# true.alpha <- 0.1
-# true.mu <- 0
-# true.sigma <- 1
-# 
-# 
-# t.root.value <- true.mu
-
+# number of mcmc iterations
 iters <- 500
 
 
@@ -61,14 +63,18 @@ plot(tr)
 edgelabels()
 nodelabels()
 
-##manually adding fossils to tree as new branches with length 0 ##
+#manually adding fossils to tree as new branches with length 0 
+#rt_node is shifted up by one after each addition, other nodes may change value depending on insertion point
+#be cautious when adding multiple tips at once that they are inserted correctly
 
+#create a tip of class phylo
 tip <- list(edge = matrix(c(2,1),1,2), 
             tip.label = "fossil",
             edge.length = 0.0,
             Nnode = 1)
 class(tip)<- "phylo"
 
+#bind the tip to the tree at node x and position y
 ftr1 <- bind.tree(tr,tip, where = 183, position = 0.1)
 plot(ftr1)
 
@@ -82,8 +88,9 @@ class(tip)<- "phylo"
 ftr2 <- bind.tree(ftr1,tip, where = 164, position = 0.1)
 plot(ftr2)
 
-
+#set the new fossilized tree to the working tree variable tr
 tr <- ftr2
+#you should now see the same tree with additional fossils
 plot(tr)
 edgelabels()
 nodelabels()
@@ -103,12 +110,12 @@ set.seed(1)
 # 
 # t.tipdata <- rTraitCont(tr, f_TrCir, ancestor = FALSE, root.value = t.root.value)
 
-##Generates tipdata for OU method,  **issue, must not include negative numbers
+##Generates tipdata for OU method
  t.tipdata <- rTraitCont(tr, "OU", sigma=true.sigma, alpha=true.alpha, theta=true.mu,
                       root.value=t.root.value)
 
 
-## identify fossils
+## identify fossils within the tree
 fossils <- fossil_id(tr)
 
 ## run the simulation and mcmc
