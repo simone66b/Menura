@@ -1,8 +1,8 @@
-mcmc_steps_else <- function(tr, tipdata, rt_value, lst, theta, model,
+mcmc_steps_else <- function(fossils, tr, tipdata, rt_value, lst, theta, model,
                    para2est, update_method, proposals, priors,
                    method, N = N, ...) {
 
-loglike_curr <-  tree_logL(tr = tr, tipdata = tipdata, lst = lst,
+loglike_curr <-  tree_logL(fossils = fossils, tr = tr, tipdata = tipdata, lst = lst,
                            alpha = theta[, "alpha"], mu = theta[, "mu"],
                            sigma = theta[, "sigma"],
                            model = model,
@@ -21,7 +21,7 @@ for (var in para2est) {
                 proposals[[var]]$df(theta_star[, var][1], theta[, var][1])
 }
 
-loglike_star <- tree_logL(tr = tr, tipdata = tipdata, lst = lst,
+loglike_star <- tree_logL(fossils = fossils, tr = tr, tipdata = tipdata, lst = lst,
                           alpha = theta_star[, "alpha"],
                           mu = theta_star[, "mu"],
                           sigma = theta_star[, "sigma"],
@@ -40,13 +40,13 @@ if (accept <= accept_prob) {
 }
 
 if (update_method == "tree") {
-  rlst <- update_tree(lst = lst, tr = tr, tipdata = tipdata,
+  rlst <- update_tree(fossils = fossils, lst = lst, tr = tr, tipdata = tipdata,
                       rt_value = rt_value, model = model, theta = theta, N = N,
                       method = method,  mcmc_type = "fuchs")
   lst <- rlst$lst
   n_data_accept <- ifelse(rlst$data_accept > 0, 1, 0)
 } else if (update_method == "subtree") {
-   rlst <- update_subtree(lst = lst, tr = tr, tipdata = tipdata,
+   rlst <- update_subtree(fossils = fossils, lst = lst, tr = tr, tipdata = tipdata,
                           rt_value = rt_value, model = model, theta = theta,
                           N = N, method = method,  mcmc_type = "fuchs")
    lst <- rlst$lst

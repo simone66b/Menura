@@ -42,7 +42,7 @@ t.root.value <- true.mu
 # 
 # t.root.value <- true.mu
 
-iters <- 4000
+iters <- 500
 
 
 
@@ -115,7 +115,7 @@ fossils <- fossil_id(tr)
 set.seed(1)
 model.1 <- fit_model.default(fossils = fossils, tr=tr, tipdata=t.tipdata, rt_value=t.root.value, iters=iters,
                      model = "OU", alpha = 10,  mu = 15, sigma = NULL,
-                     N=240, init_method = "sim", update_method = "subtree")
+                     N=240, init_method = "sim", update_method = "subtree", mcmc_type = "fuchs")
 
 # Look at the MCMC trace of the parameters
 summary(model.1)
