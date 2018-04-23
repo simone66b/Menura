@@ -20,19 +20,7 @@ dc_fn <- function(x, t, x0, t0, theta, model, log=TRUE, method) {
   } else if (method == "euler") {
     ret <- sde::dcEuler(x, t, x0, t0, theta, d = model$d,
                       s = model$s, log=log)
-    # if (!(is.na(ret))){
-    #   print("dcfn")
-    #   print(ret)
-    #   print("x")
-    #   print(x)
-    #   print("t")
-    #   print(t)
-    #   print("x0")
-    #   print(x0)
-    #   print("t0")
-    #   print(t0)
-    # }
-   
+ 
     return(ret)
   }
 

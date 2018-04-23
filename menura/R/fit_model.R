@@ -110,7 +110,7 @@ if (!ape::is.binary(tr)) {
 }
 if (min(tr$edge.length) < 1 / N) {
   warning("No data will be imputed to at least ", sum(tr$edge.length < 1 / N),
-  " edges in the tree.\nIncreasing N to avoid that.", call. = FALSE)
+  " edges in the tree including fossil edges.\nIncrease N to avoid that if these are not fossils.", call. = FALSE)
 }
 # Current program is only written with no root value updating.
 # if ((!updateRoot) && is.null(rt_value))
@@ -205,7 +205,9 @@ attr(mcmctrace, "mcpar") <- c(Start = 1, End = iters, frequency = 1)
 output <- list(mcmctrace = mcmctrace, lst = lst, loglike = loglike,
                n_data_accept = n_data_accept, n_para_accept = n_para_accept)
 output$call <- match.call()
-class(output) <- "menura"
+output$model_type <- c(model, method, mcmc_type)
+output$model_info <- c("Model:" , model , "Method:" , method ,  "Mcmc Type:" , mcmc_type)
+class(output) <- c(class(output), "menura")
 return(output)
 }
 
