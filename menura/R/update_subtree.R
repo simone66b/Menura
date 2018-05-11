@@ -1,11 +1,11 @@
-update_subtree <- function(lst, tr, tipdata, rt_value, N, method = "euler",
+update_subtree <- function(fossils, lst, tr, tipdata, rt_value, N, method = "euler",
                             theta, model, mcmc_type = "tanner-wong", ...) {
   # Changes
   # log L's  are calculated for subtr_tips instead of a clade
   # update from any node regardless edge length
   # ** if the selected subtree is has small edges, then no
   #    data update is done.
-
+ 
   # get the method from ...'s
   new_lst   <- lst
   subtr_tips <- NULL
@@ -36,9 +36,72 @@ update_subtree <- function(lst, tr, tipdata, rt_value, N, method = "euler",
   
   rt_node_dist <- ape::dist.nodes(tr)[rt_node, ]
 
-  sde_edges <- function(tr, node, X0, t0) {
+  sde_edges <- function(fossils, tr, node, X0, t0) {
     daughters <- tr$edge[which(tr$edge[, 1] == node), 2]
-    
+ 
+       if (any(daughters %in% fossils)) {
+      # do not use fossil edge (length = 0), use the sister node edge
+      
+        edge <- which((tr$edge[,1] == node) & !(tr$edge[, 2] %in% fossils))
+        f_edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] %in% fossils))
+        root <- tr$edge[edge, 2]
+        lst[[f_edge]] <<- 0
+      
+      
+        drift <- as.expression(force(eval(substitute(substitute(e,
+                                                             list(alpha = theta[edge, "alpha"],
+                                                                   mu = theta[edge, "mu"],
+                                                                   sigma = theta[edge, "sigma"])),
+                                                   list(e = model$drift)))))
+     
+     
+        diffusion <- as.expression(force(eval(substitute(substitute(e,
+                                                                  list(alpha = theta[edge, "alpha"],
+                                                                       mu = theta[edge, "mu"],
+                                                                       sigma = theta[edge, "sigma"])),
+                                                       list(e = model$diffusion)))))
+      
+       
+        diffusion_x <- as.expression(force(eval(substitute(substitute(e,
+                                                                    list(alpha = theta[edge, "alpha"],
+                                                                         mu = theta[edge, "mu"],
+                                                                         sigma = theta[edge, "sigma"])),
+                                                         list(e = model$dx_diffusion)))))
+      
+      #number of steps is the length of the edge times the given frequency N (100)
+      #####May cause an issue as the edge length of a fossil is 0, but maybe not considering you can have polytomys
+      n_steps <- tr$edge.length[edge] * N 
+      #time end is time start plus the length of the given edge
+      ####This will also be 0 for fossils
+      tE <- t0 + tr$edge.length[edge]
+      
+      #runs sde.sim
+      lst[[edge]] <<- sde::sde.sim(X0 = X0, t0 = t0, T = tE, N = n_steps,
+                                   method = method,
+                                   drift = drift,
+                                   sigma = diffusion,
+                                   sigma.x = diffusion_x,
+                                   pred.corr = pred.corr)
+      tE <- tsp(lst[[edge]])[2]
+      
+      
+      if (n_steps > 0) {
+        new_lst[[edge]] <<- sde::sde.sim(X0 = X0, t0 = t0, T = tE, N = n_steps,
+                                         method = method,
+                                         drift = drift,
+                                         sigma = diffusion,
+                                         sigma.x = diffusion_x,
+                                         pred.corr = pred.corr)
+      } else {
+        new_lst[[edge]][1] <<- X0
+      }
+      if (root > n_tips) {
+        sde_edges(fossils, tr, root, new_lst[[edge]][n_steps + 1], tE)
+      } else {
+        subtr_tips <<- c(subtr_tips, root)
+      }
+      
+    }else{
     for (d_ind in 1:2) {
       edge <- which((tr$edge[, 1] == node) & (tr$edge[ ,2] == daughters[d_ind]))
       drift <- as.expression(force(eval(substitute(
@@ -73,13 +136,13 @@ update_subtree <- function(lst, tr, tipdata, rt_value, N, method = "euler",
           new_lst[[edge]][1] <<- X0
         }
         if (daughters[d_ind] > n_tips) {
-          sde_edges(tr, daughters[d_ind], new_lst[[edge]][n_steps + 1], tE)
+          sde_edges(fossils, tr, daughters[d_ind], new_lst[[edge]][n_steps + 1], tE)
         } else {
           subtr_tips <<- c(subtr_tips, daughters[d_ind])
       }
     }
   }
-
+}
   rnode <- sample((n_tips + 1):max(tr$edge), 1)
 
   # If selected subtree doesn't contain large enough edges
@@ -90,7 +153,7 @@ update_subtree <- function(lst, tr, tipdata, rt_value, N, method = "euler",
 
   # If the selected node is the root, we would update whole tree.
   if (rnode == rt_node) {
-    new_lst <- update_tree(lst = lst, tr = tr, tipdata = tipdata,
+    new_lst <- update_tree(fossils = fossils, lst = lst, tr = tr, tipdata = tipdata,
                            rt_value = rt_value, N = N, method = method,
                            theta = theta, model = model, mcmc_type = mcmc_type,
                            ...)
@@ -99,7 +162,7 @@ update_subtree <- function(lst, tr, tipdata, rt_value, N, method = "euler",
 
     # Update the sub-tree
     redge <- which(tr$edge[, 1] == rnode)[1]
-    sde_edges(tr, rnode, X0 = lst[[redge]][1], t0 = tsp(lst[[redge]])[1])
+    sde_edges(fossils, tr, rnode, X0 = lst[[redge]][1], t0 = tsp(lst[[redge]])[1])
 
     if (mcmc_type == "tanner-wong") {
       lst <- new_lst

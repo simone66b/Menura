@@ -1,7 +1,7 @@
 # ver 0.3.0 - make the acceptace rates vectors
-fit_model <- function(tr, tipdata, rt_value, model, ...) UseMethod("fit_model")
+#fit_model <- function(fossils, tr, tipdata, rt_value, model, ...) UseMethod("fit_model")
 
-fit_model.default <- function(tr, tipdata, rt_value = mean(tipdata),
+fit_model.default <- function(fossils, tr, tipdata, rt_value = mean(tipdata),
   model = "OU",
   priors = list(
     alpha = list(df =  function(x, a = 1, b = 125, log_scale = TRUE) {
@@ -34,7 +34,7 @@ fit_model.default <- function(tr, tipdata, rt_value = mean(tipdata),
                         rlnorm(n, meanlog = log(sigma), sdlog = gamma)})
   ),
   mcmc_type = "tanner-wong", alpha = NULL, mu = NULL, sigma = NULL,
-  N = 100, init_method = "sim", update_method = "subtree", iters = 5000,
+  N = 1000, init_method = "sim", update_method = "subtree", iters = 5000,
   method = "euler", ...)
 {
 
@@ -110,7 +110,7 @@ if (!ape::is.binary(tr)) {
 }
 if (min(tr$edge.length) < 1 / N) {
   warning("No data will be imputed to at least ", sum(tr$edge.length < 1 / N),
-  " edges in the tree.\nIncreasing N to avoid that.", call. = FALSE)
+  " edges in the tree including fossil edges.\nIncrease N to avoid that if these are not fossils.", call. = FALSE)
 }
 # Current program is only written with no root value updating.
 # if ((!updateRoot) && is.null(rt_value))
@@ -123,8 +123,10 @@ dots <- list(...)
 # the constraint in model parameters are always statisfied
 
 # set the tree to cladewise and reorder parameters
+
 cdwise <- order_tree(tr, alpha, mu, sigma, priors=priors)
 tr <- cdwise$tr
+
 theta <- cdwise$theta
 para2est <- cdwise$para2est
 # set drift and diffusion expressions
@@ -132,16 +134,20 @@ sde_comp <- sde_model(model, rt_value, tipdata, ...)
 M <- sde_comp$M
 tipdata <- sde_comp$tipdata
 rt_value <- sde_comp$rt_value
+
 # initialize the path
 n_edges <- length(tr$edge.length)
 n_tips  <- length(tr$tip.label)
 node_len <- ape::node.depth.edgelength(tr)
+
 if (init_method == "sim") {
-  lst <- phylo_sde_0(tr = tr, rt_value = rt_value, theta = theta, model = M,
+  lst <- phylo_sde_0(fossils = fossils, tr = tr, rt_value = rt_value, theta = theta, model = M,
                         N = N, method = method, ...)
 } else {
   stop("The init_method specified is not available.", .call = FALSE)
 }
+
+
 loglike <- numeric(iters)
 mcmctrace <- matrix(NA, nrow = iters, ncol = length(para2est))
 colnames(mcmctrace) <- para2est
@@ -158,11 +164,13 @@ pb <- txtProgressBar(min=1, max=iters)
 if (mcmc_type == "tanner-wong") {
   for (k in 2:iters) {
     setTxtProgressBar(pb, k)
-    out_mcmc <- mcmc_steps_tanner_wong(tr = tr, tipdata = tipdata,
+   
+    out_mcmc <- mcmc_steps_tanner_wong(fossils = fossils, tr = tr, tipdata = tipdata,
                 rt_value = rt_value, lst = lst,
                 theta = theta, model = M, para2est = para2est,
                 update_method = update_method, proposals = proposals,
                 priors = priors, method = method, N = N, ...)
+    
     lst <- out_mcmc$lst
     theta <- out_mcmc$theta
     mcmctrace[k, para2est] <- theta[1, para2est]
@@ -173,7 +181,7 @@ if (mcmc_type == "tanner-wong") {
 } else {
   for (k in 2:iters) {
     setTxtProgressBar(pb, k)
-    out_mcmc <- mcmc_steps_else(tr = tr, tipdata = tipdata,
+    out_mcmc <- mcmc_steps_else(fossils = fossils, tr = tr, tipdata = tipdata,
                 rt_value = rt_value, lst = lst,
                 theta = theta, model = M, para2est = para2est,
                 update_method = update_method, proposals = proposals,
@@ -197,7 +205,9 @@ attr(mcmctrace, "mcpar") <- c(Start = 1, End = iters, frequency = 1)
 output <- list(mcmctrace = mcmctrace, lst = lst, loglike = loglike,
                n_data_accept = n_data_accept, n_para_accept = n_para_accept)
 output$call <- match.call()
-class(output) <- "menura"
+output$model_type <- c(model, method, mcmc_type)
+output$model_info <- c("Model:" , model , "Method:" , method ,  "Mcmc Type:" , mcmc_type)
+class(output) <- c(class(output), "menura")
 return(output)
 }
 

@@ -20,6 +20,7 @@ dc_fn <- function(x, t, x0, t0, theta, model, log=TRUE, method) {
   } else if (method == "euler") {
     ret <- sde::dcEuler(x, t, x0, t0, theta, d = model$d,
                       s = model$s, log=log)
+ 
     return(ret)
   }
 
@@ -43,6 +44,16 @@ logl_fn <- function (X, theta, model, log = TRUE, method) {
 
   } else if (method == "euler") {
     ret <- sde::EULERloglik(X, theta, model$d, model$s, log=log)
+    
+    # if (is.na(ret)){
+    #   print("logfn")
+    #   print(ret)
+    #   print("X")
+    #   print(X)
+    #   print("theta")
+    #   print(theta)
+    # }
+    
     return(ret)
   }
 
@@ -76,3 +87,4 @@ logl_fn <- function (X, theta, model, log = TRUE, method) {
 #     sde::EULERloglik(X, theta, model$d, model$s, log=log)
 #   }
 # }
+
