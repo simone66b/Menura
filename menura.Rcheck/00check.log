@@ -1,0 +1,137 @@
+* using log directory ‘/home/simonb/Dropbox/Menura/menura.Rcheck’
+* using R version 3.5.1 (2018-07-02)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* checking for file ‘menura/DESCRIPTION’ ... OK
+* this is package ‘menura’ version ‘0.4.1’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘menura’ can be installed ... WARNING
+Found the following significant warnings:
+  Warning: bad markup (extra space?) at tree_logL.Rd:8:15
+See ‘/home/simonb/Dropbox/Menura/menura.Rcheck/00install.out’ for details.
+* checking installed package size ... OK
+* checking package directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... NOTE
+fit_model.default: no visible binding for global variable ‘fossils’
+fossil_id: no visible global function definition for ‘Ntip’
+Undefined global functions or variables:
+  Ntip fossils
+* checking Rd files ... WARNING
+prepare_Rd: bad markup (extra space?) at tree_logL.Rd:8:15
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... WARNING
+Argument items with no description in Rd object 'tree_logL':
+  ‘fossils’
+
+* checking for unstated dependencies in examples ... OK
+* checking examples ... ERROR
+Running examples in ‘menura-Ex.R’ failed
+The error most likely occurred in:
+
+> ### Name: fit_model
+> ### Title: Bayesian Estimator of Parameters of Univariate Diffusion Models
+> ###   for Continuous Trait Evolution
+> ### Aliases: fit_model fit_model.default
+> 
+> ### ** Examples
+> 
+> set.seed(1)
+> rpkgs <- c("sde", "ape", "msm")
+> lapply(rpkgs, require, character.only = TRUE)
+Loading required package: sde
+Loading required package: MASS
+Loading required package: stats4
+Loading required package: fda
+Loading required package: splines
+Loading required package: Matrix
+
+Attaching package: ‘fda’
+
+The following object is masked from ‘package:graphics’:
+
+    matplot
+
+Loading required package: zoo
+
+Attaching package: ‘zoo’
+
+The following objects are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+sde 2.0.15
+Companion package to the book
+‘Simulation and Inference for Stochastic Differential Equations With R Examples’
+Iacus, Springer NY, (2008)
+To check the errata corrige of the book, type vignette("sde.errata")
+Loading required package: ape
+Loading required package: msm
+[[1]]
+[1] TRUE
+
+[[2]]
+[1] TRUE
+
+[[3]]
+[1] TRUE
+
+> # Number of tips
+> ntips <- 128
+> # SDE parameters
+> true.alpha <- 10
+> true.mu <- 5
+> true.sigma <- 2
+> t.root.value <- true.mu
+> iters <- 200
+> # Generate tip values
+> set.seed(1)
+> tr <-  compute.brlen(stree(n=ntips, type="balanced"))
+> f_TrCir <- function(x, l)
++   rcCIR(n=1, Dt=l, x0=x, theta=c(true.alpha*true.mu, true.alpha, true.sigma))
+> t.tipdata <- rTraitCont(tr, f_TrCir, ancestor = FALSE, root.value = t.root.value)
+> 
+> set.seed(1)
+> model.1 <- fit_model(tr=tr, tipdata=t.tipdata, rt_value=t.root.value, iters=iters,
++                 model = "CIR", alpha = 10,  mu = 15, sigma = NULL,
++                 N=10, init_method = "sim", update_method = "subtree")
+Warning: No data will be imputed to at least 240 edges in the tree including fossil edges.
+Increase N to avoid that if these are not fossils.
+Error in phylo_sde_0(fossils = fossils, tr = tr, rt_value = rt_value,  : 
+  object 'fossils' not found
+Calls: fit_model ... fit_model.default -> phylo_sde_0 -> sde_edges -> %in%
+Execution halted
+* checking PDF version of manual ... WARNING
+LaTeX errors when creating PDF version.
+This typically indicates Rd problems.
+* checking PDF version of manual without hyperrefs or index ... OK
+* DONE
+Status: 1 ERROR, 4 WARNINGs, 1 NOTE

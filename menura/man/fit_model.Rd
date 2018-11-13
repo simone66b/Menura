@@ -39,7 +39,7 @@ fit_model(tr, tipdata, rt_value, model, ...)
                     rlnorm(n, meanlog = log(sigma), sdlog = gamma)})
   ),
   mcmc_type = "tanner-wong", alpha = NULL, mu = NULL, sigma = NULL,
-  N=100, init_method="sim", update_method="subtree", iters=5000,
+  N=1000, init_method="sim", update_method="subtree", iters=5000,
   method = "euler", ...)
 }
 \arguments{
@@ -150,7 +150,7 @@ model.1 <- fit_model(tr=tr, tipdata=t.tipdata, rt_value=t.root.value, iters=iter
 model.1
 
 ## Use the coda package to analyse the mcmc chain
-# require(coda)
+# library(coda)
 # plot(model.1$mcmctrace)
 # summary(model.1$mcmctrace)
 

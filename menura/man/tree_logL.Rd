@@ -2,9 +2,10 @@
 \alias{tree_logL}
 \title{Calculates the Log Likelihood of the Diffusion Process in a Tree of Life}
 \usage{
-tree_logL(tr, tipdata, lst, alpha, mu, sigma, model, method, ...)
+tree_logL(fossils, tr, tipdata, lst, alpha, mu, sigma, model, method, ...)
 }
 \arguments{
+\item{fossils} {Name of nodes that are fossils.}
 \item{tr}{object of the class "phylo" as in the \code{ape} R package which
 contains the information of the tree structure.}
 
