@@ -1,12 +1,12 @@
 #clears environment
-rm(list=ls())
+## rm(list=ls())
 
 #set working directory 
-setwd("/home/cheyennem/Documents/Menura/menura/R")
+## setwd("/home/cheyennem/Documents/Menura/menura/R")
 
 
 # initialize functions
-source("fossil_id.R")
+## source("fossil_id.R")
 source("fit_model.R")
 source("phylo_sde_0.R")
 source("mcmc_steps_tanner_wong.R")

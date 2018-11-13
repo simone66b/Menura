@@ -43,11 +43,11 @@ fit_model(tr, tipdata, rt_value, model, ...)
   method = "euler", ...)
 }
 \arguments{
-\item{tr}{single evolutionary tree as an object of the "phylo" class in
+\item{tr}{single evolutionary tree as an object of the 'phylo' class in
 the \code{ape} R package.}
 
 \item{tipdata}{a numeric vector containing values of the trait at the tip.
-These must be in the same order as those in the tr$tip.lable}
+These must be in the same order as those in the tr$tip.label}
 
 \item{rt_value}{value of the trait at the root.}
 
@@ -64,11 +64,10 @@ of the model parameters.}
 
 \item{mcmc_type}{Type of MCMC algorithm}
 
-\item{alpha}{NULL if alpha is to be estimated,
-else either a numeric value of a numeric vector specifying
-the value of the parameter for all the branches/edges.
-In the latter case, the values must be specifying in order
-of the edges in the \code{tr} object.}
+\item{alpha}{NULL if alpha is to be estimated, else either a numeric
+  value of a numeric vector specifying the value of the parameter for
+  all the branches/edges. In the latter case, the values must be
+  specifying in order of the edges in the \code{tr} object.}
 
 \item{mu}{same as \code{alpha}}
 
@@ -80,94 +79,42 @@ of the edges in the \code{tr} object.}
 Currently only the \code{"sim"} option is available.}
 
 \item{update_method}{method for data imputation during the MCMC.
-The \code{"subtree"} will only update part of the tree at each iteration,
-where as the option \code{"tree"} will update the whole tree. See Details}
+The \code{"subtree"} will only update a random part of the tree at each
+iteration, where as the option \code{"tree"} will update the whole tree. See Details}
 
 \item{iters}{number of MCMC iterations.}
 
-\item{method}{Numerical apprximation method to use.}
+\item{method}{Numerical approximation method to use.}
 
 \item{...}{further arguments for future extensions.}
 }
 \description{
-This function estimates posterior distributions for evolutionary
-models of continuous traits in a phylogeny. The evolutionary
-processes considered here belong to a class of diffusion processes
-which are typically given as solutions to the stochastic
-differential equations of the form given by
+This function estimates posterior distributions for evolutionary models of continuous traits on a phylogeny. The evolutionary processes considered here belong to a class of diffusion processes which are typically given as solutions to the stochastic differential equations of the form given by
 \deqn{dX_t = a(X_t, alpha, mu) dt + b(X_t, sigma) dW_t,~~X_0 = x_0}
-where \eqn{X_t} denote the state variable, \code{t} the time,
+where \eqn{X_t} denote the state variable (ie the trait), \code{t} the time,
 the drift function \code{a} and
 the diffusion function \code{b} are known
 in parametric from where
 \code{alpha}, \code{mu}, and \code{sigma}
-are the parameters, and \eqn{W_t} is the Brownian motion.
+are the parameters, and \eqn{W_t} is Brownian motion.
 The value of \eqn{X_t} at time \eqn{t_0}, \eqn{X_0},
 is independent of the \eqn{W_t}.
 }
 \details{
-Given the root and tip values, the tree,
-drift and diffusion functions,
-the Markov Chain Monte Carlo (MCMC) estimates
-of the parameters are obtained.
-The parameter to be estimated is assumed to be the same
-for all the branches of the tree, however
-the rest can be allowed to vary.
+Given the root and tip values, the tree, drift and diffusion functions, the Data Augmentation - Markov Chain Monte Carlo (DA-MCMC) estimates of the parameters are obtained. Parameters may be the same across the tree or allowed to differ in different parts of the tree.
 
-Due to the low frequency nature of the data, the MCMC
-method employed here consider a the intermediate data
-are missing. Thus during each step of the MCMC iterations,
-missing data and the model parameters are imputed.
+Due to the low frequency nature of the data, we employ Data Augmentation of the evolutionary trajectory (the 'fossil record'), effectively imputing the missing trajectory, and updating trajectories at each MCMC iteration.
 
-If the diffusion process considered is
-Ornstein-Uhlenbeck (OU) process,
-Cox-Ross-Rubinstein (CIR) process or Beta process (Beta)
-then this can be specified by setting the
-\code{model} to "OU", "CIR", or
-"Beta", respectively.
-In the case of diffusion process is different to
-these, the estimation of model parameters
-can be done by specifying drift and diffusion coefficients
-in a list assigned to \code{model}. In this case,
-the list object \code{model} must include
-functions \code{d} and \code{s} which are
-functions of \code{t}, \code{x} and \code{theta}
-which are time variable, space variable, and
-a vector consisting the parameter values
-\code{alpha}, \code{mu} and \code{sigma},
-and drift coefficient as a list containing
-a \code{quote} and
-diffusion coefficient as a list objects
-which include \code{diffusion} as
-the diffusion coefficient and
-\code{x} as the first derivatives of
-diffusion coefficients.
+If the diffusion process considered is the Ornstein-Uhlenbeck (OU) process, Cox-Ingersoll-Ross (CIR) process or Beta process (Beta) then this can be specified by setting the \code{model} to "OU", "CIR", or "Beta", respectively. In the case of a user-defined diffusion process, the estimation of model parameters can be done by specifying drift and diffusion coefficients in a list assigned to \code{model}. In this case, the list object \code{model} must include functions \code{d} and \code{s} which are functions of \code{t}, \code{x} and \code{theta} which are the time variable, the space variable, and a vector consisting of the parameter values \code{alpha}, \code{mu} and \code{sigma}, and drift coefficient as a list containing a \code{quote} and diffusion coefficient as a list objects which include \code{diffusion} as the diffusion coefficient and \code{x} as the first derivatives of diffusion coefficients.
 
-The Ornstein–Uhlenbeck (OU) model is given by
-\deqn{dX_t = alpha (mu - X_t) dt + sigma~ dW_t,}
-with \eqn{X_0 = x_0 > 0}, \eqn{W_t} is the Brownian process,
-alpha, mu, and sigma are the model parameters
-where alpha and sigma are positive values.
+The Ornstein–Uhlenbeck (OU) model is given by \deqn{dX_t = alpha (mu - X_t) dt + sigma~ dW_t,} with \eqn{X_0 = x_0 > 0}, \eqn{W_t} is Brownian motion, alpha, mu, and sigma are the model parameters where alpha and sigma are positive values.
 
-The Cox-Ingersoll-Ross (CIR) model is given by
-\deqn{dXt = alpha (mu - X_t) dt + sigma~sqrt(X_t) dWt,}
-with \eqn{X_0 = x_0 > 0}, where Wt is the Brownian process, alpha, mu,
-and sigma are the model parameters which are all
-positive values. If the \code{model == "CIR"} is specified,
-then the parameter estimation is done by
-using transformation \eqn{Y = sqrt(X)} of Ito diffusion
-process.
+The Cox-Ingersoll-Ross (CIR) model is given by \deqn{dXt = alpha (mu -
+  X_t) dt + sigma~sqrt(X_t) dWt,} with \eqn{X_0 = x_0 > 0}, where Wt is
+  Brownian motion, alpha, mu, and sigma are the model parameters which
+  are all positive values. If the \code{model == "CIR"} is specified, then the parameter estimation is done by using the transformation \eqn{Y = sqrt(X)} of the Ito diffusion process.
 
-The Beta model is given by
-\deqn{ dX_t = alpha(mu - X_t) dt + sigma~sqrt(X_t (1-X_t)) dW_t,}
-with \eqn{X_0 = x_0 > 0}, \eqn{W_t} is the Brownian process,
-alpha, mu, and sigma are the model parameters
-where alpha and sigma are positive values.
-If the \code{model ==} "Beta" is specified,
-then the parameter estimation is done by
-using transformation \eqn{Y = 2~sin^{-1}(X)} of Ito diffusion
-process.
-
+The Beta model is given by \deqn{ dX_t = alpha(mu - X_t) dt + sigma~sqrt(X_t (1-X_t)) dW_t,} with \eqn{X_0 = x_0 > 0}, \eqn{W_t} is Brownian motion, alpha, mu, and sigma are the model parameters where alpha and sigma are positive values. If the \code{model ==} "Beta" is specified, then the parameter estimation is done by using transformation \eqn{Y = 2~sin^{-1}(X)} of the Ito diffusion process.
 }
 
 \section{Methods (by class)}{
@@ -202,12 +149,12 @@ model.1 <- fit_model(tr=tr, tipdata=t.tipdata, rt_value=t.root.value, iters=iter
 # summary(model.1)
 model.1
 
-## Use coda package to analyse the mcmc chain
+## Use the coda package to analyse the mcmc chain
 # require(coda)
 # plot(model.1$mcmctrace)
 # summary(model.1$mcmctrace)
 
-## The same can be done in the following way
+## The same can be done using the user-defined specification:
 model <- list()
 model$d <- function (t, x, theta) {
   ((theta[1]*theta[2] - 0.25* theta[3]^2) / (2 * x)) - theta[2] * x / 2

@@ -1,16 +1,12 @@
 Package: menura
-Title: What the Package Does (one line, title case)
-Version: 0.4.0
-Authors@R: c(person("Joe", "Developer", role = c("aut", "cre"),
-                     email = "Joe.Developer@some.domain.net"),
-              person("Pat", "Developer", role = "aut"),
-              person("A.", "User", role = "ctb",
-                     email = "A.User@whereever.net"))
-Author: Joe Developer [aut, cre],
-  Pat Developer [aut],
-  A. User [ctb]
-Maintainer: Joe Developer <Joe.Developer@some.domain.net>
-Description: What the package does (one paragraph).
+Title: Fitting (Non)-Gaussian diffusion models to phylogenies
+Version: 0.4.1
+Authors@R: c(person("Suren", "Rathnayake", role = "aut",
+                     email = "s.rathnayake@uq.edu.au"),
+              person("Cheyenne", "Moreau", role = "aut"),
+              person("Simone", "Blomberg", role = c("aut", "cre"),
+                     email = "s.blomberg1@uq.edu.au"))
+Description: Fits user-defined stochastic diffusion models to univariate trait data on a phylogeny. Also fits three canned models: Ornstein Uhlenbeck (OU; Gaussian), Cox, Ingersoll, Ross (CIR; Non-Gaussian) and an OU-like model with a Beta stationary distribution (Beta, Non-Gaussian). Models are fitted and parameters are estimated using a Data Augmentation - Metropolis Hastings algorithm. Output can be analysed using the 'coda' package or other appropriate packages for Bayesian analysis and visualisation. Menura is the genus name for the Australian Superb Lyrebird (Menura novaehollandiae), known for being the world's largest passerine, its elaborate tail and its talent for mimicry. 
 Depends: R (>= 3.2.0)
 License: GPL-3
 Encoding: UTF-8

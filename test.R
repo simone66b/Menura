@@ -2,20 +2,20 @@
 ### This is a test file running through all functions given a tree of type phylo
 ## A birfucating phylogenetic tree of type phylo is required to run this package
 ## Fossils must be bound to the tree as tips with a given tipvalue and an edgelength of 0.0, they are inserted
-## at secific positions along a branch and not to be inserted at a specific node. 
+## at specific positions along a branch and not to be inserted at a specific node. 
 ##Insertion at a node without a position results in polytomies
 
 
 
 #clears environment
-rm(list=ls())
+ ## rm(list=ls())
 
 #set working directory 
-setwd("/home/cheyennem/Documents/Menura/menura/R")
+## setwd("/home/cheyennem/Documents/Menura/menura/R")
 
 
 # initialize functions
-source("fossil_id.R")
+## source("fossil_id.R")
 source("fit_model.R")
 source("phylo_sde_0.R")
 source("mcmc_steps_tanner_wong.R")
