@@ -6,7 +6,7 @@ Authors@R: c(person("Suren", "Rathnayake", role = "aut",
               person("Cheyenne", "Moreau", role = "aut"),
               person("Simone", "Blomberg", role = c("aut", "cre"),
                      email = "s.blomberg1@uq.edu.au"))
-Description: Fits user-defined stochastic diffusion models to univariate trait data on a phylogeny. Also fits three canned models: Ornstein Uhlenbeck (OU; Gaussian), Cox, Ingersoll, Ross (CIR; Non-Gaussian) and an OU-like model with a Beta stationary distribution (Beta, Non-Gaussian). Models are fitted and parameters are estimated using a Data Augmentation - Metropolis Hastings algorithm. Output can be analysed using the 'coda' package or other appropriate packages for Bayesian analysis and visualisation. Menura is the genus name for the Australian Superb Lyrebird (Menura novaehollandiae), known for being the world's largest passerine, its elaborate tail and its talent for mimicry. 
+Description: Fits user-defined stochastic diffusion models to univariate trait data on a phylogeny. Also fits three canned models: Ornstein Uhlenbeck (OU; Gaussian), Cox, Ingersoll, Ross (CIR; Non-Gaussian) and an OU-like model with a Beta stationary distribution (Beta, Non-Gaussian). Models are fitted and parameters are estimated using a Data Augmentation - Metropolis Hastings algorithm. Output can be analysed using the 'coda' package , 'tidybayes' package or other appropriate packages for Bayesian analysis and visualisation. Menura is the genus name for the Australian Superb Lyrebird (Menura novaehollandiae), known for being the world's largest passerine, its elaborate tail and its talent for mimicry. We wrote menura in order to study the behaviour of SDE models on phylogenies. Thus, menura is EXPERIMENTAL SOFTWARE. If you are unsure whether menura is appropriate for your own analyses, it probably isn't.
 Author: Simone Blomberg <s.blomberg1@uq.edu.au>
 Maintainer: Simone Blomberg <s.blomberg1@uq.edu.au>
 Depends: R (>= 3.2.0)
@@ -15,5 +15,5 @@ Encoding: UTF-8
 LazyData: true
 Imports: ape, sde, stats, graphics
 NeedsCompilation: no
-Packaged: 2017-07-21 04:13:39 UTC; surenr
-Built: R 3.5.1; ; 2018-11-13 08:43:14 UTC; unix
+Packaged: 2018-11-18 09:26:44 UTC; simonb
+Built: R 3.5.1; ; 2018-11-18 09:37:31 UTC; unix

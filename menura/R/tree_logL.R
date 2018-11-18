@@ -1,8 +1,8 @@
 ### Calculates the Log Likelihood of the Diffusion Process in a Tree of Life
 ## Method can only be 'euler' or 'milstein'  ** currenlty not  available for milstein
 #see help file for argument descriptors
-tree_logL <- function(fossils, tr, tipdata, lst, alpha, mu, sigma, model,
-              method, ...) {
+tree_logL <- function(tr, tipdata, lst, alpha, mu, sigma, model,
+              method, fossils=NULL, ...) {
   
 
 tipdata <- as.numeric(tipdata)

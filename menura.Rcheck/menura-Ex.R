@@ -29,7 +29,7 @@ true.mu <- 5
 true.sigma <- 2
 t.root.value <- true.mu
 iters <- 200
-# Generate tip values
+# Generate tip kvalues
 set.seed(1)
 tr <-  compute.brlen(stree(n=ntips, type="balanced"))
 f_TrCir <- function(x, l)
@@ -80,7 +80,7 @@ nameEx("phylo_sde")
 flush(stderr()); flush(stdout())
 
 ### Name: phylo_sde
-### Title: Simulate a CIR Diffusion Process in the Tree of Life
+### Title: Simulate a CIR Diffusion Process on Phylogenies
 ### Aliases: phylo_sde
 
 ### ** Examples
@@ -126,8 +126,8 @@ nameEx("tree_logL")
 flush(stderr()); flush(stdout())
 
 ### Name: tree_logL
-### Title: Calculates the Log Likelihood of the Diffusion Process in a Tree
-###   of Life
+### Title: Calculates the Log Likelihood of the Diffusion Process on a
+###   Phylogeny
 ### Aliases: tree_logL
 
 ### ** Examples

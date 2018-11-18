@@ -1,31 +1,31 @@
 \name{tree_logL}
 \alias{tree_logL}
-\title{Calculates the Log Likelihood of the Diffusion Process in a Tree of Life}
+\title{Calculates the Log Likelihood of the Diffusion Process on a Phylogeny}
 \usage{
-tree_logL(fossils, tr, tipdata, lst, alpha, mu, sigma, model, method, ...)
+tree_logL(tr, tipdata, lst, alpha, mu, sigma, model, method, fossils,  ...)
 }
 \arguments{
-\item{fossils} {Name of nodes that are fossils.}
-\item{tr}{object of the class "phylo" as in the \code{ape} R package which
-contains the information of the tree structure.}
+\item{tr}{object of class "phylo" as in R package \code{ape} which contains the information of the tree structure.}
 
-\item{tipdata}{a numeric vector containing tip values in the
-same order of the tip labels in \code{tr$tip.label}.}
+\item{tipdata}{a numeric vector containing tip values in the same order of the tip labels in \code{tr$tip.label}.}
 
-\item{lst}{list containing the diffusion paths of the \code{tr} object in the same
-order as the edges in the \code{tr} object.}
+\item{lst}{list containing the diffusion paths of the \code{tr} object in the same order as the edges in the \code{tr} object.}
 
 \item{alpha}{vector containing the parameter value of theta_1 for each edge \code{tr} object,
 and the parameters location corresponds to the same edge numbering in the \code{tr} object.}
 
-\item{mu}{similar to definition of \code{alpha}.}
+\item{mu}{similar to the definition of \code{alpha}.}
 
-\item{sigma}{similar to definition of \code{alpha}.}
+\item{sigma}{similar to the definition of \code{alpha}.}
 
-\item{model}{a list which contains functions \code{d}, \code{s} and, possibly, \code{s_x} which are drift component, diffusion component, and partial derivative of diffusion component of the diffusion process.
-}
+\item{model}{a list which contains functions \code{d}, \code{s} and,
+  possibly, \code{s_x} which are the drift component, diffusion
+  component, and partial derivative of diffusion component of the
+  diffusion process.}
 
-\item{method}{Numerical method apprximate the sde.}
+\item{method}{Numerical method to approximate the SDE.}
+
+\item{fossils}{Name of nodes that are fossils.}
 
 \item{...}{not used.}
 }
@@ -33,7 +33,7 @@ and the parameters location corresponds to the same edge numbering in the \code{
 logL a number.
 }
 \description{
-Euler approximated Log likelihood of the diffusion process in the tree.
+Euler approximated Log likelihood of the diffusion process on the tree.
 }
 \examples{
 set.seed(1)

@@ -1,10 +1,10 @@
 Hmm ... looks like a package
+
 This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex)
  restricted \write18 enabled.
 entering extended mode
-(./Rd2.tex
 LaTeX2e <2018-04-01> patch level 5
-
+(./Rd2.tex
 (/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
 Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/bk10.clo))
@@ -20,121 +20,76 @@ Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.dfu)))
 (/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def))
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty))
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty)
 (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
 No file Rd2.aux.
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd)
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd)
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd)
-No file Rd2.toc.
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (30.78088pt too wide) in paragraph at lines 53--53
- []    \T1/pcr/m/n/10 alpha = list (df =  function(x, a = 1, b = 125, log_scale
- = TRUE) {[] 
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd) [1{/var/lib/texmf/fon
+ts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5] [6] [7]
+No file Rd2.ind.
+[8] (/tmp/Rtmp50rUGy/Rd2pdf243a4afcf182/Rd2.aux)
 
-Overfull \hbox (42.78088pt too wide) in paragraph at lines 54--54
- []                            \T1/pcr/m/n/10 dunif(x, min = a, max = b, log = 
-log_scale)},[] 
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
 
-Overfull \hbox (0.78088pt too wide) in paragraph at lines 57--57
- []    \T1/pcr/m/n/10 mu = list (df = function(x, a = 0, b = 20, log_scale = TR
-UE) {[] 
-
-Overfull \hbox (42.78088pt too wide) in paragraph at lines 58--58
- []                            \T1/pcr/m/n/10 dnorm(x, mean = a, sd = b, log = 
-log_scale)},[] 
-
-Overfull \hbox (24.78088pt too wide) in paragraph at lines 61--61
- []    \T1/pcr/m/n/10 sigma = list (df = function(x, a = 1, b = 225, log_scale 
-= TRUE) {[] 
-
-Overfull \hbox (48.78088pt too wide) in paragraph at lines 62--62
- []                            \T1/pcr/m/n/10 dunif(x, min = a, max = b, log = 
-log_scale) },[] 
-
-Overfull \hbox (48.78088pt too wide) in paragraph at lines 67--67
- []    \T1/pcr/m/n/10 alpha = list (df = function(n, alpha, gamma = 0.5, log_sc
-ale = TRUE) {[] 
-
-Overfull \hbox (0.78088pt too wide) in paragraph at lines 68--68
- []                    \T1/pcr/m/n/10 dlnorm(n, meanlog = log(alpha), sdlog = g
-amma,[] 
-
-Overfull \hbox (24.78088pt too wide) in paragraph at lines 71--71
- []                    \T1/pcr/m/n/10 rlnorm(n, meanlog = log(alpha), sdlog = g
-amma) }),[] 
-
-Overfull \hbox (12.78088pt too wide) in paragraph at lines 72--72
- []    \T1/pcr/m/n/10 mu = list (df = function(n, mu, gamma = 0.5, log_scale = 
-TRUE) {[] 
-
-Overfull \hbox (24.78088pt too wide) in paragraph at lines 73--73
- []                    \T1/pcr/m/n/10 dnorm(n, mean = mu, sd = gamma, log = log
-_scale)},[] 
-
-Overfull \hbox (42.78088pt too wide) in paragraph at lines 76--76
- []    \T1/pcr/m/n/10 sigma = list(df = function(n, sigma, gamma = 0.5, log_sca
-le = TRUE) {[] 
-
-Overfull \hbox (0.78088pt too wide) in paragraph at lines 77--77
- []                    \T1/pcr/m/n/10 dlnorm(n, meanlog = log(sigma), sdlog = g
-amma,[] 
-
-Overfull \hbox (12.78088pt too wide) in paragraph at lines 80--80
- []                    \T1/pcr/m/n/10 rlnorm(n, meanlog = log(sigma), sdlog = g
-amma)})[] 
-
-Overfull \hbox (6.78088pt too wide) in paragraph at lines 82--82
- []  \T1/pcr/m/n/10 mcmc_type = "tanner-wong", alpha = NULL, mu = NULL, sigma =
- NULL,[] 
-[2] [3]
-Overfull \hbox (20.58041pt too wide) in paragraph at lines 179--179
- []  \T1/pcr/m/n/9 rcCIR(n=1, Dt=l, x0=x, theta=c(true.alpha*true.mu, true.alph
-a, true.sigma))[] 
-
-Overfull \hbox (42.18039pt too wide) in paragraph at lines 180--180
- []\T1/pcr/m/n/9 t.tipdata <- rTraitCont(tr, f_TrCir, ancestor = FALSE, root.va
-lue = t.root.value)[] 
-
-Overfull \hbox (47.58038pt too wide) in paragraph at lines 183--183
- []\T1/pcr/m/n/9 model.1 <- fit_model(tr=tr, tipdata=t.tipdata, rt_value=t.root
-.value, iters=iters,[] 
-[4]
-Overfull \hbox (15.18042pt too wide) in paragraph at lines 212--212
- []\T1/pcr/m/n/9 model.2 <- fit_model(tr=tr, tipdata=tipdata, rt_value=rt_value
-, iters=iters,[] 
-[5]
-Overfull \hbox (25.49934pt too wide) in paragraph at lines 247--253
-\T1/pcr/m/n/10 diffusion\T1/ptm/m/n/10 , and the par-tial dif-fer-en-ti-a-tion 
-of \T1/pcr/m/n/10 diffusion \T1/ptm/m/n/10 by \T1/pcr/m/n/10 x \T1/ptm/m/n/10 a
-s \T1/pcr/m/n/10 dx_diffusion
-[6]
-Overfull \hbox (48.78088pt too wide) in paragraph at lines 328--328
- []\T1/pcr/m/n/10 tree_logL(fossils, tr, tipdata, lst, alpha, mu, sigma, model,
- method, ...)[] 
-[7] [8] (./Rd2.aux) )
-(see the transcript file for additional information){/usr/share/texlive/texmf-d
-ist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/ti
-mes/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Rd2.pdf (8 pages, 132531 bytes).
+ ){/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texliv
+e/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/share/texlive/texmf-
+dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/
+times/utmri8a.pfb>
+Output written on Rd2.pdf (8 pages, 148474 bytes).
 Transcript written on Rd2.log.
 This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex)
  restricted \write18 enabled.
 entering extended mode
-(./Rd2.tex
 LaTeX2e <2018-04-01> patch level 5
-
+(./Rd2.tex
 (/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
 Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/bk10.clo))
@@ -150,113 +105,250 @@ Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.dfu)))
 (/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def))
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty))
-(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty) (./Rd2.aux)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+(/tmp/Rtmp50rUGy/Rd2pdf243a4afcf182/Rd2.aux)
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd)
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/tmp/Rtmp50rUGy/Rd2pdf243a4afcf182/Rd2.out)
+(/tmp/Rtmp50rUGy/Rd2pdf243a4afcf182/Rd2.out)
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd)
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd) (./Rd2.toc) [1{/var/l
-ib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (30.78088pt too wide) in paragraph at lines 53--53
- []    \T1/pcr/m/n/10 alpha = list (df =  function(x, a = 1, b = 125, log_scale
- = TRUE) {[] 
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/tmp/Rtmp50rUGy/Rd2pdf243a4afcf182/Rd2.toc) [1{/var/lib/texmf/fonts/map/pdftex
+/updmap/pdftex.map}] [2] [3] [4] [5] [6] [7] [8]
+No file Rd2.ind.
+[9] (/tmp/Rtmp50rUGy/Rd2pdf243a4afcf182/Rd2.aux) ){/usr/share/texlive/texmf-dis
+t/fonts/enc/dvips/base/8r.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/in
+consolata/i4-t1-0.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/inconso
+lata/Inconsolata-zi4r.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
+i7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/t
+imes/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (9 pages, 149456 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2019/dev] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (3 entries accepted, 0 rejected).
+Sorting entries....done (4 comparisons).
+Generating output file Rd2.ind....done (13 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 5
+(./Rd2.tex
+(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/bk10.clo))
+(/usr/share/R/share/texmf/tex/latex/Rd.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.def
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
 
-Overfull \hbox (42.78088pt too wide) in paragraph at lines 54--54
- []                            \T1/pcr/m/n/10 dunif(x, min = a, max = b, log = 
-log_scale)},[] 
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
 
-Overfull \hbox (0.78088pt too wide) in paragraph at lines 57--57
- []    \T1/pcr/m/n/10 mu = list (df = function(x, a = 0, b = 20, log_scale = TR
-UE) {[] 
 
-Overfull \hbox (42.78088pt too wide) in paragraph at lines 58--58
- []                            \T1/pcr/m/n/10 dnorm(x, mean = a, sd = b, log = 
-log_scale)},[] 
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
 
-Overfull \hbox (24.78088pt too wide) in paragraph at lines 61--61
- []    \T1/pcr/m/n/10 sigma = list (df = function(x, a = 1, b = 225, log_scale 
-= TRUE) {[] 
+) (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+(/tmp/Rtmp50rUGy/Rd2pdf243a4afcf182/Rd2.aux)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/tmp/Rtmp50rUGy/Rd2pdf243a4afcf182/Rd2.out)
+(/tmp/Rtmp50rUGy/Rd2pdf243a4afcf182/Rd2.out)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/tmp/Rtmp50rUGy/Rd2pdf243a4afcf182/Rd2.toc) [1{/var/lib/texmf/fonts/map/pdftex
+/updmap/pdftex.map}] [2] [3] [4] [5] [6] [7] [8]
+(/tmp/Rtmp50rUGy/Rd2pdf243a4afcf182/Rd2.ind [9] [10])
+(/tmp/Rtmp50rUGy/Rd2pdf243a4afcf182/Rd2.aux)
 
-Overfull \hbox (48.78088pt too wide) in paragraph at lines 62--62
- []                            \T1/pcr/m/n/10 dunif(x, min = a, max = b, log = 
-log_scale) },[] 
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
 
-Overfull \hbox (48.78088pt too wide) in paragraph at lines 67--67
- []    \T1/pcr/m/n/10 alpha = list (df = function(n, alpha, gamma = 0.5, log_sc
-ale = TRUE) {[] 
+ ){/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texliv
+e/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/share/texlive/texmf-
+dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/
+times/utmri8a.pfb>
+Output written on Rd2.pdf (10 pages, 149970 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2019/dev] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (3 entries accepted, 0 rejected).
+Sorting entries....done (4 comparisons).
+Generating output file Rd2.ind....done (13 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 5
+(./Rd2.tex
+(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/bk10.clo))
+(/usr/share/R/share/texmf/tex/latex/Rd.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.def
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
 
-Overfull \hbox (0.78088pt too wide) in paragraph at lines 68--68
- []                    \T1/pcr/m/n/10 dlnorm(n, meanlog = log(alpha), sdlog = g
-amma,[] 
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
 
-Overfull \hbox (24.78088pt too wide) in paragraph at lines 71--71
- []                    \T1/pcr/m/n/10 rlnorm(n, meanlog = log(alpha), sdlog = g
-amma) }),[] 
 
-Overfull \hbox (12.78088pt too wide) in paragraph at lines 72--72
- []    \T1/pcr/m/n/10 mu = list (df = function(n, mu, gamma = 0.5, log_scale = 
-TRUE) {[] 
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
 
-Overfull \hbox (24.78088pt too wide) in paragraph at lines 73--73
- []                    \T1/pcr/m/n/10 dnorm(n, mean = mu, sd = gamma, log = log
-_scale)},[] 
-
-Overfull \hbox (42.78088pt too wide) in paragraph at lines 76--76
- []    \T1/pcr/m/n/10 sigma = list(df = function(n, sigma, gamma = 0.5, log_sca
-le = TRUE) {[] 
-
-Overfull \hbox (0.78088pt too wide) in paragraph at lines 77--77
- []                    \T1/pcr/m/n/10 dlnorm(n, meanlog = log(sigma), sdlog = g
-amma,[] 
-
-Overfull \hbox (12.78088pt too wide) in paragraph at lines 80--80
- []                    \T1/pcr/m/n/10 rlnorm(n, meanlog = log(sigma), sdlog = g
-amma)})[] 
-
-Overfull \hbox (6.78088pt too wide) in paragraph at lines 82--82
- []  \T1/pcr/m/n/10 mcmc_type = "tanner-wong", alpha = NULL, mu = NULL, sigma =
- NULL,[] 
-[2] [3]
-Overfull \hbox (20.58041pt too wide) in paragraph at lines 179--179
- []  \T1/pcr/m/n/9 rcCIR(n=1, Dt=l, x0=x, theta=c(true.alpha*true.mu, true.alph
-a, true.sigma))[] 
-
-Overfull \hbox (42.18039pt too wide) in paragraph at lines 180--180
- []\T1/pcr/m/n/9 t.tipdata <- rTraitCont(tr, f_TrCir, ancestor = FALSE, root.va
-lue = t.root.value)[] 
-
-Overfull \hbox (47.58038pt too wide) in paragraph at lines 183--183
- []\T1/pcr/m/n/9 model.1 <- fit_model(tr=tr, tipdata=t.tipdata, rt_value=t.root
-.value, iters=iters,[] 
-[4]
-Overfull \hbox (15.18042pt too wide) in paragraph at lines 212--212
- []\T1/pcr/m/n/9 model.2 <- fit_model(tr=tr, tipdata=tipdata, rt_value=rt_value
-, iters=iters,[] 
-[5]
-Overfull \hbox (25.49934pt too wide) in paragraph at lines 247--253
-\T1/pcr/m/n/10 diffusion\T1/ptm/m/n/10 , and the par-tial dif-fer-en-ti-a-tion 
-of \T1/pcr/m/n/10 diffusion \T1/ptm/m/n/10 by \T1/pcr/m/n/10 x \T1/ptm/m/n/10 a
-s \T1/pcr/m/n/10 dx_diffusion
-[6]
-Overfull \hbox (48.78088pt too wide) in paragraph at lines 328--328
- []\T1/pcr/m/n/10 tree_logL(fossils, tr, tipdata, lst, alpha, mu, sigma, model,
- method, ...)[] 
-[7] [8] (./Rd2.aux) )
-(see the transcript file for additional information){/usr/share/texlive/texmf-d
-ist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/ti
-mes/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Rd2.pdf (8 pages, 132615 bytes).
+) (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+(/tmp/Rtmp50rUGy/Rd2pdf243a4afcf182/Rd2.aux)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/tmp/Rtmp50rUGy/Rd2pdf243a4afcf182/Rd2.out)
+(/tmp/Rtmp50rUGy/Rd2pdf243a4afcf182/Rd2.out)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/tmp/Rtmp50rUGy/Rd2pdf243a4afcf182/Rd2.toc) [1{/var/lib/texmf/fonts/map/pdftex
+/updmap/pdftex.map}] [2] [3] [4] [5] [6] [7] [8]
+(/tmp/Rtmp50rUGy/Rd2pdf243a4afcf182/Rd2.ind [9] [10])
+(/tmp/Rtmp50rUGy/Rd2pdf243a4afcf182/Rd2.aux) ){/usr/share/texlive/texmf-dist/fo
+nts/enc/dvips/base/8r.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/incons
+olata/i4-t1-0.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/inconsolata
+/Inconsolata-zi4r.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times
+/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (10 pages, 150250 bytes).
 Transcript written on Rd2.log.
 Saving output to ‘menura-manual.pdf’ ...
 Done
-You may want to clean up by 'rm -Rf /tmp/RtmpdfOcL8/Rd2pdf17b46b37f99a'
+You may want to clean up by 'rm -Rf /tmp/Rtmp50rUGy/Rd2pdf243a4afcf182'

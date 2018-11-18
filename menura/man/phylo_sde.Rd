@@ -1,15 +1,14 @@
 \name{phylo_sde}
 \alias{phylo_sde}
-\title{Simulate a CIR Diffusion Process in the Tree of Life}
+\title{Simulate a CIR Diffusion Process on Phylogenies}
 \usage{
 phylo_sde(tr, rt_value, N, theta, model, method = "euler", ...)
 }
 \arguments{
 \item{tr}{a modified object of class \code{phylo} as in the
-\code{ape} R package. In this version, the CIR process
-parameters alpha, mu and sigma for each of the branch
-is included as vectors in the same order
-as the edge (branch) labelling.}
+\code{ape} package. In this version, the CIR process parameters alpha,
+mu and sigma for each of the branch is included as vectors in the same
+order as the edge (branch) labelling.}
 
 \item{rt_value}{value at the root.}
 
@@ -29,29 +28,25 @@ See the Examples.}
 \item{...}{not used.}
 }
 \value{
-lst a list of length equal to the number of
-branches in the object \code{tr}. Elements of lst are time series
-objects which are the simulated paths.
+lst a list of length equal to the number of branches in the object
+\code{tr}. Elements of lst are time series objects which are the simulated paths.
 }
 \description{
-Starting from the root of the tree - which is assumed to start at
-time 0, and the root value is known - a recursive scheme is used in
-simulating a CIR process in the branches of the tree.
+Starting from the root of the tree - which is assumed to start at time
+0, and the root value is known - a recursive scheme is used in simulating a CIR process in the branches of the tree.
 }
 \details{
-The number of samples imputed in a branch (edge) is proportional to the length
-of the branch. First, the samples are imputed for the two root edges.
-The end points of these are taken to be the starting points of
-the successive branches. This process is done recursive for until
-the tip nodes are reached.
+The number of samples imputed along a branch (edge) is proportional to the length
+of the branch. First, the samples are imputed for the two root
+edges. The end points of these are taken to be the starting points of
+the successive branches. This process is done recursively along the tree until the tip nodes are reached.
 
 The number of samples imputed on a branch is equal to
 \code{round(N * branch_length)}.
-As, the next branch starts from the end point of the previous,
-the branch start and stop times would change,
-which would depend on the data imputation frequency N.
+As the next branch starts from the end point of the previous, the
+branch start and stop times can change, which depends on the data imputation frequency N.
 
-In case, if length of an edge is small, no samples may be imputed for
+In this case, if length of an edge is small, no samples may be imputed for
 such a branch. As such, the simulated output may contain branches
 of zero length. This can be avoided by employing higher value for N.
 }

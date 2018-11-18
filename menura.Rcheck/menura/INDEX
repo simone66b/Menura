@@ -1,6 +1,5 @@
 fit_model               Bayesian Estimator of Parameters of Univariate
                         Diffusion Models for Continuous Trait Evolution
-phylo_sde               Simulate a CIR Diffusion Process in the Tree of
-                        Life
+phylo_sde               Simulate a CIR Diffusion Process on Phylogenies
 tree_logL               Calculates the Log Likelihood of the Diffusion
-                        Process in a Tree of Life
+                        Process on a Phylogeny
