@@ -1,4 +1,4 @@
-* using log directory ‘/home/simonb/Desktop/Menura/menura.Rcheck’
+* using log directory ‘/home/simon/Desktop/Menura/menura.Rcheck’
 * using R version 3.5.1 (2018-07-02)
 * using platform: x86_64-pc-linux-gnu (64-bit)
 * using session charset: UTF-8
@@ -42,7 +42,13 @@
 * checking Rd \usage sections ... OK
 * checking Rd contents ... OK
 * checking for unstated dependencies in examples ... OK
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
 * checking examples ... OK
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ... NONE
+* checking re-building of vignette outputs ... OK
 * checking PDF version of manual ... OK
 * DONE
 Status: OK

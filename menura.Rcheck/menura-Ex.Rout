@@ -342,7 +342,7 @@ detaching ‘package:msm’, ‘package:ape’, ‘package:sde’, ‘package:zo
 
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  32.892 0.07 32.959 0 0 
+Time elapsed:  78.666 0.598 79.282 0 0 
 > grDevices::dev.off()
 null device 
           1 

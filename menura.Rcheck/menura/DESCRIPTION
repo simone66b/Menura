@@ -16,4 +16,6 @@ LazyData: true
 Imports: ape, sde, stats, graphics
 NeedsCompilation: no
 Packaged: 2018-11-18 09:26:44 UTC; simonb
-Built: R 3.5.1; ; 2018-11-18 09:37:31 UTC; unix
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
+Built: R 3.5.1; ; 2018-11-26 07:02:07 UTC; unix

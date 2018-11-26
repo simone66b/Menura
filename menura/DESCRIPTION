@@ -16,3 +16,7 @@ LazyData: true
 Imports: ape, sde, stats, graphics
 NeedsCompilation: no
 Packaged: 2018-11-18 09:26:44 UTC; simonb
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
