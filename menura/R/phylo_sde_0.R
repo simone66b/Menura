@@ -1,8 +1,5 @@
+phylo_sde_0 <- function(tr, rt_value, N, theta, model, method, fossils=NULL, ...) {
 
-
-phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
-
-  
   #stores list of points for each simulated edge
   lst <- list()
   n_tips <- length(tr$tip.label)
@@ -143,8 +140,6 @@ phylo_sde_0 <- function(fossils, tr, rt_value, N, theta, model, method, ...) {
   }
   sde_edges(fossils, tr, rt_node, X0 = rt_value, t0 = 0)
 
-  
-  
    
   # Remove tip values (we have observed tip values)
   node_len <- ape::node.depth.edgelength(tr)

@@ -1,7 +1,9 @@
 # ver 0.3.0 - make the acceptace rates vectors
-#fit_model <- function(fossils, tr, tipdata, rt_value, model, ...) UseMethod("fit_model")
+fit_model <- function(tr, tipdata, rt_value, model, priors, proposals, mcmc_type = "tanner-wong", alpha = NULL, mu = NULL, sigma = NULL,
+  N = 1000, init_method = "sim", update_method = "subtree", iters = 5000,
+  method = "euler", fossils = NULL, ...) UseMethod("fit_model")
 
-fit_model.default <- function(fossils, tr, tipdata, rt_value = mean(tipdata),
+fit_model.default <- function(tr, tipdata, rt_value = mean(tipdata),
   model = "OU",
   priors = list(
     alpha = list(df =  function(x, a = 1, b = 125, log_scale = TRUE) {
@@ -35,7 +37,7 @@ fit_model.default <- function(fossils, tr, tipdata, rt_value = mean(tipdata),
   ),
   mcmc_type = "tanner-wong", alpha = NULL, mu = NULL, sigma = NULL,
   N = 1000, init_method = "sim", update_method = "subtree", iters = 5000,
-  method = "euler", ...)
+  method = "euler", fossils = NULL, ...)
 {
 
 if (class(tr) != "phylo")

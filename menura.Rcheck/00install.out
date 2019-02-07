@@ -1,0 +1,11 @@
+* installing *source* package ‘menura’ ...
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+   ‘menura.Rmd’ using ‘UTF-8’ 
+** testing if installed package can be loaded
+* DONE (menura)

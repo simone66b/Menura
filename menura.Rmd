@@ -1,0 +1,550 @@
+---
+title: "Package 'menura'" 
+author: "Cheyenne Moreau"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Menura}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: menura_vignette.bib
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+##Welcome to menura 
+<p>
+  <img width="75" height="100" src="menura_bird.jpg" style="float: left;">
+</p>
+
+This is the introductory description.  Summarize the most important uses for this package. This is the introductory description.  Summarize the most important uses for this package. This is the introductory description.  Summarize the most important uses for this package. This is the introductory description.  Summarize the most important uses for this package. This is the introductory description.  Summarize the most important uses for this package. For the mathematical background and underlying statistics of package menura, see @blomberg2017.
+
+
+***
+##`fit_model`      
+  
+***
+
+##Description:
+  
+  This function estimates posterior distributions for macroevolutionary
+  models of continuous traits in a phylogeny. The evolutionary
+  processes considered here belong to a class of diffusion processes
+  which are typically given as solutions to the stochastic
+  differential equations of the form given by
+  $$dX_t = a(X_t, \alpha, \mu) dt + b(X_t, \sigma) dW_t,~~X_0 = x_0$$
+  where $X_t$ denotes the state variable, $t$ the time,
+  $a$ the drift function and $b$
+ the diffusion function are known
+  in parametric from which
+  `alpha`, `mu`, and `sigma`
+  are the parameters, and $W_t$ is Brownian motion.
+  The value of $X_t$ at time $t_0$, $X_0$,
+  is independent of $W_t$.
+
+  Given root and tip values, the tree,
+  and drift and diffusion functions,
+  Markov Chain Monte Carlo (MCMC) estimates
+  of the parameters are obtained.
+  The parameter to be estimated is assumed to be the same
+  for all the branches of the tree; however,
+  the rest can be allowed to vary.
+
+  Due to the low frequency nature of the data, the MCMC
+  method used assumes intermediate data
+  are missing. Thus, during each step of the MCMC iterations,
+  missing data and the model parameters are imputed.
+
+
+##Details
+This is the main function available for analysis within the menura package.  Running `fit_model` starts the Bayesian estimation of parameters using the indicated model, method, and mcmc type. Be sure to set the parameter being estimated to `NULL`. Increasing the number of iterations (minimum 200000) and running the method multiple times is recommended to understand the variation in Markov Chain Monte Carlo estimations. Expect the function to run over night. The following guide provides a brief explanation of the options available.
+
+### Usage
+```
+# Default settings
+
+fit_model <- function(tr, tipdata, rt_value = mean(tipdata),
+                   model = "OU",
+                   priors = list(
+                     alpha = list(df =  function(x, a = 1, b = 125, log_scale = TRUE) {
+                                     dunif(x, min = a, max = b, log = log_scale)},
+                        rf = function(n, a = 1, b = 125) {
+                                      runif(n, min = a, max = b)}),
+                     mu = list(df = function(x, a = 0, b = 20, log_scale = TRUE) {
+                                       dnorm(x, mean = a, sd = b, log = log_scale)},
+                         rf = function(n, a = 0, b = 20) 
+                                        rnorm(n, mean = a, sd = b)}),
+                     sigma = list(df = function(x, a = 1, b = 225, log_scale = TRUE) {
+                                         dunif(x, min = a, max = b, log = log_scale) },
+                         rf = function(n, a = 1, b = 225) {
+                                        runif(n, min = a, max = b)})
+                                   ),
+                      proposals = list(
+                         alpha = list(df = function(n, alpha, gamma = 0.5, log_scale = TRUE) {
+                                            dlnorm(n, meanlog = log(alpha), sdlog = gamma,
+                                                   log = log_scale)},
+                                    rf = function(n, alpha, gamma = 0.5) {
+                                           rlnorm(n, meanlog = log(alpha), sdlog = gamma) }),
+                        mu = list(df = function(n, mu, gamma = 0.5, log_scale = TRUE) {
+                                         dnorm(n, mean = mu, sd = gamma, log = log_scale)},
+                                   rf = function(n, mu, gamma = 0.5) {
+                                         rnorm(n, mean = mu, sd = gamma)}),
+                        sigma = list(df = function(n, sigma, gamma = 0.5, log_scale = TRUE) {
+                                          dlnorm(n, meanlog = log(sigma), sdlog = gamma,
+                                                 log = log_scale)},
+                                     rf = function(n, sigma, gamma=0.5) {
+                                            rlnorm(n, meanlog = log(sigma), sdlog = gamma)})
+                              ),
+                    mcmc_type = "tanner-wong", alpha = NULL, mu = NULL, sigma = NULL,
+                    N = 100, init_method = "sim", update_method = "subtree", iters = 5000,
+                    method = "euler", ...)
+                    
+```
+
+
+
+###`priors` / `proposals`
+  We recommend trying various priors and proposals for the best results as the default is most likely not suitable for your dataset.
+Priors are a list of lists containing functions for prior distributions
+of the model parameters.
+Proposals are a list of lists containing functions for proposal distributions
+of the model parameters.
+
+###`method`
+
+  * Euler
+  
+  * Milstein
+  
+  See Chapter 2, Numerical Methods for SDE, from @iacus2009 for further information.
+
+###`model`
+
+Specify the diffusion process as
+   **Ornstein-Uhlenbeck (OU)**,
+   **Cox-Ingersoll-Ross (CIR)**, or **Beta (Beta)**
+   by setting the `model` to "OU", "CIR", or
+   "Beta", respectively.
+   If the diffusion process is not one of these, simply specify the drift and diffusion coefficients
+   in a list assigned to  `model`. In this case,
+   the list object  `model` must include: 
+   
+   1. `d ` and `s ` as functions of time (`t`), space (`x`) and a vector of the parameter values (`theta`)
+   consisting of  `alpha `,  `mu ` and  `sigma `
+   
+   1. drift coefficients as a list containing a `quote` 
+   
+   1. a diffusion coefficient as a list object which includes  `diffusion` as the diffusion coefficients and
+    `x` as the first derivatives of diffusion coefficients.
+ 
+   **Ornstein–Uhlenbeck (OU)** model is given by
+    $$dX_t = \alpha (\mu - X_t) dt + \sigma~ dW_t$$
+   with  $X_0 = x_0 > 0$,  $W_t$ is the Brownian process,
+   alpha, mu, and sigma are the model parameters
+   where alpha and sigma are positive values.
+ 
+   **Cox-Ingersoll-Ross (CIR)** model is given by
+    $$dXt = \alpha (\mu - X_t) dt + \sigma~\sqrt(X_t) dWt$$
+   with  $X_0 = x_0 > 0$, where Wt is the Brownian process, alpha, mu,
+   and sigma are the model parameters which are all
+   positive values. If the  `model == "CIR" ` is specified,
+   then the parameter estimation is done by
+   using transformation  $Y = sqrt(X)$ of Ito diffusion
+   process.
+ 
+   **Beta** model is given by
+    $$dX_t = \alpha(\mu - X_t) dt + \sigma~\sqrt(X_t (1-X_t)) dW_t,$$
+   with  $X_0 = x_0 > 0$,  $W_t$ is the Brownian process,
+  alpha, mu, and sigma are the model parameters
+  where alpha and sigma are positive values.
+  If the  `model == ` "Beta" is specified,
+  then the parameter estimation is done by
+  using transformation  $Y = 2~sin^{-1}(X)$ of the Ito diffusion
+  process.
+
+###`mcmc-type`
+
+* Fuchs: See @fuchs2013inference.
+* Tanner-Wong: MCMC with data augmentation as discussed in @tanner1987.
+
+###`tr`
+An object of class `phylo` from the ape package. Ensure all polytomies are resolved and that every tip has a trait value.  Currently, menura does not allow for trees with fossil data. 
+
+###`tipdata`
+A numeric vector containing tip values in the same order as the tip labels in `tr$tip.label`.
+
+###`rt_value`
+Value at the root of `tr`.
+
+###`alpha, mu, sigma`
+A vector containing the parameter value of theta[1], theta[2], and theta[3] respectively, for each edge of the tr object. In this version the CIR process parameters alpha, mu, and sigma for each branch are within vectors in the same order as the edge (branch) labelling.
+
+###`N`
+Data augmentation frequency used in the @tanner1987 mcmc method.
+
+###`init_method`
+Method for the initial data imputation.  Currently only `sim` is available.
+
+###`update_method`
+Method for data imputation during MCMC. Option `subtree` will only update part of the tree at each iteration, whereas `tree` will update the whole tree.
+
+###`iters`
+Number of MCMC iterations.  We recommend at least 200000 with more than that resulting in a cleaner mcmc trace plot.
+
+
+
+*Use the [Parameter setup] to experiment with [Example 1: Run Menura] & [Example 2: Run Menura with a Custom Model]*
+
+*Use different parameters on different branches in [Example 4: Run Menura with Varying Parameter Values]*
+
+
+**Functions called within `fit_model` you may want to use:**
+
+***
+##`tree_logL`     
+  
+***
+
+  **Description:**  Euler approximated log likelihood of the diffusion process in the tree.  
+  
+  **Arguments:** 
+  
+   **`tr`** : An object of class `phylo` from the ape package.  In this version the CIR process parameters alpha, mu, and sigma for each branch are within vectors in the same order as the edge (branch) labelling.
+   
+  **`tipdata`** : a numeric vector containing tip values in the
+same order of the tip labels in `tr$tip.label`.
+
+  **`lst`** : From function call [`phylo_sde`], a list containing the diffusion paths of the `tr` object in the same
+order as the edges in the `tr` object.
+
+  **`alpha`** : A vector containing the parameter value of theta[1] for each edge of the `tr` object,
+corresponding to the same edge numbering as in the `tr` object.
+
+  **`mu`** : Similar to alpha, value of theta[2]
+  
+  **`sigma`** : Similar to alpha, value of theta[3]
+  
+  **`model`** : A list which contains functions `d`, `s` and, possibly, `s_x` which are drift component, diffusion component, and partial derivative of diffusion component of the diffusion process.
+  
+  **`method`** : Numerical method used to approximate the SDE (euler or milstein).
+  
+  **`...`** : Not used
+  
+  **Value:** 
+  
+  **`loglike`** : Loglikelihood as an integer.
+
+*See [Example 3: Using `phylo_sde` & `tree_logL`]*
+
+*** 
+##`phylo_sde`         
+  
+***
+
+**Description:** Starting from the root of the tree - assumed to start at
+time 0 with a known root value - a recursive scheme is used to
+simulate a CIR process along the branches of the tree.
+
+  **Details:** The number of samples imputed along a branch (edge) is proportional to the length
+of the branch, expressed as: `round(N * branch_length)`. First, samples are imputed for the two edges branching from the root.
+The end points of these become the starting points for
+the successive branches. This process is done recursively until
+the tip nodes are reached.
+
+As the next branch starts from the end point of the previous,
+the branch start and stop times change
+depending on the data imputation frequency N.
+
+If the length of an edge is small, no samples will be imputed for
+such a branch. As such, the simulated output may contain branches
+of zero length. This can be avoided by using a higher value for N.
+  
+  **Arguments:**
+  
+  
+  **`tr`** : An object of class `phylo` from the ape package.  In this version the CIR process parameters alpha, mu, and sigma for each branch are within vectors in the same order as the edge (branch) labelling.
+  
+
+  **`rt_value`** : Value at the root of `tr`.
+  
+  
+   **`N`** : Data imputation frequency.
+   
+
+**`theta`** : Matrix of parameter values for each edge of the tree.
+
+
+**`model`** : A list containing drift, diffusion, and the partial differentiation of diffusion as quoted
+       expressions using method quote. For the Euler scheme the drift coefficient as `drift`, the diffusion coefficient as
+       `diffusion`, and the partial differentiation of `diffusion` by `x` as `dx_diffusion` is required.  
+       
+
+**`method`** : Specified as either "euler" or "milstein."
+
+
+**`...`** : Not used.
+
+  
+  **Value:**
+  
+  **`lst`** : A list of time series for each simulated path equal to the length of
+ the number of branches in the `tr` object.
+
+*See [Example 3: Using `phylo_sde` & `tree_logL`]*
+
+## Interpreting the output
+
+Explaination of coda type output 
+Explaination of menura object output
+Show plots of simulations
+Using the coda package `plot` and `summary` functions to interpret the runs.
+Coda diagnostics.
+
+We recommend analyzing your results with the coda and tidybayes packages.  
+
+Insert mcmc trace plots
+
+## Examples
+Test the full functionality of the menura package by generating a random binary tree of type "phylo" with [`compute.brlen`](https://www.rdocumentation.org/packages/ape/versions/5.1/topics/compute.brlen) and randomly generated tipdata using [`rTraitCont`](https://www.rdocumentation.org/packages/ape/versions/5.1/topics/rTraitCont) from the `ape` package. Then run function `fit.model` using the default arguments values.
+
+###Parameter setup
+```
+# Number of tips on the tree
+ntips <- 128
+
+# SDE parameters
+true.alpha <- 10
+true.mu <- 5
+true.sigma <- 2
+
+# Set a starting root value
+t.root.value <- true.mu
+
+# Iterations set to 50 to limit run time.  Most simulations require 200000 or more
+iters <- 50
+
+# Create a random tree
+tr <-  compute.brlen(stree(n=ntips, type="balanced"))
+
+# Plot the tree to see the structure
+plot(tr)
+edgelabels()
+nodelabels()
+
+
+## Uncomment the tipdata generation method for your preferred model
+
+# Generates tipdata for CIR method
+#f_TrCir <- function(x, l){
+#  x <- 1
+#  l <- 0.1
+#  rcCIR(n=1, Dt=l, x0=x, theta=c(true.alpha*true.mu, true.alpha, true.sigma))
+#}
+
+#t.tipdata <- rTraitCont(tr, f_TrCir, ancestor = FALSE, root.value = t.root.value)
+
+# Generates tipdata for OU method
+# t.tipdata <- rTraitCont(ftr, "OU", sigma=sigma, alpha=alpha, theta=mu,
+                     # root.value=rt_value)
+                     
+                     ##<insert example 1 or 2>##
+```
+###Example 1: Run Menura
+```
+## Run the simulation and parameter estimation 
+set.seed(1)
+model.1 <- fit_model(tr=tr, tipdata=t.tipdata, rt_value=t.root.value, iters=iters,
+                     model = "CIR", alpha = 10,  mu = 5, sigma = NULL,
+                     N=240, init_method = "sim", update_method = "subtree")
+
+# Look at the MCMC trace of parameters
+summary(model.1)
+model.1
+
+## Use coda package to analyse the mcmc chain
+ require(coda)
+ plot(model.1$mcmctrace)
+ summary(model.1$mcmctrace)}
+```
+
+###Example 2: Run Menura with a Custom Model
+```
+## Define a different model than the default options
+
+model <- list()
+model$d <- function (t, x, theta) {
+  ((theta[1]*theta[2] - 0.25* theta[3]^2) / (2 * x)) - theta[2] * x / 2
+}
+model$s <- function(t, x, theta) {
+  0.5 * theta[3]
+}
+model$drift <- quote(((alpha * mu - 0.25 * sigma^2) / (2*x)) -
+                       alpha * x / 2)
+model$diffusion <- quote(sigma/2)
+model$dx_diffusion <- quote(0)
+
+tipdata  <- sqrt(t.tipdata)
+rt_value <- sqrt(t.root.value)
+set.seed(1)
+model.2 <- fit_model(tr=tr, tipdata=tipdata, rt_value=rt_value, iters=iters,
+                     model = model, alpha = 10,  mu = 15, sigma = NULL,
+                     N=240, init_method = "sim", update_method = "subtree")
+
+plot(model.2$mcmctrace)
+```
+###Example 3: Using `phylo_sde` & `tree_logL`
+```
+## Use phylo_sde or tree_logL separately
+  set.seed(1)
+
+  # Random tree with n tips
+  tr <-  compute.brlen(rtree(n=4))
+
+  # plot the tree
+  plot(tr)
+  edgelabels()
+  nodelabels()
+  add.scale.bar()
+
+  
+  # SDE parameters
+  Nedges <- length(tr$edge.length)  
+  
+  dclade <- max(which(tr$edge[,1] == tr$edge[1,1])) - 1  
+  
+  # These parameters are vectors with size = number of edges 
+  alpha <- mu <- sigma <- rep(0, Nedges)
+  
+  # Numeric vector of selective constraint strength for ec. branch
+  alpha[1:Nedges]  <- 0.1
+  
+  #represents numeric vector giving ec. branch optimum
+  mu[1:Nedges] <- 0
+  
+  #numeric vector Std-dev of random component for ec. branch
+  sigma[1:Nedges] <- 1
+  
+  rt_value <- 0
+  
+  #simulate tipdata
+  tipdata <- rTraitCont(tr, "OU", sigma=sigma, alpha=alpha, theta=mu,
+                        root.value=rt_value)
+  
+  
+  model <- list()
+  model$d <- function (t, x, theta) {
+    theta[1] * (theta[2] - x)
+  }
+  
+  model$s <- function(t, x, theta) {
+    theta[3]
+  }
+  
+  # quote() assigns an expression to a variable instead of the solution
+  model$drift <- quote(alpha * (mu - x))
+  model$diffusion <- quote(sigma)
+  model$dx_diffusion <- quote(0)
+
+  #theta is a vector of the parameters
+  theta <- cbind(alpha=alpha, mu=mu, sigma=sigma)
+  N <- 100
+  
+  lst <- phylo_sde(tr=tr, rt_value=rt_value, theta=theta, model=model,
+                    N=N, method="euler")
+  
+  # lst stores the time series point path to each node
+  lst 
+  
+  # Calls log likelihood using Euler, approximates for diffusion process in tree
+  loglike <-  tree_logL (tr=tr, tipdata=tipdata, lst=lst,
+                         alpha=theta[, "alpha"],
+                         mu=theta[, "mu"],
+                         sigma=theta[, "sigma"], model=model,
+                         method = "euler")
+  
+
+ 
+
+
+#compare to plot(tr)
+plot(tr)
+#plot the point paths in list
+plot(NA, xlim=c(0,1), ylim=c(-2, 1.5), type="n")
+lapply(lst, lines)
+
+loglike
+```
+
+###Example 4: Run Menura with Varying Parameter Values
+```
+
+# This example illustrates the packages capacity to take on different parameter values for each branch
+ntips <- 128
+tr <-  compute.brlen(stree(n=ntips, type="balanced"))
+
+Nedges <- length(tr$edge.length)  
+
+# These parameters are vectors with size = number of edges 
+alpha <- mu <- sigma <- rep(0, Nedges)
+
+# Numeric vector of selective constraint strength for ec. branch
+alpha[1:Nedges]  <- 0.1
+#Perhaps branch 3 and 5 has an alpha of 0.5 instead of 0.1
+alpha[3] <- 0.5
+alpha[5] <- 0.5
+
+#represents numeric vector giving ec. branch optimum
+mu[1:Nedges] <- 0
+
+#numeric vector Std-dev of random component for ec. branch
+# Sigma is the parameter you wish to estimate
+sigma[1:Nedges] <- 1
+
+
+# SDE parameters
+true.alpha <- 0.1
+true.mu <- 0
+true.sigma <- 1
+
+t.root.value <- true.mu
+iters <- 200
+
+
+## Uncomment the tipdata generation method for your preferred model
+
+# Generates tipdata for CIR method
+# f_TrCir <- function(x, l){
+#   x <- 1
+#   l <- 0.1
+#   rcCIR(n=1, Dt=l, x0=x, theta=c(true.alpha*true.mu, true.alpha, true.sigma))
+# }
+# 
+# t.tipdata <- rTraitCont(tr, f_TrCir, ancestor = FALSE, root.value = t.root.value)
+
+# Generates tipdata for OU method
+t.tipdata <- rTraitCont(ftr, "OU", sigma=sigma, alpha=alpha, theta=mu,
+root.value=rt_value)
+
+set.seed(1)
+model.1 <- fit_model(tr=tr, tipdata=t.tipdata, rt_value=t.root.value, iters=iters,
+                     model = "OU", alpha = 10,  mu = 15, sigma = NULL,
+                     N=240, init_method = "sim", update_method = "subtree")
+
+# Look at the MCMC trace of the parameters
+summary(model.1)
+model.1
+
+## Use coda package to analyse the mcmc chain
+require(coda)
+plot(model.1$mcmctrace)
+summary(model.1$mcmctrace)
+```
+
+# References
+
+
