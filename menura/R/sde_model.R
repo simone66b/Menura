@@ -18,7 +18,10 @@ sde_model <- function(model, rt_value, tipdata, ...) {
       attr(M, "sde_class") <- "OU"
 
     } else if (model == "CIR") {
-
+        if (any(tipdata <= 0)) {
+            stop("Tip data must be strictly positive for the CIR model.")
+        }
+        
       M <- list()
       M$d <- function(t, x, theta) {
         ((theta[1] * theta[2] - 0.25 * theta[3]^2) / (2 * x)) - theta[1] * x / 2
@@ -38,10 +41,9 @@ sde_model <- function(model, rt_value, tipdata, ...) {
 
     } else if (model == "Beta") {
 
-      if (max(abs(tipdata)) > 1)
-        stop("For the Beta model, tip values can take values in ",
-              " the -1 to 1 range only.")
-
+        if (any(tipdata >= 1) || any(tipdata <= 0)) {
+        stop("For the Beta model, tip values can take values in (0, 1) range only.")
+        }
       M <- list()
       M$d <- function(t, x, theta) {
         ((2 * theta[1] * theta[2] - theta[2]) / sin(x)) -
