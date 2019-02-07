@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2018.10.24)  26 NOV 2018 17:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2018.10.24)  7 FEB 2019 14:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -395,7 +395,7 @@ Package: inputenc 2018/04/06 v1.3b Input encoding file
 
 
 Writing index file Rd2.idx
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.aux)
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.aux)
 \openout1 = `Rd2.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
@@ -452,8 +452,8 @@ LaTeX Info: Redefining \ref on input line 8.
 LaTeX Info: Redefining \pageref on input line 8.
 LaTeX Info: Redefining \nameref on input line 8.
 
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.out)
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.out)
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.out)
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.out)
 \@outlinefile=\write4
 \openout4 = `Rd2.out'.
 
@@ -482,7 +482,7 @@ LaTeX Font Info:    Try loading font information for T1+phv on input line 31.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.toc
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 1.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -498,14 +498,14 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
 (Font)              scaled to size 9.0pt on input line 186.
  [4] [5] [6] [7] [8]
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.ind [9] [10
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.ind [9] [10
 
 
 ])
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 425.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 425.
 
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.aux)
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 425.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 425.
 Package rerunfilecheck Info: File `Rd2.out' has not changed.
@@ -534,7 +534,7 @@ usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/
 times/utmri8a.pfb>
-Output written on Rd2.pdf (10 pages, 150780 bytes).
+Output written on Rd2.pdf (10 pages, 150769 bytes).
 PDF statistics:
  162 PDF objects out of 1000 (max. 8388607)
  135 compressed objects within 2 object streams

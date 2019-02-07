@@ -63,7 +63,7 @@ No file Rd2.aux.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd) [1{/var/lib/texmf/fon
 ts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5] [6] [7] [8]
 No file Rd2.ind.
-[9] (/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.aux)
+[9] (/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.aux)
 
 Package rerunfilecheck Warning: File `Rd2.out' has changed.
 (rerunfilecheck)                Rerun to get outlines right
@@ -83,7 +83,7 @@ usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/
 times/utmri8a.pfb>
-Output written on Rd2.pdf (9 pages, 149403 bytes).
+Output written on Rd2.pdf (9 pages, 149391 bytes).
 Transcript written on Rd2.log.
 This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex)
  restricted \write18 enabled.
@@ -136,22 +136,22 @@ Package hyperref Warning: Option `pagebackref' has already been used,
 ) (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty)
 (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty)
 Writing index file Rd2.idx
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.aux)
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.aux)
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd)
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd)
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 ) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.out)
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.out)
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.out)
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.out)
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
 (/usr/share/texlive/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd)
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.toc) [1{/var/lib/texmf/fonts/map/pdftex
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.toc) [1{/var/lib/texmf/fonts/map/pdftex
 /updmap/pdftex.map}] [2] [3] [4] [5] [6] [7] [8]
 No file Rd2.ind.
-[9] (/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.aux) ){/usr/share/texlive/texmf-dis
+[9] (/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.aux) ){/usr/share/texlive/texmf-dis
 t/fonts/enc/dvips/base/8r.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/in
 consolata/i4-t1-0.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/inconso
 lata/Inconsolata-zi4r.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
@@ -165,7 +165,7 @@ exmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/t
 imes/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb
 ></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Rd2.pdf (9 pages, 149996 bytes).
+Output written on Rd2.pdf (9 pages, 149978 bytes).
 Transcript written on Rd2.log.
 This is makeindex, version 2.15 [TeX Live 2019/dev] (kpathsea + Thai support).
 Scanning input file Rd2.idx....done (3 entries accepted, 0 rejected).
@@ -224,22 +224,22 @@ Package hyperref Warning: Option `pagebackref' has already been used,
 ) (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty)
 (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty)
 Writing index file Rd2.idx
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.aux)
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.aux)
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd)
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd)
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 ) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.out)
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.out)
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.out)
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.out)
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
 (/usr/share/texlive/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd)
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.toc) [1{/var/lib/texmf/fonts/map/pdftex
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.toc) [1{/var/lib/texmf/fonts/map/pdftex
 /updmap/pdftex.map}] [2] [3] [4] [5] [6] [7] [8]
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.ind [9] [10])
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.aux)
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.ind [9] [10])
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.aux)
 
 Package rerunfilecheck Warning: File `Rd2.out' has changed.
 (rerunfilecheck)                Rerun to get outlines right
@@ -259,7 +259,7 @@ usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/
 times/utmri8a.pfb>
-Output written on Rd2.pdf (10 pages, 150511 bytes).
+Output written on Rd2.pdf (10 pages, 150495 bytes).
 Transcript written on Rd2.log.
 This is makeindex, version 2.15 [TeX Live 2019/dev] (kpathsea + Thai support).
 Scanning input file Rd2.idx....done (3 entries accepted, 0 rejected).
@@ -318,22 +318,22 @@ Package hyperref Warning: Option `pagebackref' has already been used,
 ) (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty)
 (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty)
 Writing index file Rd2.idx
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.aux)
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.aux)
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd)
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd)
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 ) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.out)
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.out)
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.out)
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.out)
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
 (/usr/share/texlive/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd)
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.toc) [1{/var/lib/texmf/fonts/map/pdftex
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.toc) [1{/var/lib/texmf/fonts/map/pdftex
 /updmap/pdftex.map}] [2] [3] [4] [5] [6] [7] [8]
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.ind [9] [10])
-(/tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b/Rd2.aux) ){/usr/share/texlive/texmf-dist/fo
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.ind [9] [10])
+(/tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae/Rd2.aux) ){/usr/share/texlive/texmf-dist/fo
 nts/enc/dvips/base/8r.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/incons
 olata/i4-t1-0.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/inconsolata
 /Inconsolata-zi4r.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
@@ -347,8 +347,8 @@ e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf
 type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times
 /utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Rd2.pdf (10 pages, 150780 bytes).
+Output written on Rd2.pdf (10 pages, 150769 bytes).
 Transcript written on Rd2.log.
 Saving output to ‘menura-manual.pdf’ ...
 Done
-You may want to clean up by 'rm -Rf /tmp/RtmpXG4lrg/Rd2pdf59fe60210c9b'
+You may want to clean up by 'rm -Rf /tmp/RtmpnJbtgG/Rd2pdf4d2e42cc12ae'
