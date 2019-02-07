@@ -64,7 +64,7 @@ in quote format as functions of alpha, mu and sigma, or a string ("OU",
 \item{proposals}{list of lists containing functions for proposal
   distributions. Defaults are appropriate in most circumstances.}
 
-\item{mcmc_type}{Type of MCMC algorithm. Allowable values are ``tanner-wong'' (Defult) and ``fuchs''}
+\item{mcmc_type}{Type of MCMC algorithm. Allowable values are ``tanner-wong'' (Default) and ``fuchs''}
 
 \item{alpha}{NULL if alpha is to be estimated, else a numeric
   value of a numeric vector specifying the value of the parameter for
