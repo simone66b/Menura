@@ -1,3 +1,27 @@
+#'phylo_sde
+#'
+#'Simulate a Cox-Ingersoll-Ross Diffusion Process in the Tree of Life
+#'
+#'@param tr An object of class \code{phylo} from the ape package.  In this version the CIR
+#'process parameters alpha, mu, and sigma for each branch are within vectors in the same order
+#'as the edge (branch) labelling.
+#'@param rt_value Value at the root of \code{tr}.
+#'@param N Data imputation frequency.
+#'@param theta Matrix of parameter values for each edge of the tree.
+#'@param model A list containing drift, diffusion, and the partial differentiation of diffusion as quoted
+#'expressions using method quote. For the Euler scheme
+#'the drift coefficient as \code{drift}, the diffusion coefficient as
+#'\code{diffusion}, and the partial differentiation of
+#'\code{diffusion} by \code{x} as \code{dx_diffusion} is required.
+#'See the Examples.
+#'@param method Specified as either "euler" or "milstein."
+#'@param ... Not used.
+#'
+#'@return A list of time series projects for each simulated path equal to the length of
+#'the number of branches in the \code{tr} object.
+#'
+#'@export
+
 phylo_sde_0 <- function(tr, rt_value, N, theta, model, method, fossils=NULL, ...) {
 
   #stores list of points for each simulated edge
