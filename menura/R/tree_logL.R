@@ -23,6 +23,8 @@
 #'\code{diffusion}, and the partial differentiation of
 #'\code{diffusion} by \code{x} as \code{dx_diffusion} is required.
 #'@param method Specified as either "euler" or "milstein."
+#'@param fossils A numeric vector containing the tip values for every fossil added to the tree.
+#'@seealso \code{\link{fossil_id}}
 #'@param ... Not used.
 #'
 #'@return logL, an integer.

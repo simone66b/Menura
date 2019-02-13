@@ -44,30 +44,24 @@ update_tree <- function(fossils, lst, tr, tipdata, rt_value, N, method,
                                                                    sigma = theta[edge, "sigma"])),
                                                    list(e = model$drift)))))
       
-      #diffusion = expression (1)
-      # model$diffusion = sigma
+      
       diffusion <- as.expression(force(eval(substitute(substitute(e,
                                                                   list(alpha = theta[edge, "alpha"],
                                                                        mu = theta[edge, "mu"],
                                                                        sigma = theta[edge, "sigma"])),
                                                        list(e = model$diffusion)))))
       
-      #diffusion_x = 0
-      #model$dx_diffusion  
+      
       diffusion_x <- as.expression(force(eval(substitute(substitute(e,
                                                                     list(alpha = theta[edge, "alpha"],
                                                                          mu = theta[edge, "mu"],
                                                                          sigma = theta[edge, "sigma"])),
                                                          list(e = model$dx_diffusion)))))
       
-      #number of steps is the length of the edge times the given frequency N (100)
-      #####May cause an issue as the edge length of a fossil is 0, but maybe not considering you can have polytomys
+
       n_steps <- tr$edge.length[edge] * N 
-      #time end is time start plus the length of the given edge
-      ####This will also be 0 for fossils
       tE <- t0 + tr$edge.length[edge]
       
-      #runs sde.sim
       lst[[edge]] <<- sde::sde.sim(X0 = X0, t0 = t0, T = tE, N = n_steps,
                                    method = method,
                                    drift = drift,
@@ -121,12 +115,6 @@ update_tree <- function(fossils, lst, tr, tipdata, rt_value, N, method,
     lst <- new_lst
     data_accept <- 1
   } else if(mcmc_type == "Fuchs"){
-
-    # if (method == "milstein") {
-    #   dc_fn <- sde::Elerian
-    # } else if (method == "euler") {
-    #   dc_fn <- sde::dcEuler
-    # }
 
     data_accept <- 0
     logl_curr <- logl_new <- 0
