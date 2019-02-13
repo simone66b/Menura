@@ -29,14 +29,14 @@ for (var in para2est) {
 if (update_method == "tree") {
   rlst <- update_tree(fossils = fossils, lst = lst, tr = tr, tipdata = tipdata,
                   rt_value = rt_value, model = model, theta = theta,
-                  N = N, method = method, mcmc_type = "tanner-wong")
+                  N = N, method = method, mcmc_type = "DA")
   lst_star <- rlst$lst
   n_data_accept <- 1 #ifelse(rlst$data_accept > 0, 1, 0)
   
 } else if (update_method == "subtree") {
   rlst <- update_subtree(fossils = fossils, lst = lst, tr = tr, tipdata = tipdata,
                   rt_value = rt_value, model = model, theta = theta,
-                  N = N, method = method, mcmc_type = "tanner-wong")
+                  N = N, method = method, mcmc_type = "DA")
   lst_star <- rlst$lst
   n_data_accept <- 1 #ifelse(rlst$data_accept > 0, 1, 0)
 } else {

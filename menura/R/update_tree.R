@@ -117,10 +117,10 @@ update_tree <- function(fossils, lst, tr, tipdata, rt_value, N, method,
 }
   sde_edges(fossils, tr, rt_node, X0 = rt_value, t0 = 0)
 
-  if (mcmc_type == "tanner-wong") {
+  if (mcmc_type == "DA") {
     lst <- new_lst
     data_accept <- 1
-  } else {
+  } else if(mcmc_type == "Fuchs"){
 
     # if (method == "milstein") {
     #   dc_fn <- sde::Elerian
