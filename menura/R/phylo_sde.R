@@ -15,6 +15,7 @@
 #'\code{diffusion} by \code{x} as \code{dx_diffusion} is required.
 #'See the Examples.
 #'@param method Specified as either "euler" or "milstein."
+#'@param fossils A numeric vector containing the tip values for every fossil added to the tree.
 #'@param ... Not used.
 #'
 #'@return A list of time series projects for each simulated path equal to the length of
@@ -22,7 +23,7 @@
 #'
 #'@export
 
-phylo_sde_0 <- function(tr, rt_value, N, theta, model, method, fossils=NULL, ...) {
+phylo_sde <- function(tr, rt_value, N, theta, model, method, fossils=NULL, ...) {
 
   #stores list of points for each simulated edge
   lst <- list()
