@@ -33,16 +33,6 @@ logl_fn <- function (X, theta, model, log = TRUE, method) {
 
   } else if (method == "euler") {
     ret <- sde::EULERloglik(X, theta, model$d, model$s, log=log)
-    
-    # if (is.na(ret)){
-    #   print("logfn")
-    #   print(ret)
-    #   print("X")
-    #   print(X)
-    #   print("theta")
-    #   print(theta)
-    # }
-    
     return(ret)
   }
 
@@ -50,30 +40,4 @@ logl_fn <- function (X, theta, model, log = TRUE, method) {
 
 }
 
-# if (method == "milstein") {
-#
-#   dc_fn <- function(x, t, x0, t0, theta, model, log=TRUE) {
-#     sde::dcElerian(x, t, x0, t0, theta, d = model$d,
-#                       s = model$s, sx = model$s_x, log=log)
-#   }
-#
-#   logl_fn <- function (X, theta, model, log = TRUE) {
-#     l0 <- 0
-#     tvec <- time(X)
-#     for (j in 2:length(X))
-#       l0 <- l0 + dc_fn(x=X[j], t=tvec[j], x0=X[j-1], t0=tvec[j-1],
-#                   theta, model, log=TRUE)
-#     l0
-#   }
-#
-# } else if (method == "euler") {
-#
-#   dc_fn <-  <- function(x, t, x0, t0, theta, model, log=TRUE) {
-#     sde::dcEuler(x, t, x0, t0, theta, d = model$d, s = model$s, log=log)
-#   }
-#
-#   logl_fn <- function (X, theta, model, log = TRUE) {
-#     sde::EULERloglik(X, theta, model$d, model$s, log=log)
-#   }
-# }
 
