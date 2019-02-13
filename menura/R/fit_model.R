@@ -88,7 +88,7 @@
 #'of the model parameters. Use of the default priors is not recommended.
 #'@param proposals A list of lists containing functions for proposal distributions
 #'of the model parameters.
-#'@param mcmc_type Type of MCMC algorithm, "tanner-wong" or "fuchs"
+#'@param mcmc_type Type of MCMC algorithm, "DA" or "Fuchs"
 #'@param alpha Set to NULL if alpha is to be estimated,
 #'otherwise set to a numeric value or a numeric vector specifying
 #'the value of the parameter for all the branches/edges.
@@ -298,7 +298,7 @@ if (mcmc_type == "DA") {
   for (k in 2:iters) {
     setTxtProgressBar(pb, k)
    
-    out_mcmc <- mcmc_steps_tanner_wong(fossils = fossils, tr = tr, tipdata = tipdata,
+    out_mcmc <- mcmc_steps_DA(fossils = fossils, tr = tr, tipdata = tipdata,
                 rt_value = rt_value, lst = lst,
                 theta = theta, model = M, para2est = para2est,
                 update_method = update_method, proposals = proposals,
@@ -314,7 +314,7 @@ if (mcmc_type == "DA") {
 } else if (mcmc_type == "Fuchs"){
   for (k in 2:iters) {
     setTxtProgressBar(pb, k)
-    out_mcmc <- mcmc_steps_else(fossils = fossils, tr = tr, tipdata = tipdata,
+    out_mcmc <- mcmc_steps_fuchs(fossils = fossils, tr = tr, tipdata = tipdata,
                 rt_value = rt_value, lst = lst,
                 theta = theta, model = M, para2est = para2est,
                 update_method = update_method, proposals = proposals,
