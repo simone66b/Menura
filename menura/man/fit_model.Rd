@@ -45,7 +45,7 @@ of the model parameters. Use of the default priors is not recommended.}
 \item{proposals}{A list of lists containing functions for proposal distributions
 of the model parameters.}
 
-\item{mcmc_type}{Type of MCMC algorithm, "tanner-wong" or "fuchs"}
+\item{mcmc_type}{Type of MCMC algorithm, "DA" or "Fuchs"}
 
 \item{alpha}{Set to NULL if alpha is to be estimated,
 otherwise set to a numeric value or a numeric vector specifying
