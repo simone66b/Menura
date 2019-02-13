@@ -104,6 +104,8 @@
 #'where as \code{"tree"} will update the whole tree. See Details.
 #'@param iters Number of MCMC iterations.
 #'@param method Numerical approximation method, "euler" or "milstein."
+#'@param fossils A numeric vector containing the tip values for every fossil added to the tree.
+#'@seealso \code{\link{fossil_id}}
 #'@param ... Not used.
 #'
 #'@export
@@ -328,7 +330,7 @@ if (mcmc_type == "DA") {
 
 bt <- back_transform(model = model, tipdata = tipdata, rt_value = rt_value,
       lst = lst)
-#tipdata <- bt$tipdata; rt_value <- bt$rt_value
+
 lst <- bt$lst
 
 attr(mcmctrace, "class") <- "mcmc"
