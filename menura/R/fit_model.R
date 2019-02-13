@@ -274,7 +274,7 @@ n_tips  <- length(tr$tip.label)
 node_len <- ape::node.depth.edgelength(tr)
 
 if (init_method == "sim") {
-  lst <- phylo_sde_0(fossils = fossils, tr = tr, rt_value = rt_value, theta = theta, model = M,
+  lst <- phylo_sde(fossils = fossils, tr = tr, rt_value = rt_value, theta = theta, model = M,
                         N = N, method = method, ...)
 } else {
   stop("The init_method specified is not available.", .call = FALSE)
