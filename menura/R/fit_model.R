@@ -50,8 +50,8 @@
 #'  the diffusion coefficients and
 #'  \code{x} as the first derivatives of
 #'  diffusion coefficients.
-#'
-#'  The Ornstein–Uhlenbeck (OU) model is given by
+#' 
+#'  The Ornstein-Uhlenbeck (OU) model is given by
 #'  \deqn{dX_t = alpha (mu - X_t) dt + sigma~ dW_t,}
 #'  with \eqn{X_0 = x_0 > 0}, \eqn{W_t} is the Brownian process,
 #'  alpha, mu, and sigma are the model parameters
