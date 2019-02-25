@@ -15,7 +15,7 @@ Thus, menura is EXPERIMENTAL SOFTWARE. If you are unsure whether menura is appro
 
 # Installation
 
-Install directly from using the devtools packag
+Install directly from using the devtools package
 
 ```
 library(devtools)
