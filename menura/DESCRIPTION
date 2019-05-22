@@ -1,6 +1,6 @@
 Package: menura
 Title: Fitting (Non)-Gaussian diffusion models to phylogenies
-Version: 0.4.2
+Version: 0.4.3
 Authors@R: c(person("Suren", "Rathnayake", role = "aut",
                      email = "surenr@gmail.com"),
               person("Cheyenne", "Moreau", role = "aut"),

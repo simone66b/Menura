@@ -62,8 +62,9 @@ if (accept <= accept_prob) {
   lst <- lst_star
   theta <- theta_star
   n_para_accept <- 1
+  loglike <- loglike_star
 }
 
-return(list(lst = lst, theta = theta, n_para_accept = n_para_accept,
+return(list(lst = lst, loglike = loglike, theta = theta, n_para_accept = n_para_accept,
   n_data_accept = n_data_accept))
 }

@@ -281,7 +281,8 @@ if (init_method == "sim") {
 }
 
 
-loglike <- numeric(iters)
+    loglike <- numeric(iters)
+    loglike[1] <- 0
 mcmctrace <- matrix(NA, nrow = iters, ncol = length(para2est))
 colnames(mcmctrace) <- para2est
 mcmctrace[1, para2est] <- theta[1, para2est]
@@ -305,6 +306,7 @@ if (mcmc_type == "DA") {
                 priors = priors, method = method, N = N, ...)
     
     lst <- out_mcmc$lst
+    loglike[k] <- out_mcmc$loglike
     theta <- out_mcmc$theta
     mcmctrace[k, para2est] <- theta[1, para2est]
     n_para_accept[k] <- out_mcmc$n_para_accept
@@ -320,6 +322,7 @@ if (mcmc_type == "DA") {
                 update_method = update_method, proposals = proposals,
                 priors = priors, method = method, N = N, ...)
     lst <- out_mcmc$lst
+    loglike[k] <- out_mcmc$loglike
     theta <- out_mcmc$theta
     mcmctrace[k, para2est] <- theta[1, para2est]
     n_para_accept[k] <- out_mcmc$n_para_accept
