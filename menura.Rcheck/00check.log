@@ -1,9 +1,9 @@
-* using log directory ‘/home/simon/Desktop/Menura/menura.Rcheck’
-* using R version 3.5.2 (2018-12-20)
+* using log directory ‘/home/simon/Desktop/Recent Desktop Stuff/Menura/menura.Rcheck’
+* using R version 3.6.0 (2019-04-26)
 * using platform: x86_64-pc-linux-gnu (64-bit)
 * using session charset: UTF-8
 * checking for file ‘menura/DESCRIPTION’ ... OK
-* this is package ‘menura’ version ‘0.4.2’
+* this is package ‘menura’ version ‘0.4.4’
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... OK
@@ -44,7 +44,7 @@
 * checking for unstated dependencies in examples ... OK
 * checking installed files from ‘inst/doc’ ... OK
 * checking files in ‘vignettes’ ... OK
-* checking examples ... OK
+* checking examples ... NONE
 * checking for unstated dependencies in vignettes ... OK
 * checking package vignettes in ‘inst/doc’ ... OK
 * checking running R code from vignettes ... NONE
