@@ -311,11 +311,11 @@ if (mcmc_type == "DA") {
     mcmctrace[k, para2est] <- theta[1, para2est]
     n_para_accept[k] <- out_mcmc$n_para_accept
     n_data_accept[k] <- out_mcmc$n_data_accept
-    loglike[k] <- tree_logL(tr = tr, tipdata = tipdata, lst = lst,
-                            alpha = theta[, "alpha"], mu = theta[, "mu"],
-                            sigma = theta[, "sigma"],
-                            model = M,
-                            method = method)
+    ## loglike[k] <- tree_logL(tr = tr, tipdata = tipdata, lst = lst,
+    ##                         alpha = theta[, "alpha"], mu = theta[, "mu"],
+    ##                         sigma = theta[, "sigma"],
+    ##                         model = M,
+    ##                         method = method)
   }
   close(pb)
 } else if (mcmc_type == "Fuchs"){
@@ -332,11 +332,11 @@ if (mcmc_type == "DA") {
     mcmctrace[k, para2est] <- theta[1, para2est]
     n_para_accept[k] <- out_mcmc$n_para_accept
     n_data_accept[k] <- out_mcmc$n_data_accept
-    loglike[k] <- tree_logL(tr = tr, tipdata = tipdata, lst = lst,
-                            alpha = theta[, "alpha"], mu = theta[, "mu"],
-                            sigma = theta[, "sigma"],
-                            model = M,
-                            method = method)
+    ## loglike[k] <- tree_logL(tr = tr, tipdata = tipdata, lst = lst,
+    ##                         alpha = theta[, "alpha"], mu = theta[, "mu"],
+    ##                         sigma = theta[, "sigma"],
+    ##                         model = M,
+    ##                         method = method)
   }
   close(pb)
 }
