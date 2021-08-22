@@ -1,13 +1,13 @@
 Package: menura
 Title: Fitting (Non)-Gaussian diffusion models to phylogenies
-Version: 0.4.3
+Version: 0.4.4
 Authors@R: c(person("Suren", "Rathnayake", role = "aut",
-                     email = "s.rathnayake@uq.edu.au"),
+                     email = "surenr@gmail.com"),
               person("Cheyenne", "Moreau", role = "aut"),
               person("Simone", "Blomberg", role = c("aut", "cre"),
                      email = "s.blomberg1@uq.edu.au"))
+Author: Simone P Blomberg
 Description: Fits user-defined stochastic diffusion models to univariate trait data on a phylogeny. Also fits three canned models: Ornstein Uhlenbeck (OU; Gaussian), Cox, Ingersoll, Ross (CIR; Non-Gaussian) and an OU-like model with a Beta stationary distribution (Beta, Non-Gaussian). Models are fitted and parameters are estimated using a Data Augmentation - Metropolis Hastings algorithm. Output can be analysed using the 'coda' package , 'tidybayes' package or other appropriate packages for Bayesian analysis and visualisation. Menura is the genus name for the Australian Superb Lyrebird (Menura novaehollandiae), known for being the world's largest passerine, its elaborate tail and its talent for mimicry. We wrote menura in order to study the behaviour of SDE models on phylogenies. Thus, menura is EXPERIMENTAL SOFTWARE. If you are unsure whether menura is appropriate for your own analyses, it probably isn't.
-Author: Simone Blomberg <s.blomberg1@uq.edu.au>
 Maintainer: Simone Blomberg <s.blomberg1@uq.edu.au>
 Depends: R (>= 3.2.0)
 License: GPL-3
@@ -20,3 +20,4 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+RoxygenNote: 6.0.1.9000

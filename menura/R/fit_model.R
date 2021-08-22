@@ -1,9 +1,137 @@
-# ver 0.3.0 - make the acceptace rates vectors
-fit_model <- function(tr, tipdata, rt_value, model, priors, proposals, mcmc_type = "tanner-wong", alpha = NULL, mu = NULL, sigma = NULL,
-  N = 1000, init_method = "sim", update_method = "subtree", iters = 5000,
-  method = "euler", fossils = NULL, ...) UseMethod("fit_model")
+#'fit_model
+#'
+#'Bayesian Estimator of Parameters of Univariate Diffusion Model for Continuous Trait Evolution
+#'
+#'  This function estimates posterior distributions for evolutionary
+#'  models of continuous traits in a phylogeny. The evolutionary
+#'  processes considered here belong to a class of diffusion processes
+#'  which are typically given as solutions to the stochastic
+#'  differential equations of the form given by
+#'  \deqn{dX_t = a(X_t, alpha, mu) dt + b(X_t, sigma) dW_t,~~X_0 = x_0}
+#'  where \eqn{X_t} denotes the state variable, \code{t} the time,
+#'  \code{a} the drift function and \code{b}
+#'  the diffusion function are known
+#'  in parametric from which
+#'  \code{alpha}, \code{mu}, and \code{sigma}
+#'  are the parameters, and \eqn{W_t} is Brownian motion.
+#'  The value of \eqn{X_t} at time \eqn{t_0}, \eqn{X_0},
+#'  is independent of \eqn{W_t}.
+#'
+#'  Given root and tip values, the tree,
+#'  and drift and diffusion functions,
+#'  Markov Chain Monte Carlo (MCMC) estimates
+#'  of the parameters are obtained.
+#'  The parameter to be estimated is assumed to be the same
+#'  for all the branches of the tree; however,
+#'  the rest can be allowed to vary.
 
-fit_model.default <- function(tr, tipdata, rt_value = mean(tipdata),
+#'  Due to the low frequency nature of the data, the MCMC
+#'  method used assumes intermediate data
+#'  are missing. Thus, during each step of the MCMC iterations,
+#'  missing data and the model parameters are imputed.
+#'
+#'  If the diffusion process is
+#'  Ornstein-Uhlenbeck (OU),
+#'  Cox-Ingersoll-Ross (CIR), or Beta (Beta)
+#'  this can be specified by setting the
+#'  \code{model} to "OU", "CIR", or
+#'  "Beta", respectively.
+#'  If the diffusion process is not one of these, the estimation of model parameters
+#'  can be done by specifying drift and diffusion coefficients
+#'  in a list assigned to \code{model}. In this case,
+#'  the list object \code{model} must include : 1)
+#'  \code{d} and \code{s} which are
+#'  functions of time (\code{t}), space (\code{x}) and a vector of the parameter values (\code{theta})
+#'  consisting of \code{alpha}, \code{mu} and \code{sigma},
+#'  2) drift coefficients as a list containing
+#'  a \code{quote} and 3) a
+#'  diffusion coefficient as a list object
+#'  which includes \code{diffusion} as
+#'  the diffusion coefficients and
+#'  \code{x} as the first derivatives of
+#'  diffusion coefficients.
+#' 
+#'  The Ornstein-Uhlenbeck (OU) model is given by
+#'  \deqn{dX_t = alpha (mu - X_t) dt + sigma~ dW_t,}
+#'  with \eqn{X_0 = x_0 > 0}, \eqn{W_t} is the Brownian process,
+#'  alpha, mu, and sigma are the model parameters
+#'  where alpha and sigma are positive values.
+#'
+#'  The Cox-Ingersoll-Ross (CIR) model is given by
+#'  \deqn{dXt = alpha (mu - X_t) dt + sigma~sqrt(X_t) dWt,}
+#'  with \eqn{X_0 = x_0 > 0}, where Wt is the Brownian process, alpha, mu,
+#'  and sigma are the model parameters which are all
+#'  positive values. If the \code{model == "CIR"} is specified,
+#'  then the parameter estimation is done by
+#'  using transformation \eqn{Y = sqrt(X)} of Ito diffusion
+#'  process.
+#'
+#'  The Beta model is given by
+#'  \deqn{ dX_t = alpha(mu - X_t) dt + sigma~sqrt(X_t (1-X_t)) dW_t,}
+#'  with \eqn{X_0 = x_0 > 0}, \eqn{W_t} is the Brownian process,
+#'  alpha, mu, and sigma are the model parameters
+#'  where alpha and sigma are positive values.
+#'  If the \code{model ==} "Beta" is specified,
+#'  then the parameter estimation is done by
+#'  using transformation \eqn{Y = 2~sin^{-1}(X)} of Ito diffusion
+#'  process.
+#'
+#'@param tr Single evolutionary tree as an object of the "phylo" class in
+#'the \code{ape} package.
+#'@param tipdata A numeric vector containing tip values in the same order as the tip labels in \code{tr$tip.label}.
+#'@param rt_value Value at the root of \code{tr}.
+#'@param model Either a list containing drift and diffusion coefficients
+#'in quote format as functions of alpha, mu and sigma,
+#'or a string ("OU", "CIR", or "Beta") specifying the diffusion process.
+#'See Details.
+#'@param priors A list of lists containing functions for prior distributions
+#'of the model parameters. Use of the default priors is not recommended.
+#'@param proposals A list of lists containing functions for proposal distributions
+#'of the model parameters.
+#'@param mcmc_type Type of MCMC algorithm, "DA" or "Fuchs"
+#'@param alpha Set to NULL if alpha is to be estimated,
+#'otherwise set to a numeric value or a numeric vector specifying
+#'the value of the parameter for all the branches/edges.
+#'In the latter case, the values must be specifying in the same order
+#'as the edges in the \code{tr} object.
+#'@param mu As \code{alpha}.
+#'@param sigma As \code{alpha}.
+#'@param N Data augmentation frequency.
+#'@param init_method Method for initial data imputation.
+#'Currently only the \code{"sim"} option is available.
+#'@param update_method Method for data imputation during the MCMC.
+#'Option \code{"subtree"} will only update part of the tree at each iteration,
+#'where as \code{"tree"} will update the whole tree. See Details.
+#'@param iters Number of MCMC iterations.
+#'@param method Numerical approximation method, "euler" or "milstein."
+#'@param fossils A numeric vector containing the tip values for every fossil added to the tree.
+#'@seealso \code{\link{fossil_id}}
+#'@param ... Not used.
+#'
+#'@export
+#'@importFrom graphics plot
+#'@importFrom ape dist.nodes
+#'@importFrom ape compute.brlen
+#'@importFrom ape Ntip
+#'@importFrom sde EULERloglik
+#'@importFrom sde dcEuler
+#'@importFrom sde dcElerian
+#'@importFrom sde sde.sim
+#'@importFrom stats dlnorm
+#'@importFrom stats dnorm
+#'@importFrom stats dunif
+#'@importFrom stats rgamma
+#'@importFrom stats rlnorm
+#'@importFrom stats rnorm
+#'@importFrom stats runif
+#'@importFrom stats ts
+#'@importFrom stats tsp
+#'@importFrom stats window
+#'@importFrom stats reorder
+#'@importFrom utils setTxtProgressBar txtProgressBar
+#'@importFrom stats D time
+
+fit_model <- function(tr, tipdata, rt_value = mean(tipdata),
   model = "OU",
   priors = list(
     alpha = list(df =  function(x, a = 1, b = 125, log_scale = TRUE) {
@@ -35,7 +163,7 @@ fit_model.default <- function(tr, tipdata, rt_value = mean(tipdata),
                  rf = function(n, sigma, gamma=0.5) {
                         rlnorm(n, meanlog = log(sigma), sdlog = gamma)})
   ),
-  mcmc_type = "tanner-wong", alpha = NULL, mu = NULL, sigma = NULL,
+  mcmc_type = "DA", alpha = NULL, mu = NULL, sigma = NULL,
   N = 1000, init_method = "sim", update_method = "subtree", iters = 5000,
   method = "euler", fossils = NULL, ...)
 {
@@ -107,6 +235,9 @@ if (!is.numeric(iters))
 if (!((update_method == "tree") || (update_method == "subtree")))
   stop("update_method must only be tree or subtree", call. = FALSE)
 
+if(!((mcmc_type == "DA") || (mcmc_type == "Fuchs")))
+  stop("mcmc_type must be only DA or Fuchs", call. = FALSE)
+
 if (!ape::is.binary(tr)) {
   stop("The tree must be rooted.", call. = FALSE)
 }
@@ -143,7 +274,7 @@ n_tips  <- length(tr$tip.label)
 node_len <- ape::node.depth.edgelength(tr)
 
 if (init_method == "sim") {
-  lst <- phylo_sde_0(fossils = fossils, tr = tr, rt_value = rt_value, theta = theta, model = M,
+  lst <- phylo_sde(fossils = fossils, tr = tr, rt_value = rt_value, theta = theta, model = M,
                         N = N, method = method, ...)
 } else {
   stop("The init_method specified is not available.", .call = FALSE)
@@ -164,11 +295,11 @@ n_para_accept <- n_data_accept <- numeric(iters)
 n_para_accept[1] <- n_data_accept[1] <- 1
 pb <- txtProgressBar(min=1, max=iters)
 
-if (mcmc_type == "tanner-wong") {
+if (mcmc_type == "DA") {
   for (k in 2:iters) {
     setTxtProgressBar(pb, k)
    
-    out_mcmc <- mcmc_steps_tanner_wong(fossils = fossils, tr = tr, tipdata = tipdata,
+    out_mcmc <- mcmc_steps_DA(fossils = fossils, tr = tr, tipdata = tipdata,
                 rt_value = rt_value, lst = lst,
                 theta = theta, model = M, para2est = para2est,
                 update_method = update_method, proposals = proposals,
@@ -180,12 +311,17 @@ if (mcmc_type == "tanner-wong") {
     mcmctrace[k, para2est] <- theta[1, para2est]
     n_para_accept[k] <- out_mcmc$n_para_accept
     n_data_accept[k] <- out_mcmc$n_data_accept
+    ## loglike[k] <- tree_logL(tr = tr, tipdata = tipdata, lst = lst,
+    ##                         alpha = theta[, "alpha"], mu = theta[, "mu"],
+    ##                         sigma = theta[, "sigma"],
+    ##                         model = M,
+    ##                         method = method)
   }
   close(pb)
-} else {
+} else if (mcmc_type == "Fuchs"){
   for (k in 2:iters) {
     setTxtProgressBar(pb, k)
-    out_mcmc <- mcmc_steps_else(fossils = fossils, tr = tr, tipdata = tipdata,
+    out_mcmc <- mcmc_steps_fuchs(fossils = fossils, tr = tr, tipdata = tipdata,
                 rt_value = rt_value, lst = lst,
                 theta = theta, model = M, para2est = para2est,
                 update_method = update_method, proposals = proposals,
@@ -196,13 +332,18 @@ if (mcmc_type == "tanner-wong") {
     mcmctrace[k, para2est] <- theta[1, para2est]
     n_para_accept[k] <- out_mcmc$n_para_accept
     n_data_accept[k] <- out_mcmc$n_data_accept
+    ## loglike[k] <- tree_logL(tr = tr, tipdata = tipdata, lst = lst,
+    ##                         alpha = theta[, "alpha"], mu = theta[, "mu"],
+    ##                         sigma = theta[, "sigma"],
+    ##                         model = M,
+    ##                         method = method)
   }
   close(pb)
 }
 
 bt <- back_transform(model = model, tipdata = tipdata, rt_value = rt_value,
       lst = lst)
-#tipdata <- bt$tipdata; rt_value <- bt$rt_value
+
 lst <- bt$lst
 
 attr(mcmctrace, "class") <- "mcmc"

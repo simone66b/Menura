@@ -1,12 +1,6 @@
 update_subtree <- function(fossils, lst, tr, tipdata, rt_value, N, method = "euler",
-                            theta, model, mcmc_type = "tanner-wong", ...) {
-  # Changes
-  # log L's  are calculated for subtr_tips instead of a clade
-  # update from any node regardless edge length
-  # ** if the selected subtree is has small edges, then no
-  #    data update is done.
+                            theta, model, mcmc_type = "DA", ...) {
  
-  # get the method from ...'s
   new_lst   <- lst
   subtr_tips <- NULL
   n_tips <- length(tr$tip.label)
@@ -40,7 +34,6 @@ update_subtree <- function(fossils, lst, tr, tipdata, rt_value, N, method = "eul
     daughters <- tr$edge[which(tr$edge[, 1] == node), 2]
  
        if (any(daughters %in% fossils)) {
-      # do not use fossil edge (length = 0), use the sister node edge
       
         edge <- which((tr$edge[,1] == node) & !(tr$edge[, 2] %in% fossils))
         f_edge <- which((tr$edge[,1] == node) & (tr$edge[, 2] %in% fossils))
@@ -68,14 +61,12 @@ update_subtree <- function(fossils, lst, tr, tipdata, rt_value, N, method = "eul
                                                                          sigma = theta[edge, "sigma"])),
                                                          list(e = model$dx_diffusion)))))
       
-      #number of steps is the length of the edge times the given frequency N (100)
-      #####May cause an issue as the edge length of a fossil is 0, but maybe not considering you can have polytomys
+      
       n_steps <- tr$edge.length[edge] * N 
-      #time end is time start plus the length of the given edge
-      ####This will also be 0 for fossils
+      
       tE <- t0 + tr$edge.length[edge]
       
-      #runs sde.sim
+      
       lst[[edge]] <<- sde::sde.sim(X0 = X0, t0 = t0, T = tE, N = n_steps,
                                    method = method,
                                    drift = drift,
@@ -164,18 +155,11 @@ update_subtree <- function(fossils, lst, tr, tipdata, rt_value, N, method = "eul
     redge <- which(tr$edge[, 1] == rnode)[1]
     sde_edges(fossils, tr, rnode, X0 = lst[[redge]][1], t0 = tsp(lst[[redge]])[1])
 
-    if (mcmc_type == "tanner-wong") {
+    if (mcmc_type == "DA") {
       lst <- new_lst
       data_accept <- 1
-    } else {
-
-      # if (method == "milstein") {
-      #   dc_fn <- sde::Elerian
-      # } else if (method == "euler") {
-      #   dc_fn <- sde::dcEuler
-      # }
-
-      # Calculate the acceptance probability
+    } else if(mcmc_type == "Fuchs"){
+      
       data_accept <- 0
       curr_path_logLs <- new_path_logLs <- 0
      
