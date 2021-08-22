@@ -1,36 +1,6 @@
-#'tree_logL
-#'
-#'Calculate the loglikelihood of a Cox-Ingersoll-Ross Diffusion Process in the Tree of Life
-#'
-#'  This function caluclates the log likelihood.
-#'
-#'@param tr An object of class \code{phylo} from the ape package.  In this version the CIR
-#'process parameters alpha, mu, and sigma for each branch are within vectors in the same order
-#'as the edge (branch) labelling.
-#'@param tipdata A numeric vector containing tip values in the same order as the tip labels in \code{tr$tip.label}.
-#'@param lst A list of time series projects for each simulated path equal to the length of
-#'the number of branches in the \code{tr} object.
-#'@param alpha Set to NULL if alpha is to be estimated,
-#'otherwise set to a numeric value or a numeric vector specifying
-#'the value of the parameter for all the branches/edges.
-#'In the latter case, the values must be specifying in the same order
-#'as the edges in the \code{tr} object.
-#'@param mu As \code{alpha}.
-#'@param sigma As \code{alpha}.
-#'@param model A list containing drift, diffusion, and the partial differentiation of diffusion as quoted
-#'expressions using method quote. For the Euler scheme
-#'the drift coefficient as \code{drift}, the diffusion coefficient as
-#'\code{diffusion}, and the partial differentiation of
-#'\code{diffusion} by \code{x} as \code{dx_diffusion} is required.
-#'@param method Specified as either "euler" or "milstein."
-#'@param fossils A numeric vector containing the tip values for every fossil added to the tree.
-#'@seealso \code{\link{fossil_id}}
-#'@param ... Not used.
-#'
-#'@return logL, an integer.
-#'
-#'@export
-
+### Calculates the Log Likelihood of the Diffusion Process in a Tree of Life
+## Method can only be 'euler' or 'milstein'  ** currenlty not  available for milstein
+#see help file for argument descriptors
 tree_logL <- function(tr, tipdata, lst, alpha, mu, sigma, model,
               method, fossils=NULL, ...) {
   
@@ -108,8 +78,6 @@ logL_edges <- function (fossils, node, tr, tipdata, lst, alpha, mu, sigma, model
         #must be a tip
         #logL of a tip and its edge is the sum of the conditional density of the diffusion process and the logl 
          } else {
-
-             if (is.null(lst[[edge]])) logL
                logL[edge] <<- logl_fn(X = lst[[edge]], theta = theta,
                                      model = model, log = TRUE, method = method) +
                               dc_fn(x = tipdata[daughters[ind_d]],

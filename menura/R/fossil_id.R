@@ -20,7 +20,7 @@ fossil_id <- function(ftr){
          fossils[i] <- nodes[i]
       }
     } 
-    return(fossils)
+    return(na.omit(fossils))
   }
 
 
