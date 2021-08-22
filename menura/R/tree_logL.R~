@@ -78,8 +78,6 @@ logL_edges <- function (fossils, node, tr, tipdata, lst, alpha, mu, sigma, model
         #must be a tip
         #logL of a tip and its edge is the sum of the conditional density of the diffusion process and the logl 
          } else {
-
-             if (is.null(lst[[edge]])) logL
                logL[edge] <<- logl_fn(X = lst[[edge]], theta = theta,
                                      model = model, log = TRUE, method = method) +
                               dc_fn(x = tipdata[daughters[ind_d]],

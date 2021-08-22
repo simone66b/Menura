@@ -64,6 +64,6 @@ phylo_sde <- function(tr, rt_value, N, theta, model, method = "euler", ...) {
     }
     
   sde_edges(tr, rt_node, X0 = rt_value, t0 = 0)
-  return(lst)
+  return(lst[!sapply(lst, is.null)])
 }
 
