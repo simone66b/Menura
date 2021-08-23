@@ -68,11 +68,23 @@ fossil.data <- traits[fossil_id(tree)]
 
 tree <- multi2di(tree)
 
+fossil_id <- function(ftr){
+    br_zero <- which(ftr$edge.length[] == 0)
+    nodes <- ftr$edge[br_zero, 2]
+    fossils <- 0
+    for(i in 1:length(nodes)){
+      if (nodes[i] <= ape::Ntip(ftr)){
+         fossils[i] <- nodes[i]
+      }
+    } 
+    return(na.omit(fossils))
+  }
+
+
 test  <- fit_model(tree, traits, rt_value=0, model="OU", alpha=1, mu=0,
                    sigma=NULL, N=100000, iters=100, fossils=fossil.data)
 
-phylo_sde <-  function (tr, rt_value, N, theta, model, method, fossils = NULL, 
-                         ...) {
+phylo_sde <-  function (tr, rt_value, N, theta, model, method, traitdata, fossils = NULL, ...) {
     lst <- list()
     n_tips <- length(tr$tip.label)
     rt_node <- n_tips + 1
@@ -95,15 +107,14 @@ phylo_sde <-  function (tr, rt_value, N, theta, model, method, fossils = NULL,
         model$dx_diffusion <- quote(NULL)
     }
     
- sde_edges <- function(fossils, tr, node, X0, t0) {
+    sde_edges <- function(fossils, tr, node, X0, t0, traits, fossil.data) {
         daughters <- tr$edge[which(tr$edge[, 1] == node), 2]
         if (any(daughters %in% fossils)) {
-            edge <- which((tr$edge[, 1] == node) & !(tr$edge[, 
-                2] %in% fossils))
-            f_edge <- which((tr$edge[, 1] == node) & (tr$edge[, 
-                2] %in% fossils))
+            edge <- which((tr$edge[, 1] == node) & !(tr$edge[, 2] %in% fossils))
+            f_edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] %in% fossils))
+           
             root <- tr$edge[edge, 2]
-            lst[[f_edge]] <<- NULL
+
             drift <- as.expression(force(eval(substitute(substitute(e, 
                 list(alpha = theta[edge, "alpha"], mu = theta[edge, 
                   "mu"], sigma = theta[edge, "sigma"])), list(e = model$drift)))))
@@ -117,21 +128,18 @@ phylo_sde <-  function (tr, rt_value, N, theta, model, method, fossils = NULL,
             tE <- t0 + tr$edge.length[edge]
             if (tr$edge.length[edge] == 0) {
                 lst[[edge]] <<- NULL
-                } else {
-            lst[[edge]] <<- sde::sde.sim(X0 = X0, t0 = t0, T = tE, 
-                N = n_steps, method = method, drift = drift, 
-                sigma = diffusion, sigma.x = diffusion_x, pred.corr = pred.corr)
+            } else {
+                lst[[edge]] <- sde::sde.sim(X0 =traits[which(names(traits) %in% names(fossil.data))],
+                                            t0 = t0, T = tE, 
+                                            N = n_steps, method = method, drift = drift, 
+                                            sigma = diffusion, sigma.x = diffusion_x,
+                                            pred.corr = pred.corr)
+            }
             tE <- tsp(lst[[edge]])[2]
-            if (root > n_tips) {
-                sde_edges(fossils, tr, root, lst[[edge]][n_steps + 
-                  1], tE)
-            }
-                }
-            }
-        else {
+            sde_edges(fossils, tr, root, lst[[edge]][n_steps + 1], t0=tE, traits, fossil.data)
+        } else {
             for (d_ind in 1:2) {
-                edge <- which((tr$edge[, 1] == node) & (tr$edge[, 
-                  2] == daughters[d_ind]))
+                edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[d_ind]))
                 drift <- as.expression(force(eval(substitute(substitute(e, 
                   list(alpha = theta[edge, "alpha"], mu = theta[edge, 
                     "mu"], sigma = theta[edge, "sigma"])), list(e = model$drift)))))
@@ -145,20 +153,19 @@ phylo_sde <-  function (tr, rt_value, N, theta, model, method, fossils = NULL,
                 tE <- t0 + tr$edge.length[edge]
 
                 if (tr$edge.length[edge] == 0) {lst[[edge]] <<- NULL
-                    } else {
-                lst[[edge]] <<- sde::sde.sim(X0 = X0, t0 = t0, 
-                  T = tE, N = n_steps, method = method, drift = drift, 
-                  sigma = diffusion, sigma.x = diffusion_x, pred.corr = pred.corr)
-                tE <- tsp(lst[[edge]])[2]
+                } else {
+                    lst[[edge]] <<- sde::sde.sim(X0 = X0, t0 = t0, 
+                                                 T = tE, N = n_steps, method = method, drift = drift, 
+                                                 sigma = diffusion, sigma.x = diffusion_x, pred.corr = pred.corr)
+                    tE <- tsp(lst[[edge]])[2]
                 }
-                if (daughters[d_ind] > n_tips) {
-                    if (is.null(lst[[edge]]) t0 <- t0 else t0 <- lst[[edge]][n_steps+1]
-                  sde_edges(fossils, tr, daughters[d_ind], t0, tE)
-                }
+                if (is.null(lst[[edge]])) t0 <- t0 else t0 <- lst[[edge]][n_steps+1]
+                sde_edges(fossils, tr, daughters[d_ind], t0, tE)
+                
             }
         }
- }
-
+    }
+    
     
     sde_edges(fossils, tr, rt_node, X0 = rt_value, t0 = 0)
   node_len <- ape::node.depth.edgelength(tr)
