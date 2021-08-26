@@ -40,8 +40,8 @@ library(ape)
 library(menura)
 library(phytools)
 
-tree.size <- 4
-num.fossils <- 1
+tree.size <- 20
+num.fossils <- 5
 
 tree <- compute.brlen(rtree(tree.size))
 ## tree <- compute.brlen(stree(tree.size, type="balanced"))
@@ -82,7 +82,7 @@ fossil_id <- function(ftr){
 
 
 test  <- fit_model(tree, traits, rt_value=0, model="OU", alpha=1, mu=0,
-                   sigma=NULL, N=100000, iters=100, fossils=fossil.data)
+                   sigma=NULL, N=1000, iters=100, fossils=fossil.data)
 
 phylo_sde <-  function (tr, rt_value, N, theta, model, method, traitdata, fossils = NULL, ...) {
     lst <- list()
@@ -162,16 +162,20 @@ phylo_sde <-  function (tr, rt_value, N, theta, model, method, traitdata, fossil
                                                 pred.corr = pred.corr)
                     tE <- tsp(lst[[edge]])[2]
                 }
-                ## if (is.null(lst[[edge]])) t0 <- t0 else t0 <- lst[[edge]][n_steps+1]
-                sde_edges(fossils, tr, daughters[d_ind], X0=X0,  t0=tE, traits=traits,
+                if (lengths(lst[[edge]]) <= 1) t0 <- t0 else t0 <- lst[[edge]][n_steps+1]
+                sde_edges(fossils, tr, daughters[d_ind], X0=X0,  t0=t0, traits=traits,
                           fossil.data=fossil.data)
                 
             }
         }
+     }   
+    sde_edges(fossils, tr, rt_node, X0 = rt_value, t0 = 0, traits=traits, fossil.data=fossil.data)
+    return(lst)
+
     }
+
+
     
-    
-    sde_edges(fossils, tr, rt_node, X0 = rt_value, t0 = 0)
   node_len <- ape::node.depth.edgelength(tr)
     for (nthtip in 1:n_tips) {
         nEdge <- which(tr$edge[, 2] == nthtip)
@@ -196,11 +200,11 @@ phylo_sde <-  function (tr, rt_value, N, theta, model, method, traitdata, fossil
     return(lst)
 }
 
-
+lst <- lst2
  plot(NA, xlim=c(0,1), ylim=c(-2,2), type="n")
 lst2 <- lst[lengths(lst) > 1]
 lapply(lst2, lines)
-
+X11();plot(tree)
 
 
 alpha <- 1
@@ -211,4 +215,4 @@ N <- 200
 
 model="OU"
 method="euler"
-tst <- sde_edges(tr, node=0, X0=0, t0=0) 
+ 
