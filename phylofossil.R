@@ -40,8 +40,8 @@ library(ape)
 library(menura)
 library(phytools)
 
-tree.size <- 20
-num.fossils <- 5
+tree.size <- 4
+num.fossils <- 1
 
 tree <- compute.brlen(rtree(tree.size))
 ## tree <- compute.brlen(stree(tree.size, type="balanced"))
@@ -107,68 +107,7 @@ phylo_sde <-  function (tr, rt_value, N, theta, model, method, traitdata, fossil
         model$dx_diffusion <- quote(NULL)
     }
     
-    sde_edges <- function(fossils, tr, node, X0, t0, traits, fossil.data) {
-        daughters <- tr$edge[which(tr$edge[, 1] == node), 2]
-        if (length(daughters) == 0) return()
-        if (any(daughters %in% fossils)) {
-            edge <- which((tr$edge[, 1] == node) & !(tr$edge[, 2] %in% fossils))
-            f_edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] %in% fossils))
-           
-            root <- tr$edge[edge, 2]
-
-            drift <- as.expression(force(eval(substitute(substitute(e, 
-                list(alpha = theta[edge, "alpha"], mu = theta[edge, 
-                  "mu"], sigma = theta[edge, "sigma"])), list(e = model$drift)))))
-            diffusion <- as.expression(force(eval(substitute(substitute(e, 
-                list(alpha = theta[edge, "alpha"], mu = theta[edge, 
-                  "mu"], sigma = theta[edge, "sigma"])), list(e = model$diffusion)))))
-            diffusion_x <- as.expression(force(eval(substitute(substitute(e, 
-                list(alpha = theta[edge, "alpha"], mu = theta[edge, 
-                  "mu"], sigma = theta[edge, "sigma"])), list(e = model$dx_diffusion)))))
-            n_steps <- tr$edge.length[edge] * N
-            tE <- t0 + tr$edge.length[edge]
-            if (tr$edge.length[edge] == 0) {
-                lst[[edge]] <<-list(NULL)
-            } else {
-                lst[[edge]] <<- sde::sde.sim(X0 =traits[which(names(traits) %in% names(fossil.data))],
-                                            t0 = t0, T = tE, 
-                                            N = n_steps, method = method, drift = drift, 
-                                            sigma = diffusion, sigma.x = diffusion_x,
-                                            pred.corr = pred.corr)
-            }
-            tE <- tsp(lst[[edge]])[2]
-            sde_edges(fossils, tr, root, lst[[edge]][n_steps + 1], t0=tE, traits, fossil.data)
-        } else {
-            for (d_ind in 1:2) {
-                edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[d_ind]))
-                drift <- as.expression(force(eval(substitute(substitute(e, 
-                  list(alpha = theta[edge, "alpha"], mu = theta[edge, 
-                    "mu"], sigma = theta[edge, "sigma"])), list(e = model$drift)))))
-                diffusion <- as.expression(force(eval(substitute(substitute(e, 
-                  list(alpha = theta[edge, "alpha"], mu = theta[edge, 
-                    "mu"], sigma = theta[edge, "sigma"])), list(e = model$diffusion)))))
-                diffusion_x <- as.expression(force(eval(substitute(substitute(e, 
-                  list(alpha = theta[edge, "alpha"], mu = theta[edge, 
-                    "mu"], sigma = theta[edge, "sigma"])), list(e = model$dx_diffusion)))))
-                n_steps <- tr$edge.length[edge] * N
-                tE <- t0 + tr$edge.length[edge]
-
-                if (tr$edge.length[edge] == 0) {
-                    lst[[edge]] <<- list(NULL)
-                } else {
-                    lst[[edge]] <<- sde::sde.sim(X0 = X0, t0 = t0, 
-                                                 T = tE, N = n_steps, method = method, drift = drift, 
-                                                sigma = diffusion, sigma.x = diffusion_x,
-                                                pred.corr = pred.corr)
-                    tE <- tsp(lst[[edge]])[2]
-                }
-                if (lengths(lst[[edge]]) <= 1) t0 <- t0 else t0 <- lst[[edge]][n_steps+1]
-                sde_edges(fossils, tr, daughters[d_ind], X0=X0,  t0=t0, traits=traits,
-                          fossil.data=fossil.data)
-                
-            }
-        }
-     }   
+   
     sde_edges(fossils, tr, rt_node, X0 = rt_value, t0 = 0, traits=traits, fossil.data=fossil.data)
     return(lst)
 
@@ -200,6 +139,76 @@ phylo_sde <-  function (tr, rt_value, N, theta, model, method, traitdata, fossil
     return(lst)
 }
 
+
+X0 <- traits[fossils[which(fossils %in% daughters)]]
+
+
+ sde_edges <- function(fossils, tr, node, X0, t0, traits) {
+        daughters <- tr$edge[which(tr$edge[, 1] == node), 2]
+        if (length(daughters) == 0) return()
+        if (any(daughters %in% fossils)) {
+            edge <- which((tr$edge[, 1] == node) & !(tr$edge[, 2] %in% fossils))
+            f_edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] %in% fossils))
+           
+            root <- tr$edge[edge, 2]
+            X0 <- traits[fossils[which(fossils %in% daughters)]]
+            drift <- as.expression(force(eval(substitute(substitute(e, 
+                list(alpha = theta[edge, "alpha"], mu = theta[edge, 
+                  "mu"], sigma = theta[edge, "sigma"])), list(e = model$drift)))))
+            diffusion <- as.expression(force(eval(substitute(substitute(e, 
+                list(alpha = theta[edge, "alpha"], mu = theta[edge, 
+                  "mu"], sigma = theta[edge, "sigma"])), list(e = model$diffusion)))))
+            diffusion_x <- as.expression(force(eval(substitute(substitute(e, 
+                list(alpha = theta[edge, "alpha"], mu = theta[edge, 
+                  "mu"], sigma = theta[edge, "sigma"])), list(e = model$dx_diffusion)))))
+            n_steps <- tr$edge.length[edge] * N
+            tE <- t0 + tr$edge.length[edge]
+            if (tr$edge.length[edge] == 0) {
+                lst[[edge]] <<-list(NULL)
+            } else {
+                lst[[edge]] <<- sde::sde.sim(X0 = X0,
+                                            t0 = t0, T = tE, 
+                                            N = n_steps, method = method, drift = drift, 
+                                            sigma = diffusion, sigma.x = diffusion_x,
+                                            pred.corr = pred.corr)
+            }
+            tE <- tsp(lst[[edge]])[2]
+            X0 <- lst[[edge]][length(lst[[edge]])]
+            sde_edges(fossils, tr, root, X0, t0=tE, traits)
+        } else {
+            for (d_ind in 1:2) {
+                edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] == daughters[d_ind]))
+                drift <- as.expression(force(eval(substitute(substitute(e, 
+                  list(alpha = theta[edge, "alpha"], mu = theta[edge, 
+                    "mu"], sigma = theta[edge, "sigma"])), list(e = model$drift)))))
+                diffusion <- as.expression(force(eval(substitute(substitute(e, 
+                  list(alpha = theta[edge, "alpha"], mu = theta[edge, 
+                    "mu"], sigma = theta[edge, "sigma"])), list(e = model$diffusion)))))
+                diffusion_x <- as.expression(force(eval(substitute(substitute(e, 
+                  list(alpha = theta[edge, "alpha"], mu = theta[edge, 
+                    "mu"], sigma = theta[edge, "sigma"])), list(e = model$dx_diffusion)))))
+                n_steps <- tr$edge.length[edge] * N
+                tE <- t0 + tr$edge.length[edge]
+
+                if (tr$edge.length[edge] == 0) {
+                    lst[[edge]] <<- list(NULL)
+                } else {
+                    lst[[edge]] <<- sde::sde.sim(X0 = X0, t0 = t0, 
+                                                 T = tE, N = n_steps, method = method, drift = drift, 
+                                                sigma = diffusion, sigma.x = diffusion_x,
+                                                pred.corr = pred.corr)
+                    tE <- tsp(lst[[edge]])[2]
+                   X0 <- lst[[edge]][length(lst[[edge]])
+        ]
+                }
+            if (length(lst[[edge]]) <= 1) t0 <- t0 else t0 <- tE
+                sde_edges(fossils, tr, daughters[d_ind], X0=X0,  t0=t0, traits=traits)
+                
+            }
+        }
+     }   
+
+
 lst <- lst2
  plot(NA, xlim=c(0,1), ylim=c(-2,2), type="n")
 lst2 <- lst[lengths(lst) > 1]
@@ -216,3 +225,5 @@ N <- 200
 model="OU"
 method="euler"
  
+  lst2 <- phylo_sde(tr=tree, rt_value=rt_value, theta=theta, model=model,
+                    N=1000, method="euler")
