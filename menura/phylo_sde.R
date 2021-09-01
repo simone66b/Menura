@@ -50,10 +50,12 @@
    sde_edges <- function(fossils, tr, node, X0, t0) {
         daughters <- tr$edge[which(tr$edge[, 1] == node), 2]
         if (any(daughters %in% fossils)) {
-            edge <- which((tr$edge[, 1] == node) & !(tr$edge[, 2] %in% fossils))
-            f_edge <- which((tr$edge[, 1] == node) & (tr$edge[, 2] %in% fossils))
+            edge <- which((tr$edge[, 1] == node) & !(tr$edge[, 
+                2] %in% fossils))
+            f_edge <- which((tr$edge[, 1] == node) & (tr$edge[, 
+                2] %in% fossils))
             root <- tr$edge[edge, 2]
-            lst[[f_edge]] <<- traits[list(NULL)
+            lst[[f_edge]] <<- 0
             drift <- as.expression(force(eval(substitute(substitute(e, 
                 list(alpha = theta[edge, "alpha"], mu = theta[edge, 
                   "mu"], sigma = theta[edge, "sigma"])), list(e = model$drift)))))
@@ -89,45 +91,39 @@
                     "mu"], sigma = theta[edge, "sigma"])), list(e = model$dx_diffusion)))))
                 n_steps <- tr$edge.length[edge] * N
                 tE <- t0 + tr$edge.length[edge]
-
-                if(tr$edge.length[edge] != 0) {
                 lst[[edge]] <<- sde::sde.sim(X0 = X0, t0 = t0, 
                   T = tE, N = n_steps, method = method, drift = drift, 
                   sigma = diffusion, sigma.x = diffusion_x, pred.corr = pred.corr)
                 tE <- tsp(lst[[edge]])[2]
                 if (daughters[d_ind] > n_tips) {
-                  sde_edges(fossils, tr, daughters[d_ind], lst[[edge]][n_steps + 1], tE)
+                  sde_edges(fossils, tr, daughters[d_ind], lst[[edge]][n_steps + 
+                    1], tE)
                 }
-                } else {
-                    lst[[edge]] <<- list(NULL)
-                    }
-                
             }
         }
-   }
-
+    }
     sde_edges(fossils, tr, rt_node, X0 = rt_value, t0 = 0)
-    ## node_len <- ape::node.depth.edgelength(tr)
-    ## for (nthtip in 1:n_tips) {
-    ##     nEdge <- which(tr$edge[, 2] == nthtip)
-    ##     ntsp <- tsp(lst[[nEdge]])
-    ##     if (nthtip %in% fossils) {
-    ##         ntsp[2] <- 0
-    ##         lst[[nEdge]] <<- list(NULL)
-    ##     }
-    ##     if (ntsp[2] > (node_len[nthtip] - 1/N)) {
-    ##         if (length(lst[[nEdge]]) > 1) {
-    ##             if (length(lst[[nEdge]]) == 2) {
-    ##               lst[[nEdge]] <<- ts(lst[[nEdge]][1], start = ntsp[1], 
-    ##                 end = ntsp[1], frequency = N)
-    ##             }
-    ##             else {
-    ##               lst[[nEdge]] <<- window(lst[[nEdge]], start = ntsp[1], 
-    ##                 end = ntsp[2] - 1/N)
-    ##             }
-    ##         }
-    ##     }
-    ## }
+    node_len <- ape::node.depth.edgelength(tr)
+    for (nthtip in 1:n_tips) {
+        nEdge <- which(tr$edge[, 2] == nthtip)
+        ntsp <- tsp(lst[[nEdge]])
+        if (nthtip %in% fossils) {
+            ntsp[2] <- 0
+            lst[[nEdge]] <- 0
+        }
+        if (ntsp[2] > (node_len[nthtip] - 1/N)) {
+            if (length(lst[[nEdge]]) > 1) {
+                if (length(lst[[nEdge]]) == 2) {
+                  lst[[nEdge]] <- ts(lst[[nEdge]][1], start = ntsp[1], 
+                    end = ntsp[1], frequency = N)
+                }
+                else {
+                  lst[[nEdge]] <- window(lst[[nEdge]], start = ntsp[1], 
+                    end = ntsp[2] - 1/N)
+                }
+            }
+        }
+    }
     return(lst)
 }
 
