@@ -226,7 +226,7 @@ model="OU"
 method="euler"
  
   lst2 <- phylo_sde(tr=tree, rt_value=rt_value, theta=theta, model=model,
-                    N=1000, method="euler")
+                    N=1000, method="euler", traits=traits)
 
 
 

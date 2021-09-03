@@ -119,8 +119,9 @@ set.seed(1)
 
 #### USE THIS TO TEST
 fossils <- fossil_id(tree)
-  lst2 <- phylo_sde(tr=tree, rt_value=rt_value, theta=theta, model=model,
-                    N=100, method="euler", traits=traits, fossils=fossils)
+lst2 <- phylo_sde(tr=tree, rt_value=rt_value, N=100,  theta=theta,
+                  model=model,
+                    method="euler", traits=traits, fossils=fossils)
 
 fossil.data <- 
   # lst stores the time series point path to each node
