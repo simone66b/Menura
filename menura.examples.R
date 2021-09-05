@@ -74,7 +74,7 @@ set.seed(1)
   nodelabels()
   add.scale.bar()
 
-  tr <- tree
+ ##  tr <- tree
   # SDE parameters
   Nedges <- length(tr$edge.length)  
   
@@ -95,7 +95,7 @@ set.seed(1)
   rt_value <- 0
   
   #simulate tipdata
-  tipdata <- rTraitCont(tr, "OU", sigma=sigma, alpha=alpha, theta=mu,
+  traits <- rTraitCont(tr, "OU", sigma=sigma, alpha=alpha, theta=mu,
                         root.value=rt_value)
   
   
@@ -118,9 +118,9 @@ set.seed(1)
   N <- 100
 
 #### USE THIS TO TEST
-fossils <- fossil_id(tree)
-  lst2 <- phylo_sde(tr=tree, rt_value=rt_value, theta=theta, model=model,
-                    N=100, method="euler", traits=traits, fossils=fossils)
+fossils <- fossil_id(tr)
+  lst2 <- phylo_sde(tr=tr, rt_value=rt_value, theta=theta, model=model,
+                    N=100, method="euler", fossils=fossils, traits=traits)
 
 fossil.data <- 
   # lst stores the time series point path to each node
